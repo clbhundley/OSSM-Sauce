@@ -1,0 +1,29 @@
+Starting
+Starting
+Stepper Pin:14
+1073494668
+1073494436
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:resetSettings 
+*wm:SETTINGS ERASED 
+*wm:StartAP with SSID:  OSSM WiFi Manager
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 
+[ 23400][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 24053][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 29665][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 30418][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 30851][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 31373][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:1 networks found
+[ 38495][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 38533][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 40391][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:Connecting to NEW AP: Kinetic_400945
+*wm:connectTimeout not set, ESP waitForConnectResult... 
+*wm:[ERROR] Connect to new AP Failed 
+[121358][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:config portal exiting 
+----------
+trying connection to server.

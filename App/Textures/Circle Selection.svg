@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" xmlns="http://www.w3.org/2000/svg" width="516" height="516" viewBox="0 0 516 516">
+  <defs>
+    <style>
+      .b {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 16px;
+      }
+    </style>
+  </defs>
+  <path class="b" d="m456.14,410.49c69.14-89.61,69.14-215.38,0-304.99"/>
+  <path class="b" d="m410.49,59.86c-89.61-69.14-215.38-69.14-304.99,0"/>
+  <path class="b" d="m59.86,105.51c-69.14,89.61-69.14,215.38,0,304.99"/>
+  <path class="b" d="m105.51,456.14c89.61,69.14,215.38,69.14,304.99,0"/>
+</svg>

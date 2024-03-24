@@ -1,0 +1,2373 @@
+[gd_scene load_steps=51 format=3 uid="uid://d3cq3b5o0feo0"]
+
+[ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
+[ext_resource type="Script" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
+[ext_resource type="Texture2D" uid="uid://da3nxjs8pqcoy" path="res://Textures/Dot Small.svg" id="3_4fxdc"]
+[ext_resource type="Script" path="res://Scripts/Position Controls.gd" id="4_juubk"]
+[ext_resource type="Texture2D" uid="uid://du8j273r744tn" path="res://Textures/Straight.svg" id="5_assl3"]
+[ext_resource type="Texture2D" uid="uid://bm14gbhhm3uqb" path="res://Textures/Smooth.svg" id="6_w7w2d"]
+[ext_resource type="Texture2D" uid="uid://cb703kraugp85" path="res://Textures/S32.svg" id="7_vkr47"]
+[ext_resource type="Texture2D" uid="uid://cnyl16jr7jd8g" path="res://Textures/Dot.svg" id="8_gc26k"]
+[ext_resource type="Script" path="res://Scripts/Loop Controls.gd" id="9_ggpkr"]
+[ext_resource type="Texture2D" uid="uid://bssf5wkfubmdu" path="res://Textures/PauseLarge.svg" id="10_txgs1"]
+[ext_resource type="Script" path="res://Scripts/Action Panel.gd" id="11_ovb0l"]
+[ext_resource type="Texture2D" uid="uid://dkpllak4evknm" path="res://Textures/Play.svg" id="12_5566s"]
+[ext_resource type="Texture2D" uid="uid://dcx71x8114vuv" path="res://Textures/Selection.svg" id="13_5y1j6"]
+[ext_resource type="Texture2D" uid="uid://fxyub7xy8ha5" path="res://Textures/Pause.svg" id="14_nxmo0"]
+[ext_resource type="Texture2D" uid="uid://dd4yrbph2jgxm" path="res://Textures/Speed.svg" id="15_h1yph"]
+[ext_resource type="Texture2D" uid="uid://df1fg8fsnax6k" path="res://Textures/Range.svg" id="16_6gn0p"]
+[ext_resource type="Texture2D" uid="uid://biyi8wy11rxn2" path="res://Textures/Menu.svg" id="17_qgwvh"]
+[ext_resource type="Script" path="res://Scripts/Speed Panel.gd" id="18_xiv3r"]
+[ext_resource type="Texture2D" uid="uid://btmbmu74nqhry" path="res://Textures/Back.svg" id="19_cpmuu"]
+[ext_resource type="Script" path="res://Scripts/Range Panel.gd" id="20_ogp2k"]
+[ext_resource type="Script" path="res://Scripts/Menu.gd" id="21_khfk6"]
+[ext_resource type="Texture2D" uid="uid://1yuj650f5xs" path="res://Textures/Gear.svg" id="22_2ruby"]
+[ext_resource type="Texture2D" uid="uid://o6gdsdww0cu4" path="res://Textures/Exit.svg" id="23_nlut4"]
+[ext_resource type="Texture2D" uid="uid://bvlmowqblmdgt" path="res://Textures/Down.svg" id="24_n8lpp"]
+[ext_resource type="Texture2D" uid="uid://hdymqqpd3vf" path="res://Textures/Up.svg" id="25_pehks"]
+[ext_resource type="Texture2D" uid="uid://rcaxkukbqghe" path="res://Textures/Restart.svg" id="26_aqrhn"]
+[ext_resource type="Texture2D" uid="uid://bd8t1o4bylcx0" path="res://Textures/Trash.svg" id="27_jm1bm"]
+[ext_resource type="Texture2D" uid="uid://6v1hvd7m2vhs" path="res://Textures/t3.svg" id="28_wynws"]
+[ext_resource type="Script" path="res://Scripts/Settings.gd" id="29_ui4fx"]
+[ext_resource type="Script" path="res://Scripts/Add File.gd" id="30_0ohdi"]
+[ext_resource type="Script" path="res://Scripts/File List.gd" id="31_476hc"]
+[ext_resource type="Script" path="res://Scripts/Circle Selection.gd" id="32_6g672"]
+[ext_resource type="Texture2D" uid="uid://8r6wnojlpyb2" path="res://Textures/Circle Selection.svg" id="33_onotn"]
+[ext_resource type="Texture2D" uid="uid://ceigu0byvwpor" path="res://Textures/Play Large.svg" id="34_0psch"]
+[ext_resource type="Texture2D" uid="uid://dtor82hfkxpes" path="res://Textures/Restart Large.svg" id="35_yhpak"]
+[ext_resource type="Texture2D" uid="uid://ceniqb8fv6rr" path="res://Textures/hourglass.svg" id="36_fybvn"]
+[ext_resource type="Texture2D" uid="uid://c0bgeto1j6das" path="res://Textures/wifi.svg" id="37_kag8w"]
+
+[sub_resource type="GDScript" id="GDScript_o3urw"]
+script/source = "extends Control
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton and owner.active_path_index != null:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.is_pressed():
+				$Timer.start()
+			elif event.is_released():
+				$Timer.stop()
+
+func _on_timer_timeout():
+	if owner.paused:
+		%CircleSelection.show_play()
+	else:
+		%CircleSelection.show_pause()
+"
+
+[sub_resource type="GDScript" id="GDScript_et6nu"]
+script/source = "extends Panel
+
+@onready var Item:Panel = $Scroll/VBox/Item
+
+var selected_index
+
+var drag_delta:float
+
+func _ready():
+	$Scroll/VBox.remove_child(Item)
+
+func _on_item_selected(item):
+	if drag_delta > 7:
+		return
+	deselect_all()
+	item.select()
+	var index = item.get_index()
+	selected_index = index
+	var restart_button = %Menu/PathControls/HBox/Restart
+	if owner.active_path_index == index and owner.frame > 0:
+		restart_button.show()
+	else:
+		restart_button.hide()
+	if not owner.paused and owner.active_path_index == index:
+		%Menu.show_pause()
+	else:
+		%Menu.show_play()
+	var timer = item.get_node('Timer')
+	if timer.time_left:
+		%Menu._on_play_pressed()
+	else:
+		timer.start()
+
+func add_item(item_text:String):
+	var item = Item.duplicate()
+	item.get_node('Label').text = item_text
+	$Scroll/VBox.add_child(item)
+	var item_button = item.get_node('Button')
+	item_button.connect('pressed', _on_item_selected.bind(item))
+	%Menu/Main/PlaylistButtons/SavePlaylist.disabled = false
+
+func move_item(current_index, new_index):
+	var item = $Scroll/VBox.get_child(current_index)
+	var path = %PathDisplay/Paths.get_child(current_index)
+	$Scroll/VBox.move_child(item, new_index)
+	%PathDisplay/Paths.move_child(path, new_index)
+	selected_index = new_index
+	
+	var path_data = owner.paths[current_index]
+	owner.paths.remove_at(current_index)
+	owner.paths.insert(new_index, path_data)
+	
+	var marker_data = owner.markers[current_index]
+	owner.markers.remove_at(current_index)
+	owner.markers.insert(new_index, path_data)
+	
+	if owner.active_path_index == current_index:
+		owner.active_path_index = new_index
+	elif owner.active_path_index == new_index:
+		owner.active_path_index = current_index
+
+func get_items() -> Array:
+	var items:Array
+	for item in $Scroll/VBox.get_children():
+		items.append(item.get_node('Label').text)
+	return items
+
+func _input(event):
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			drag_delta = 0
+	if event is InputEventMouseMotion:
+		if event.button_mask & MOUSE_BUTTON_LEFT:
+			drag_delta += abs(event.relative.y)
+			$Scroll.scroll_vertical -= event.relative.y
+
+func deselect_all():
+	for item in $Scroll/VBox.get_children():
+		item.deselect()
+
+func clear():
+	if owner.active_path_index != null:
+		owner.active_path_index = null
+		%Menu/PathControls.hide()
+		if not owner.paused:
+			%Menu._on_pause_pressed()
+	owner.paths.clear()
+	for item in $Scroll/VBox.get_children():
+		$Scroll/VBox.remove_child(item)
+	for path in %PathDisplay/Paths.get_children():
+		%PathDisplay/Paths.remove_child(path)
+	%PathDisplay/Ball.hide()
+"
+
+[sub_resource type="GDScript" id="GDScript_pigvm"]
+script/source = "extends Panel
+
+func set_active():
+	$Icon.show()
+	$Animation.play('Spin')
+
+func select():
+	$Label.self_modulate = Color.SANDY_BROWN
+	self_modulate = Color.SLATE_GRAY
+
+func deselect():
+	self_modulate.a = 0.7
+	self_modulate = Color.WHITE
+	if get_index() == get_tree().get_root().get_child(0).active_path_index:
+		$Label.self_modulate = Color.BURLYWOOD
+	else:
+		$Label.self_modulate = Color.WHITE
+		$Label.self_modulate.a = 0.765
+		$Icon.hide()
+		$Animation.stop()
+"
+
+[sub_resource type="Animation" id="Animation_4ant3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cbmbt"]
+resource_name = "Spin"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avydh"]
+_data = {
+"RESET": SubResource("Animation_4ant3"),
+"Spin": SubResource("Animation_cbmbt")
+}
+
+[sub_resource type="GDScript" id="GDScript_3psro"]
+script/source = "extends Control
+
+func _on_add_delay_pressed():
+	var duration:float = $Box/SpinBox.value
+	owner.create_delay(duration)
+	show_menu_buttons()
+
+func _on_back_pressed():
+	show_menu_buttons()
+
+func show_menu_buttons():
+	var buttons = [
+		%Menu/Main/PlaylistButtons,
+		%Menu/Main/PathButtons,
+		%Menu/PathControls,
+		%Menu/Header,
+		%Menu/Main/Mode]
+	for button in buttons:
+		button.show()
+	%Menu.refresh_selection()
+	hide()
+"
+
+[sub_resource type="GDScript" id="GDScript_kgmbj"]
+script/source = "extends Control
+
+func _on_text_edit_text_changed():
+	var filter:Array = ['\\\\', '/', ':', '*', '?', '\"', '<', '>', '|', '\\n']
+	var filtered_text:String = $TextEdit.text
+	for character in filter:
+		filtered_text = filtered_text.replace(character,\"\")
+	if $TextEdit.text != filtered_text:
+		$TextEdit.text = filtered_text
+		$TextEdit.set_caret_column($TextEdit.text.length())
+	if $TextEdit.text.length() > 0:
+		$HBox/Save.disabled = false
+	else:
+		$HBox/Save.disabled = true
+
+func _on_save_pressed():
+	var filename:String = $TextEdit.text
+	var path:String = owner.playlists_dir + \"/\" + filename + \".bxpl\"
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	for path_name in %Menu/Playlist.get_items():
+		file.store_line(path_name)
+	file.close()
+	show_menu_buttons()
+
+func _on_back_pressed():
+	show_menu_buttons()
+
+func show_menu_buttons():
+	var buttons = [
+		%Menu/Main/PlaylistButtons,
+		%Menu/Main/PathButtons,
+		%Menu/PathControls,
+		%Menu/Header,
+		%Menu/Main/Mode]
+	for button in buttons:
+		button.show()
+	%Menu.refresh_selection()
+	hide()
+"
+
+[sub_resource type="GDScript" id="GDScript_rckrg"]
+script/source = "extends Panel
+
+func select():
+	$Label.self_modulate = Color.SANDY_BROWN
+	self_modulate = Color.SLATE_GRAY
+
+func deselect():
+	$Label.self_modulate = Color.WHITE
+	$Label.self_modulate.a = 0.765
+	self_modulate.a = 0.7
+	self_modulate = Color.WHITE
+"
+
+[sub_resource type="Animation" id="Animation_il416"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7gpwe"]
+resource_name = "Spin"
+length = 90.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 90),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u5ydg"]
+_data = {
+"RESET": SubResource("Animation_il416"),
+"Spin": SubResource("Animation_7gpwe")
+}
+
+[sub_resource type="GDScript" id="GDScript_dqjk0"]
+script/source = "extends Panel
+
+func _ready():
+	self_modulate.a = 2
+
+func _on_accept_pressed():
+	hide()
+
+func _on_dont_show_toggled(toggled_on):
+	owner.user_settings.set_value('app_settings', 'show_splash', false)
+"
+
+[node name="OSSMSauce" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2qx77")
+script = ExtResource("2_7liag")
+
+[node name="PathDisplay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PathArea" type="Control" parent="PathDisplay"]
+layout_mode = 1
+anchor_top = 0.0625
+anchor_right = 1.0
+anchor_bottom = 0.84375
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_o3urw")
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="PathDisplay/PathArea"]
+wait_time = 0.3
+
+[node name="Paths" type="Control" parent="PathDisplay"]
+anchors_preset = 0
+
+[node name="Ball" type="Sprite2D" parent="PathDisplay"]
+self_modulate = Color(1, 0.384314, 0.47451, 1)
+position = Vector2(540, 960)
+texture = ExtResource("3_4fxdc")
+
+[node name="PositionControls" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_juubk")
+metadata/_edit_use_anchors_ = true
+
+[node name="Smoothing" type="Control" parent="PositionControls"]
+custom_minimum_size = Vector2(860, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -430.0
+offset_right = 430.0
+offset_bottom = 160.0
+grow_horizontal = 2
+
+[node name="HSlider" type="HSlider" parent="PositionControls/Smoothing"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -60.0
+offset_right = 210.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(210, 60)
+min_value = 0.5
+max_value = 20.0
+step = 0.5
+value = 16.0
+
+[node name="Straight" type="TextureRect" parent="PositionControls/Smoothing"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_right = 86.0
+offset_bottom = 40.0
+grow_vertical = 2
+texture = ExtResource("5_assl3")
+
+[node name="Smooth" type="TextureRect" parent="PositionControls/Smoothing"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -40.5
+offset_bottom = 40.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("6_w7w2d")
+
+[node name="MovementBar" type="NinePatchRect" parent="PositionControls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -669.0
+offset_right = 86.0
+offset_bottom = 779.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="SliderTop" type="TextureRect" parent="PositionControls/MovementBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -708.0
+offset_right = 69.0
+offset_bottom = -570.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="Slider" type="TextureRect" parent="PositionControls/MovementBar"]
+self_modulate = Color(0.941176, 0.501961, 0.501961, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 570.0
+offset_right = 69.0
+offset_bottom = 708.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="LoopControls" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_ggpkr")
+metadata/_edit_use_anchors_ = true
+
+[node name="ActiveSwitch" type="Button" parent="LoopControls"]
+visible = false
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+offset_left = 215.0
+offset_top = 45.0
+offset_right = 480.0
+offset_bottom = 127.0
+theme_override_font_sizes/font_size = 54
+toggle_mode = true
+text = "OFF"
+
+[node name="StrokeDurationLabel" type="Label" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -292.0
+offset_top = 46.0
+offset_right = 315.0
+offset_bottom = 123.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "Stroke Duration: 10s"
+
+[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -386.0
+offset_top = 323.0
+offset_right = -216.0
+offset_bottom = 1092.0
+grow_horizontal = 2
+rotation = 4.71239
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="LoopControls/StrokeDurationSlider"]
+self_modulate = Color(0.858824, 0.439216, 0.576471, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderStop" type="TextureRect" parent="LoopControls/StrokeDurationSlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 230.0
+offset_right = 69.0
+offset_bottom = 368.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="Label" type="Label" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 136.0
+offset_right = 26.0
+offset_bottom = 210.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+horizontal_alignment = 1
+
+[node name="Controls" type="VBoxContainer" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.0
+offset_top = 362.0
+offset_right = 350.0
+offset_bottom = 707.0
+grow_horizontal = 2
+theme_override_constants/separation = 45
+
+[node name="Labels" type="HBoxContainer" parent="LoopControls/Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 240
+
+[node name="In" type="Label" parent="LoopControls/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "IN"
+
+[node name="Out" type="Label" parent="LoopControls/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "OUT"
+
+[node name="Transitions" type="HBoxContainer" parent="LoopControls/Controls"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="In" type="OptionButton" parent="LoopControls/Controls/Transitions"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 8
+selected = 1
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Out" type="OptionButton" parent="LoopControls/Controls/Transitions"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 8
+selected = 1
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Easings" type="HBoxContainer" parent="LoopControls/Controls"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="In" type="OptionButton" parent="LoopControls/Controls/Easings"]
+layout_mode = 2
+item_count = 4
+selected = 2
+popup/item_0/text = "Ease In"
+popup/item_0/id = 0
+popup/item_1/text = "Ease Out"
+popup/item_1/id = 1
+popup/item_2/text = "Ease In/Out"
+popup/item_2/id = 2
+popup/item_3/text = "Ease Out/In"
+popup/item_3/id = 3
+
+[node name="Out" type="OptionButton" parent="LoopControls/Controls/Easings"]
+layout_mode = 2
+item_count = 4
+selected = 2
+popup/item_0/text = "Ease In"
+popup/item_0/id = 0
+popup/item_1/text = "Ease Out"
+popup/item_1/id = 1
+popup/item_2/text = "Ease In/Out"
+popup/item_2/id = 2
+popup/item_3/text = "Ease Out/In"
+popup/item_3/id = 3
+
+[node name="ttc" type="Button" parent="LoopControls/Controls"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+toggle_mode = true
+text = "Tap to Cycle: OFF"
+
+[node name="Line2D" type="Line2D" parent="LoopControls"]
+position = Vector2(0, 25.9997)
+
+[node name="Pause" type="TextureRect" parent="LoopControls"]
+visible = false
+modulate = Color(1, 1, 1, 0.478431)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 104.5
+offset_right = 150.0
+offset_bottom = 563.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_txgs1")
+
+[node name="Control" type="Control" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -383.0
+offset_top = 28.0
+offset_right = 383.0
+offset_bottom = 640.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LoopControls/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tap" type="TextureButton" parent="LoopControls/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MouseInput" type="Label" parent="LoopControls"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -39.5
+offset_right = 350.0
+offset_bottom = 29.5
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "MOUSE INPUT"
+
+[node name="TouchInput" type="Label" parent="LoopControls"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -39.5
+offset_right = -10.0
+offset_bottom = 29.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "TOUCH INPUT"
+
+[node name="ActionPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.67451)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_top = -194.0
+offset_right = 541.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("11_ovb0l")
+
+[node name="Play" type="TextureRect" parent="ActionPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 78.0
+offset_top = -47.5
+offset_right = 152.0
+offset_bottom = 47.5
+grow_vertical = 2
+texture = ExtResource("12_5566s")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Play"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -90.0
+offset_right = 83.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_5y1j6")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Play"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.783784
+anchor_top = -0.442105
+anchor_right = 1.60811
+anchor_bottom = 1.44211
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Pause" type="TextureRect" parent="ActionPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 86.0
+offset_top = -40.5
+offset_right = 133.0
+offset_bottom = 40.5
+grow_vertical = 2
+texture = ExtResource("14_nxmo0")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Pause"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = -90.0
+offset_right = 89.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_5y1j6")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Pause"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.40426
+anchor_top = -0.592593
+anchor_right = 2.38298
+anchor_bottom = 1.59259
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Speed" type="TextureRect" parent="ActionPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 289.0
+offset_top = -52.0
+offset_right = 469.0
+offset_bottom = 53.0
+grow_vertical = 2
+texture = ExtResource("15_h1yph")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Speed"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_5y1j6")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Speed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.352381
+anchor_right = 1.0
+anchor_bottom = 1.35238
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Range" type="TextureRect" parent="ActionPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -27.0
+offset_right = -301.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("16_6gn0p")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Range"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -61.5
+offset_bottom = 61.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_5y1j6")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Range"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -1.07018
+anchor_right = 1.0
+anchor_bottom = 2.08772
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="TextureRect" parent="ActionPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -51.0
+offset_right = -60.0
+offset_bottom = 51.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("17_qgwvh")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("13_5y1j6")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.362745
+anchor_top = -0.362745
+anchor_right = 1.36275
+anchor_bottom = 1.36275
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="ActionPanel"]
+wait_time = 0.8
+one_shot = true
+
+[node name="SpeedPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("18_xiv3r")
+metadata/_edit_use_anchors_ = true
+
+[node name="SpeedBar" type="NinePatchRect" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -806.5
+offset_right = 1.0
+offset_bottom = 806.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="SpeedPanel/SpeedBar"]
+self_modulate = Color(0.498039, 1, 0.831373, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -791.0
+offset_right = 69.0
+offset_bottom = -653.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderBottom" type="TextureRect" parent="SpeedPanel/SpeedBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="AccelerationBar" type="NinePatchRect" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -806.5
+offset_right = 158.0
+offset_bottom = 806.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="SpeedPanel/AccelerationBar"]
+self_modulate = Color(1, 0.713726, 0.756863, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -791.0
+offset_right = 69.0
+offset_bottom = -653.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderBottom" type="TextureRect" parent="SpeedPanel/AccelerationBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="BackTexture" type="TextureRect" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 46.0
+offset_top = -61.5
+offset_right = 167.0
+offset_bottom = 61.5
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("19_cpmuu")
+
+[node name="BackButton" type="TextureButton" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 540.0
+offset_right = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTop" type="Label" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Speed:
+20000 steps/sec"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBot" type="Label" parent="SpeedPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -151.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 54
+text = "Acceleration:
+200000 steps/sec²"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RangePanel" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.5
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("20_ogp2k")
+metadata/_edit_use_anchors_ = true
+
+[node name="RangeBar" type="NinePatchRect" parent="RangePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -806.0
+offset_right = 86.0
+offset_bottom = 807.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="MaxSlider" type="TextureRect" parent="RangePanel/RangeBar"]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="MinSlider" type="TextureRect" parent="RangePanel/RangeBar"]
+self_modulate = Color(1, 0.498039, 0.313726, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="BackTexture" type="TextureRect" parent="RangePanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -167.0
+offset_top = -61.5
+offset_right = -46.0
+offset_bottom = 61.5
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("19_cpmuu")
+flip_h = true
+
+[node name="BackButton" type="TextureButton" parent="RangePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_right = -540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTop" type="Label" parent="RangePanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Position:
+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBot" type="Label" parent="RangePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -151.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 54
+text = "Min Position:
+0%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("21_khfk6")
+
+[node name="Header" type="HBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 222.0
+grow_horizontal = 2
+theme_override_constants/separation = 280
+alignment = 1
+
+[node name="Back" type="TextureButton" parent="Menu/Header"]
+layout_mode = 2
+texture_normal = ExtResource("19_cpmuu")
+stretch_mode = 3
+
+[node name="Settings" type="TextureButton" parent="Menu/Header"]
+self_modulate = Color(0.560784, 0.737255, 0.560784, 1)
+layout_mode = 2
+texture_normal = ExtResource("22_2ruby")
+stretch_mode = 3
+
+[node name="Exit" type="TextureButton" parent="Menu/Header"]
+modulate = Color(0.862745, 0.0784314, 0.235294, 1)
+layout_mode = 2
+texture_normal = ExtResource("23_nlut4")
+stretch_mode = 3
+
+[node name="Main" type="VBoxContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -723.0
+offset_bottom = -307.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 71
+
+[node name="Mode" type="OptionButton" parent="Menu/Main"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.498039, 0.313726, 1)
+alignment = 1
+expand_icon = true
+item_count = 3
+selected = 0
+popup/item_0/text = "Path Mode"
+popup/item_0/id = 0
+popup/item_1/text = "Position Mode"
+popup/item_1/id = 1
+popup/item_2/text = "Loop Mode"
+popup/item_2/id = 2
+
+[node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main"]
+layout_mode = 2
+theme_override_constants/separation = 117
+alignment = 1
+
+[node name="LoadPlaylist" type="Button" parent="Menu/Main/PlaylistButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Load Playlist"
+
+[node name="SavePlaylist" type="Button" parent="Menu/Main/PlaylistButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+disabled = true
+text = "Save Playlist"
+
+[node name="PathButtons" type="HBoxContainer" parent="Menu/Main"]
+layout_mode = 2
+theme_override_constants/separation = 175
+alignment = 1
+
+[node name="AddPath" type="Button" parent="Menu/Main/PathButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Add Path"
+
+[node name="AddDelay" type="Button" parent="Menu/Main/PathButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Add Delay"
+
+[node name="LoopSettings" type="VBoxContainer" parent="Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -446.0
+offset_top = -579.0
+offset_right = 452.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 65
+
+[node name="DisplayMode" type="VBoxContainer" parent="Menu/LoopSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/DisplayMode"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Stroke Speed Display:"
+
+[node name="OptionButton" type="OptionButton" parent="Menu/LoopSettings/DisplayMode"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+item_count = 2
+selected = 0
+popup/item_0/text = "Seconds"
+popup/item_0/id = 0
+popup/item_1/text = "Percentage"
+popup/item_1/id = 1
+
+[node name="HSeparator" type="HSeparator" parent="Menu/LoopSettings"]
+layout_mode = 2
+
+[node name="MaxStrokeDuration" type="VBoxContainer" parent="Menu/LoopSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/MaxStrokeDuration"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Stroke Duration:"
+
+[node name="SpinBox" type="SpinBox" parent="Menu/LoopSettings/MaxStrokeDuration"]
+layout_mode = 2
+min_value = 1.0
+max_value = 99999.0
+step = 0.01
+value = 10.0
+suffix = "sec"
+
+[node name="MinStrokeDuration" type="VBoxContainer" parent="Menu/LoopSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/MinStrokeDuration"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Min Stroke Duration:"
+
+[node name="SpinBox" type="SpinBox" parent="Menu/LoopSettings/MinStrokeDuration"]
+layout_mode = 2
+min_value = 0.01
+max_value = 9999.0
+step = 0.01
+value = 0.2
+suffix = "sec"
+
+[node name="PathControls" type="Control" parent="Menu"]
+anchors_preset = 0
+anchor_top = 0.35625
+anchor_right = 1.0
+anchor_bottom = 0.446354
+metadata/_edit_use_anchors_ = true
+
+[node name="Down" type="TextureButton" parent="Menu/PathControls"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 58.0
+offset_right = 169.0
+offset_bottom = 127.0
+texture_normal = ExtResource("24_n8lpp")
+
+[node name="Up" type="TextureButton" parent="Menu/PathControls"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 58.0
+offset_right = 323.0
+offset_bottom = 127.0
+texture_normal = ExtResource("25_pehks")
+
+[node name="HBox" type="HBoxContainer" parent="Menu/PathControls"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -484.0
+offset_top = -57.5
+offset_right = -53.0
+offset_bottom = 57.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 83
+alignment = 2
+
+[node name="Play" type="TextureButton" parent="Menu/PathControls/HBox"]
+layout_mode = 2
+texture_normal = ExtResource("12_5566s")
+stretch_mode = 3
+
+[node name="Pause" type="TextureButton" parent="Menu/PathControls/HBox"]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("14_nxmo0")
+stretch_mode = 3
+
+[node name="Restart" type="TextureButton" parent="Menu/PathControls/HBox"]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("26_aqrhn")
+stretch_mode = 3
+
+[node name="Delete" type="TextureButton" parent="Menu/PathControls/HBox"]
+layout_mode = 2
+texture_normal = ExtResource("27_jm1bm")
+stretch_mode = 3
+
+[node name="Playlist" type="Panel" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.453646
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_et6nu")
+metadata/_edit_use_anchors_ = true
+
+[node name="Scroll" type="ScrollContainer" parent="Menu/Playlist"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Menu/Playlist/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Item" type="Panel" parent="Menu/Playlist/Scroll/VBox"]
+self_modulate = Color(1, 1, 1, 0.701961)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+script = SubResource("GDScript_pigvm")
+
+[node name="Label" type="Label" parent="Menu/Playlist/Scroll/VBox/Item"]
+self_modulate = Color(1, 1, 1, 0.764706)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -37.0
+offset_right = 988.0
+offset_bottom = 37.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Icon" type="TextureRect" parent="Menu/Playlist/Scroll/VBox/Item"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -33.0
+offset_right = -10.9996
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(33, 33)
+mouse_filter = 2
+texture = ExtResource("28_wynws")
+
+[node name="Button" type="TextureButton" parent="Menu/Playlist/Scroll/VBox/Item"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="Menu/Playlist/Scroll/VBox/Item"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Animation" type="AnimationPlayer" parent="Menu/Playlist/Scroll/VBox/Item"]
+libraries = {
+"": SubResource("AnimationLibrary_avydh")
+}
+
+[node name="AddDelay" type="Control" parent="Menu"]
+visible = false
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_3psro")
+
+[node name="Box" type="Control" parent="Menu/AddDelay"]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchor_top = 0.166146
+anchor_right = 1.0
+anchor_bottom = 0.453125
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HBox" type="HBoxContainer" parent="Menu/AddDelay/Box"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -204.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="AddDelay" type="Button" parent="Menu/AddDelay/Box/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Add Delay"
+
+[node name="Back" type="Button" parent="Menu/AddDelay/Box/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="SpinBox" type="SpinBox" parent="Menu/AddDelay/Box"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.5
+offset_top = -41.0
+offset_right = 156.5
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 0.01
+max_value = 999999.0
+step = 0.01
+value = 1.5
+
+[node name="Label" type="Label" parent="Menu/AddDelay/Box"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -365.0
+offset_top = -36.5
+offset_right = -281.0
+offset_bottom = 37.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+text = "sec"
+
+[node name="SavePlaylist" type="Control" parent="Menu"]
+visible = false
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -641.0
+offset_right = 540.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_kgmbj")
+
+[node name="HBox" type="HBoxContainer" parent="Menu/SavePlaylist"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -204.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Save" type="Button" parent="Menu/SavePlaylist/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Save Playlist"
+
+[node name="Back" type="Button" parent="Menu/SavePlaylist/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="TextEdit" type="TextEdit" parent="Menu/SavePlaylist"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -45.0
+offset_right = 296.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+
+[node name="Label" type="Label" parent="Menu/SavePlaylist"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -37.0
+offset_right = -108.0
+offset_bottom = 37.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+text = ".bxpl"
+
+[node name="Timer" type="Timer" parent="Menu"]
+wait_time = 0.5
+one_shot = true
+
+[node name="VersionLabel" type="Label" parent="Menu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -210.0
+offset_top = -60.0
+offset_right = -12.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "App v1.0.0"
+
+[node name="Settings" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(0.364706, 0.364706, 0.364706, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("29_ui4fx")
+
+[node name="Back" type="TextureButton" parent="Settings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0675926
+anchor_top = 0.0223958
+anchor_right = 0.199074
+anchor_bottom = 0.0932292
+grow_horizontal = 2
+texture_normal = ExtResource("19_cpmuu")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Network" type="VBoxContainer" parent="Settings"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -723.0
+offset_bottom = -431.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Address" type="VBoxContainer" parent="Settings/Network"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Network/Address"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "WebSocket Server Address:"
+
+[node name="TextEdit" type="TextEdit" parent="Settings/Network/Address"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+placeholder_text = "192.168.254...:120"
+
+[node name="Port" type="VBoxContainer" parent="Settings/Network"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Network/Port"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Port:"
+
+[node name="TextEdit" type="TextEdit" parent="Settings/Network/Port"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "120"
+placeholder_text = "120"
+
+[node name="Connect" type="Button" parent="Settings/Network"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Connect To Server"
+
+[node name="Status" type="Label" parent="Settings/Network"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "CONNECTED"
+
+[node name="Sliders" type="VBoxContainer" parent="Settings"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -321.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="MaxSpeed" type="VBoxContainer" parent="Settings/Sliders"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Sliders/MaxSpeed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Speed Slider Max:"
+
+[node name="TextEdit" type="TextEdit" parent="Settings/Sliders/MaxSpeed"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "25000"
+placeholder_text = "25000"
+
+[node name="MaxAcceleration" type="VBoxContainer" parent="Settings/Sliders"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Settings/Sliders/MaxAcceleration"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Acceleration Slider Max:"
+
+[node name="TextEdit" type="TextEdit" parent="Settings/Sliders/MaxAcceleration"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "500000"
+placeholder_text = "500000"
+
+[node name="HomingSpeed" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+offset_top = 1120.0
+offset_right = 1080.0
+offset_bottom = 1288.0
+
+[node name="Label" type="Label" parent="Settings/HomingSpeed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Homing Speed:"
+
+[node name="SpinBox" type="SpinBox" parent="Settings/HomingSpeed"]
+layout_mode = 2
+min_value = 1.0
+max_value = 99999.0
+value = 1000.0
+suffix = "steps/sec"
+
+[node name="Window" type="Control" parent="Settings"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 447.0
+offset_bottom = 652.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AlwaysOnTop" type="Control" parent="Settings/Window"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = -81.5
+offset_right = -619.0
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckBox" type="CheckBox" parent="Settings/Window/AlwaysOnTop"]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 24.0
+offset_bottom = 26.0
+scale = Vector2(3, 3)
+theme_override_font_sizes/font_size = 54
+
+[node name="Label" type="Label" parent="Settings/Window/AlwaysOnTop"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = -1.0
+offset_right = 439.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 54
+text = "Always on top"
+
+[node name="TransparentBg" type="Control" parent="Settings/Window"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = 3.5
+offset_right = -619.0
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckBox" type="CheckBox" parent="Settings/Window/TransparentBg"]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 24.0
+offset_bottom = 26.0
+scale = Vector2(3, 3)
+theme_override_font_sizes/font_size = 54
+
+[node name="Label" type="Label" parent="Settings/Window/TransparentBg"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = -1.0
+offset_right = 721.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 54
+text = "Transparent Background"
+
+[node name="AddFile" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("30_0ohdi")
+
+[node name="Label" type="Label" parent="AddFile"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -424.5
+offset_top = 14.0
+offset_right = 424.5
+offset_bottom = 102.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Documents/OSSM sauce/Paths"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="AddFile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0723958
+anchor_right = 1.0
+anchor_bottom = 0.115104
+grow_horizontal = 2
+theme_override_constants/separation = 175
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AddPath" type="Button" parent="AddFile/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Add Path"
+
+[node name="LoadPlaylist" type="Button" parent="AddFile/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Load Playlist"
+
+[node name="Back" type="Button" parent="AddFile/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="PathListOG" type="ItemList" parent="AddFile"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.140625
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+metadata/_edit_use_anchors_ = true
+
+[node name="FileList" type="Panel" parent="AddFile"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.139583
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_476hc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Scroll" type="ScrollContainer" parent="AddFile/FileList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="AddFile/FileList/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Item" type="Panel" parent="AddFile/FileList/Scroll/VBox"]
+self_modulate = Color(1, 1, 1, 0.701961)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+script = SubResource("GDScript_rckrg")
+
+[node name="Label" type="Label" parent="AddFile/FileList/Scroll/VBox/Item"]
+self_modulate = Color(1, 1, 1, 0.764706)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -37.0
+offset_right = 988.0
+offset_bottom = 37.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Button" type="TextureButton" parent="AddFile/FileList/Scroll/VBox/Item"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="AddFile/FileList/Scroll/VBox/Item"]
+wait_time = 0.5
+one_shot = true
+
+[node name="CircleSelection" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.313726)
+layout_mode = 1
+anchor_left = 0.244444
+anchor_top = 0.305729
+anchor_right = 0.755556
+anchor_bottom = 0.593229
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_6g672")
+metadata/_edit_use_anchors_ = true
+
+[node name="Circle" type="TextureRect" parent="CircleSelection"]
+self_modulate = Color(1, 1, 1, 0.666667)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -258.0
+offset_right = 258.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(258, 258)
+texture = ExtResource("33_onotn")
+
+[node name="Pause" type="TextureRect" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.5
+offset_top = -121.5
+offset_right = 73.5
+offset_bottom = 121.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_txgs1")
+
+[node name="Play" type="TextureRect" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.360507
+anchor_top = 0.271739
+anchor_right = 0.719203
+anchor_bottom = 0.728261
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_0psch")
+metadata/_edit_use_anchors_ = true
+
+[node name="Restart" type="TextureButton" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -188.5
+offset_right = 147.0
+offset_bottom = 154.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("35_yhpak")
+stretch_mode = 3
+
+[node name="Hourglass" type="TextureRect" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -154.0
+offset_right = 125.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("36_fybvn")
+stretch_mode = 3
+
+[node name="HomingLabel" type="Label" parent="CircleSelection/Hourglass"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -273.5
+offset_top = -363.0
+offset_right = 273.5
+offset_bottom = -118.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 88
+text = "HOMING
+PLEASE WAIT"
+horizontal_alignment = 1
+
+[node name="OutsideButton" type="TextureButton" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.478261
+anchor_top = -1.06341
+anchor_right = 1.47826
+anchor_bottom = 2.06341
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InsideButton" type="TextureButton" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CircleSelection"]
+libraries = {
+"": SubResource("AnimationLibrary_u5ydg")
+}
+
+[node name="Wifi" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(1031, 45)
+texture = ExtResource("37_kag8w")
+
+[node name="Splash" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_dqjk0")
+
+[node name="Label" type="RichTextLabel" parent="Splash"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -445.5
+offset_top = -818.5
+offset_right = 445.5
+offset_bottom = 564.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "OSSM Sauce is an experimental WebSocket based controller designed to give users maximum control over their OSSM devices.
+
+Extensive testing has been done to ensure reliable performance and safety, however, this app can damage your OSSM and yourself if used carelessly.
+
+It's up to YOU to understand how this app behaves before using it in a live environment.
+
+-Opti"
+
+[node name="DontShow" type="Control" parent="Splash"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 87.0
+offset_top = 482.0
+offset_right = -538.0
+offset_bottom = 561.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CheckBox" type="CheckBox" parent="Splash/DontShow"]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 24.0
+offset_bottom = 26.0
+scale = Vector2(3, 3)
+theme_override_font_sizes/font_size = 54
+
+[node name="Label" type="Label" parent="Splash/DontShow"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = -1.0
+offset_right = 439.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 54
+text = "Don't show again"
+
+[node name="Accept" type="Button" parent="Splash"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -293.0
+offset_right = 244.0
+offset_bottom = -165.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+text = "ACCEPT"
+
+[connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
+[connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
+[connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
+[connection signal="gui_input" from="PositionControls/MovementBar/Slider" to="PositionControls" method="_on_slider_gui_input"]
+[connection signal="toggled" from="LoopControls/ActiveSwitch" to="LoopControls" method="_on_active_switch_toggled"]
+[connection signal="gui_input" from="LoopControls/StrokeDurationSlider/Slider" to="LoopControls" method="_on_slider_gui_input"]
+[connection signal="item_selected" from="LoopControls/Controls/Transitions/In" to="LoopControls" method="send_command"]
+[connection signal="item_selected" from="LoopControls/Controls/Transitions/Out" to="LoopControls" method="send_command"]
+[connection signal="item_selected" from="LoopControls/Controls/Easings/In" to="LoopControls" method="send_command"]
+[connection signal="item_selected" from="LoopControls/Controls/Easings/Out" to="LoopControls" method="send_command"]
+[connection signal="toggled" from="LoopControls/Controls/ttc" to="LoopControls" method="_on_ttc_toggled"]
+[connection signal="pressed" from="LoopControls/Control/Tap" to="LoopControls" method="_on_tap_pressed"]
+[connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Speed/Button" to="ActionPanel" method="_on_speed_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Range/Button" to="ActionPanel" method="_on_range_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Menu/Button" to="ActionPanel" method="_on_menu_button_pressed"]
+[connection signal="timeout" from="ActionPanel/Timer" to="ActionPanel" method="_on_timer_timeout"]
+[connection signal="pressed" from="SpeedPanel/BackButton" to="SpeedPanel" method="_on_back_button_pressed"]
+[connection signal="pressed" from="RangePanel/BackButton" to="RangePanel" method="_on_back_button_pressed"]
+[connection signal="pressed" from="Menu/Header/Back" to="Menu" method="_on_Back_pressed"]
+[connection signal="pressed" from="Menu/Header/Settings" to="Menu" method="_on_Settings_pressed"]
+[connection signal="pressed" from="Menu/Header/Exit" to="Menu" method="_on_Exit_pressed"]
+[connection signal="item_selected" from="Menu/Main/Mode" to="Menu" method="_on_mode_selected"]
+[connection signal="pressed" from="Menu/Main/PlaylistButtons/LoadPlaylist" to="Menu" method="_on_load_playlist_pressed"]
+[connection signal="pressed" from="Menu/Main/PlaylistButtons/SavePlaylist" to="Menu" method="_on_save_playlist_pressed"]
+[connection signal="pressed" from="Menu/Main/PathButtons/AddPath" to="Menu" method="_on_add_path_pressed"]
+[connection signal="pressed" from="Menu/Main/PathButtons/AddDelay" to="Menu" method="_on_add_delay_pressed"]
+[connection signal="item_selected" from="Menu/LoopSettings/DisplayMode/OptionButton" to="Menu" method="_on_stroke_duration_display_mode_changed"]
+[connection signal="value_changed" from="Menu/LoopSettings/MaxStrokeDuration/SpinBox" to="Menu" method="_on_max_stroke_duration_changed"]
+[connection signal="value_changed" from="Menu/LoopSettings/MinStrokeDuration/SpinBox" to="Menu" method="_on_min_stroke_duration_changed"]
+[connection signal="pressed" from="Menu/PathControls/Down" to="Menu" method="_on_down_pressed"]
+[connection signal="pressed" from="Menu/PathControls/Up" to="Menu" method="_on_up_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Play" to="Menu" method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Pause" to="Menu" method="_on_pause_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Delete" to="Menu" method="_on_delete_pressed"]
+[connection signal="pressed" from="Menu/AddDelay/Box/HBox/AddDelay" to="Menu/AddDelay" method="_on_add_delay_pressed"]
+[connection signal="pressed" from="Menu/AddDelay/Box/HBox/Back" to="Menu/AddDelay" method="_on_back_pressed"]
+[connection signal="pressed" from="Menu/SavePlaylist/HBox/Save" to="Menu/SavePlaylist" method="_on_save_pressed"]
+[connection signal="pressed" from="Menu/SavePlaylist/HBox/Back" to="Menu/SavePlaylist" method="_on_back_pressed"]
+[connection signal="text_changed" from="Menu/SavePlaylist/TextEdit" to="Menu/SavePlaylist" method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="Settings/Back" to="Settings" method="_on_Back_pressed"]
+[connection signal="text_changed" from="Settings/Network/Address/TextEdit" to="Settings" method="_on_network_address_text_changed"]
+[connection signal="pressed" from="Settings/Network/Connect" to="Settings" method="_on_connect_pressed"]
+[connection signal="text_changed" from="Settings/Sliders/MaxSpeed/TextEdit" to="Settings" method="_on_speed_input_changed"]
+[connection signal="text_changed" from="Settings/Sliders/MaxAcceleration/TextEdit" to="Settings" method="_on_acceleration_input_changed"]
+[connection signal="value_changed" from="Settings/HomingSpeed/SpinBox" to="Settings" method="_on_homing_speed_changed"]
+[connection signal="toggled" from="Settings/Window/AlwaysOnTop/CheckBox" to="Settings" method="_on_always_on_top_toggled"]
+[connection signal="toggled" from="Settings/Window/TransparentBg/CheckBox" to="Settings" method="_on_transparent_background_toggled"]
+[connection signal="pressed" from="AddFile/HBox/AddPath" to="AddFile" method="_on_add_path_pressed"]
+[connection signal="pressed" from="AddFile/HBox/LoadPlaylist" to="AddFile" method="_on_load_playlist_pressed"]
+[connection signal="pressed" from="AddFile/HBox/Back" to="AddFile" method="_on_back_pressed"]
+[connection signal="item_selected" from="AddFile/PathListOG" to="AddFile" method="_on_path_list_item_selected"]
+[connection signal="pressed" from="CircleSelection/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="CircleSelection/OutsideButton" to="CircleSelection" method="_on_outside_button_pressed"]
+[connection signal="pressed" from="CircleSelection/InsideButton" to="CircleSelection" method="_on_inside_button_pressed"]
+[connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
+[connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]

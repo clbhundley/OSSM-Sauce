@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="11" height="440.5" viewBox="0 0 11 440.5">
+  <defs>
+    <style>
+      .b {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 11px;
+      }
+    </style>
+  </defs>
+  <path class="b" d="M5.5,0v440.5V0Z"/>
+</svg>

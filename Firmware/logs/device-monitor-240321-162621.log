@@ -1,0 +1,34 @@
+Starting
+Stepper Pin:14
+1073494692
+1073494496
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+
+
+ _____  ___  ___  __  __          
+(  _  )/ __)/ __)(  \/  )        
+ )(_)( \__ \\__ \ )    (      
+(_____)(___/(___/(_/\/\_)  ____ 
+/ __)  /__\  (  )(  )/ __)( ___) 
+\__ \ /(__)\  )(__)(( (__  )__)
+(___/(__)(__)(______)\___)(____) 
+ Firmware v1.0
+
+-- CONNECTING TO WIFI --
+--     PLEASE WAIT    --
+
+.
+
+-- WiFi connected! --
+
+
+Beginning sensorless homing...
+
+MINIMUM RANGE LIMIT: 25
+MAXIMUM RANGE LIMIT: 3676
+
+TOTAL RANGE: 
+3651
+
+-- OSSM Ready! --

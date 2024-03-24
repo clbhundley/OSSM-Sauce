@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://dqhnc02ffxjr2"]
+
+[resource]
+LineEdit/font_sizes/font_size = 54
+OptionButton/font_sizes/font_size = 54
+PopupMenu/font_sizes/font_size = 54
+Tree/font_sizes/font_size = 54

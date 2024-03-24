@@ -1,0 +1,116 @@
+Starting
+Starting
+Stepper Pin:14
+1073494628
+1073494292
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1820) wifi:Association refused temporarily, comeback time 299 mSec
+E (2127) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2431) wifi:Association refused temporarily, comeback time 299 mSec
+E (2736) wifi:Association refused temporarily, comeback time 299 mSec
+E (3042) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3346) wifi:Association refused temporarily, comeback time 299 mSec
+E (3652) wifi:Association refused temporarily, comeback time 299 mSec
+E (3958) wifi:Association refused temporarily, comeback time 299 mSec
+.E (4263) wifi:Association refused temporarily, comeback time 299 mSec
+E (4567) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: -18
+HARD MAXIMUM LIMIT: 3601
+
+TOTAL HARD RANGE: 
+3619
+
+0
+0
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+4
+1740
+setting CYCLE
+pull trans different!
+end
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+4
+1740
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+4
+1960
+setting CYCLE
+duration different!
+end
+4
+1950
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end
+4
+1400
+setting CYCLE
+duration different!
+end
+4
+1030
+setting CYCLE
+end
+0
+0
+setting CYCLE
+duration different!
+end
+REVERSING PUSH!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+0
+0
+setting CYCLE
+duration different!
+end
+0
+0
+setting CYCLE
+duration different!
+end

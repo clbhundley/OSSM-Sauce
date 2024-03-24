@@ -1,0 +1,15 @@
+Starting
+Starting
+Stepper Pin:14
+1073494668
+1073494436
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:resetSettings 
+*wm:SETTINGS ERASED 
+*wm:AutoConnect 
+*wm:No wifi saved, skipping 
+*wm:AutoConnect: FAILED for  23 ms
+*wm:AccessPoint set password is INVALID or <8 chars 
+----------
+trying connection to server.

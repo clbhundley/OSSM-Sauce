@@ -1,0 +1,40 @@
+Starting
+Starting
+Stepper Pin:14
+1073495308
+1073494456
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:AutoConnect 
+*wm:Connecting to SAVED AP: Kinetic_400945
+*wm:connectTimeout not set, ESP waitForConnectResult... 
+E (2991) wifi:Association refused temporarily, comeback time 299 mSec
+E (3298) wifi:Association refused temporarily, comeback time 299 mSec
+E (3601) wifi:Association refused temporarily, comeback time 299 mSec
+E (3907) wifi:Association refused temporarily, comeback time 299 mSec
+E (4211) wifi:Association refused temporarily, comeback time 299 mSec
+E (4521) wifi:Association refused temporarily, comeback time 299 mSec
+E (4827) wifi:Association refused temporarily, comeback time 299 mSec
+E (5132) wifi:Association refused temporarily, comeback time 299 mSec
+E (5437) wifi:Association refused temporarily, comeback time 299 mSec
+E (5743) wifi:Association refused temporarily, comeback time 299 mSec
+*wm:AutoConnect: SUCCESS 
+*wm:STA IP Address: 192.168.254.68
+Connected to Wifi, Connecting to server.
+[  9208][E][WiFiClient.cpp:313] setSocketOption(): fail on -1, errno: 9, "Bad file number"
+Not Connected!
+*wm:StartAP with SSID:  OSSM WiFi Manager
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 
+[ 39151][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 41988][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 42392][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 43139][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 43381][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:1 networks found
+[ 48885][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 48894][E][WebServer.cpp:648] _handleRequest(): request handler not found
+Should save config
+[ 60186][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:config portal exiting 
+----------

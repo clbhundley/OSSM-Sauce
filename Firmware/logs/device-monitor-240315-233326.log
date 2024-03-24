@@ -1,0 +1,10 @@
+Starting
+Starting
+Stepper Pin:14
+1073494764
+1073494420
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:AutoConnect 
+*wm:Connecting to SAVED AP: Kinetic_400945
+*wm:connectTimeout not set, ESP waitForConnectResult... 

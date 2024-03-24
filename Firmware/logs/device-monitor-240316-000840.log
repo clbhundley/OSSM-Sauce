@@ -1,0 +1,91 @@
+Starting
+*wm:AutoConnect 
+*wm:Connecting to SAVED AP: Kinetic_400945
+*wm:AutoConnect: FAILED for  60639 ms
+*wm:StartAP with SSID:  AutoConnectAP
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 
+[ 81035][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 81253][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 81470][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 81535][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 82751][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 84520][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 87587][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 90696][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 93782][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 96900][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 99985][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[103034][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[103284][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:<- HTTP Erase 
+*wm:Erasing 
+*wm:Erasing WiFi Config 
+*wm:RESETTING ESP 
+*wm:Restarting 
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13232
+load:0x40080400,len:3028
+entry 0x400805e4
+Starting
+*wm:AutoConnect 
+*wm:No wifi saved, skipping 
+*wm:AutoConnect: FAILED for  1 ms
+*wm:StartAP with SSID:  AutoConnectAP
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 
+[  3860][E][WiFiUdp.cpp:185] endPacket(): could not send data: 12
+[  3867][E][WiFiUdp.cpp:185] endPacket(): could not send data: 12
+[  3904][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  3927][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  4188][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  4213][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:<- HTTP Erase 
+*wm:Erasing 
+*wm:Erasing WiFi Config 
+*wm:RESETTING ESP 
+*wm:Restarting 
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13232
+load:0x40080400,len:3028
+entry 0x400805e4
+Starting
+*wm:AutoConnect 
+*wm:No wifi saved, skipping 
+*wm:AutoConnect: FAILED for  1 ms
+*wm:StartAP with SSID:  AutoConnectAP
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 
+[   764][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  1058][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  1371][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  1705][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  3912][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[  6960][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 10181][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 13280][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 16362][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:1 networks found
+[ 20030][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 23146][E][WebServer.cpp:648] _handleRequest(): request handler not found
+*wm:Connecting to NEW AP: Kinetic_400945
+*wm:[ERROR] Connect to new AP Failed 
+[ 88245][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1
+[ 88249][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1
+[ 88252][E][WebServer.cpp:648] _handleRequest(): request handler not found
+[ 88257][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1
+[ 88262][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1
+[ 88267][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1
+[ 88273][E][WiFiUdp.cpp:185] endPacket(): could not send data: -1

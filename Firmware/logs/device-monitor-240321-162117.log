@@ -1,0 +1,45 @@
+Starting
+Stepper Pin:14
+1073494692
+1073494496
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+
+
+ _____  ___  ___  __  __          
+(  _  )/ __)/ __)(  \/  )        
+ )(_)( \__ \\__ \ )    (      
+(_____)(___/(___/(_/\/\_)  ____ 
+/ __)  /__\  (  )(  )/ __)( ___) 
+\__ \ /(__)\  )(__)(( (__  )__)
+(___/(__)(__)(______)\___)(____) 
+ Firmware v1.0
+
+-- CONNECTING TO WIFI --
+--     PLEASE WAIT    --
+
+.E (1925) wifi:Association refused temporarily, comeback time 299 mSec
+E (2236) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2540) wifi:Association refused temporarily, comeback time 299 mSec
+E (2844) wifi:Association refused temporarily, comeback time 299 mSec
+E (3149) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3453) wifi:Association refused temporarily, comeback time 299 mSec
+E (3758) wifi:Association refused temporarily, comeback time 299 mSec
+E (4063) wifi:Association refused temporarily, comeback time 299 mSec
+.
+
+-- WiFi connected! --
+
+
+-- Connected to WebSocket server! --
+
+
+Beginning sensorless homing...
+
+MINIMUM RANGE LIMIT: -129
+MAXIMUM RANGE LIMIT: 2687
+
+TOTAL RANGE: 
+2816
+
+-- OSSM Ready! --

@@ -1,0 +1,44 @@
+Starting
+Starting
+Stepper Pin:14
+1073494576
+1073494240
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1965) wifi:Association refused temporarily, comeback time 299 mSec
+E (2271) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2579) wifi:Association refused temporarily, comeback time 299 mSec
+E (2886) wifi:Association refused temporarily, comeback time 299 mSec
+E (3192) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3496) wifi:Association refused temporarily, comeback time 299 mSec
+E (3801) wifi:Association refused temporarily, comeback time 299 mSec
+E (4106) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+[  8299][E][WiFiClient.cpp:313] setSocketOption(): fail on -1, errno: 9, "Bad file number"
+Not Connected!
+interpolation_value  9300
+interpolation_value  11300
+interpolation_value  13300
+interpolation_value  15300
+interpolation_value  17300
+interpolation_value  19300
+interpolation_value  21300
+interpolation_value  23300
+interpolation_value  25300
+interpolation_value  27300
+interpolation_value  29300
+interpolation_value  31300
+interpolation_value  33300
+interpolation_value  35300
+interpolation_value  37300
+interpolation_value  39300
+interpolation_value  41300
+interpolation_value  43300
+interpolation_value  45300
+interpolation_value  47300
+interpolation_value  49300
+interpolation_value  51300
+interpolation_value  53300
+interpolation_value  55300
+interpolation_value  57300
+interpolation_value  59300

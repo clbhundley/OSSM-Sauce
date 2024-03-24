@@ -1,0 +1,102 @@
+body {
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+		Roboto, Ubuntu, sans-serif;
+	padding: 0;
+	margin: 0;
+	line-height: 1.4;
+}
+
+.content {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 12px;
+}
+
+h2 {
+	margin-top: 2em;
+}
+
+h3 {
+	margin-top: 1.5em;
+}
+
+a {
+	color: #03a9f4;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.hidden {
+	display: none;
+}
+
+esp-web-install-button[install-unsupported] {
+	visibility: inherit;
+}
+
+.content pre {
+	max-width: 100%;
+	overflow-y: scroll;
+}
+
+.footer {
+	margin-top: 24px;
+	border-top: 1px solid #ccc;
+	padding-top: 24px;
+	text-align: center;
+}
+
+.footer .initiative {
+	font-style: italic;
+	margin-top: 16px;
+}
+
+table {
+	border-spacing: 0;
+}
+
+td {
+	padding: 8px;
+	border-bottom: 1px solid #ccc;
+}
+
+.radios li {
+	list-style: none;
+	line-height: 2em;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #333;
+		color: #fff;
+	}
+	a {
+		color: #58a6ff;
+	}
+}
+
+.icon {
+	width: 30px;
+}
+
+.download-link {
+	color: blue;
+	text-decoration: none;
+	font-family: 'Roboto', sans-serif;
+}
+
+.download-link:hover {
+	text-decoration: underline;
+}
+
+.icon-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.icon-text {
+	margin-left: 10px;
+}

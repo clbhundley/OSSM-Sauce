@@ -1,0 +1,13 @@
+Starting
+Starting
+Stepper Pin:14
+1073494668
+1073494436
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:AutoConnect 
+*wm:Connecting to SAVED AP: Kinetic_400945
+*wm:AutoConnect: FAILED for  180700 ms
+*wm:StartAP with SSID:  OSSM WiFi Manager
+*wm:AP IP address: 192.168.4.1
+*wm:Starting Web Portal 

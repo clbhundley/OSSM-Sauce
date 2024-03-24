@@ -1,0 +1,93 @@
+Starting
+Stepper Pin:14
+1073494692
+1073494496
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+
+
+ _____  ___  ___  __  __          
+(  _  )/ __)/ __)(  \/  )        
+ )(_)( \__ \\__ \ )    (      
+(_____)(___/(___/(_/\/\_)  ____ 
+/ __)  /__\  (  )(  )/ __)( ___) 
+\__ \ /(__)\  )(__)(( (__  )__)
+(___/(__)(__)(______)\___)(____) 
+ Firmware v1.0
+
+-- CONNECTING TO WIFI --
+--     PLEASE WAIT    --
+
+.
+
+-- WiFi connected! --
+
+
+-- Connected to WebSocket server! --
+
+
+Beginning sensorless homing...
+
+MINIMUM RANGE LIMIT: -22
+MAXIMUM RANGE LIMIT: 3625
+
+TOTAL RANGE: 
+3647
+
+-- OSSM Ready! --
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13232
+load:0x40080400,len:3028
+entry 0x400805e4
+Starting
+Stepper Pin:14
+1073494692
+1073494496
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+
+
+ _____  ___  ___  __  __          
+(  _  )/ __)/ __)(  \/  )        
+ )(_)( \__ \\__ \ )    (      
+(_____)(___/(___/(_/\/\_)  ____ 
+/ __)  /__\  (  )(  )/ __)( ___) 
+\__ \ /(__)\  )(__)(( (__  )__)
+(___/(__)(__)(______)\___)(____) 
+ Firmware v1.0
+
+-- CONNECTING TO WIFI --
+--     PLEASE WAIT    --
+
+.E (1892) wifi:Association refused temporarily, comeback time 299 mSec
+E (2201) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2505) wifi:Association refused temporarily, comeback time 299 mSec
+E (2811) wifi:Association refused temporarily, comeback time 299 mSec
+E (3116) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3420) wifi:Association refused temporarily, comeback time 299 mSec
+E (3726) wifi:Association refused temporarily, comeback time 299 mSec
+E (4032) wifi:Association refused temporarily, comeback time 299 mSec
+.E (4337) wifi:Association refused temporarily, comeback time 299 mSec
+..
+
+-- WiFi connected! --
+
+
+-- Connected to WebSocket server! --
+
+
+Beginning sensorless homing...
+
+MINIMUM RANGE LIMIT: -16
+MAXIMUM RANGE LIMIT: 3626
+
+TOTAL RANGE: 
+3642
+
+-- OSSM Ready! --

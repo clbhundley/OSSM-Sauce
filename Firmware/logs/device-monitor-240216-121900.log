@@ -1,0 +1,16 @@
+Starting
+Starting
+Stepper Pin:14
+1073494636
+1073494300
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.Connected to Wifi, Connecting to server.
+Not Connected!
+
+HARD MINIMUM LIMIT: 1838
+HARD MAXIMUM LIMIT: 1836
+
+TOTAL HARD RANGE: 
+2
+

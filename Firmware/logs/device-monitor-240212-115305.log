@@ -1,0 +1,2728 @@
+Starting
+Starting
+Stepper Pin:14
+1073494624
+1073494288
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1820) wifi:Association refused temporarily, comeback time 299 mSec
+E (2127) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2432) wifi:Association refused temporarily, comeback time 299 mSec
+E (2742) wifi:Association refused temporarily, comeback time 299 mSec
+E (3046) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3351) wifi:Association refused temporarily, comeback time 299 mSec
+E (3655) wifi:Association refused temporarily, comeback time 299 mSec
+E (3959) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: -1313
+HARD MAXIMUM LIMIT: 2314
+
+TOTAL HARD RANGE: 
+3627
+
+strokeBaseSpeed
+1986
+OSSM Connected
+X:OSSM
+X:APP
+X:OSSM
+L
+strokeBaseSpeed
+2147483647
+Guru Meditation Error: Core  1 panic'ed (IntegerDivideByZero). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x400d32a5  PS      : 0x00060b30  A0      : 0x800d3ac3  A1      : 0x3ffcbe80  
+A2      : 0x00000000  A3      : 0xdf7ef9e3  A4      : 0xdf7ef9e3  A5      : 0x3ffc5060  
+A6      : 0x3ffc38dc  A7      : 0x3ffc38b4  A8      : 0x800d329a  A9      : 0x3ffcbe60  
+A10     : 0x0000eea7  A11     : 0x00000000  A12     : 0x0000eea7  A13     : 0x0000a140  
+A14     : 0x7ff00000  A15     : 0x7ffc2000  SAR     : 0x0000000a  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x40084fd1  LEND    : 0x40084fd9  LCOUNT  : 0x00000027  
+
+
+Backtrace: 0x400d32a2:0x3ffcbe80 0x400d3ac0:0x3ffcbeb0 0x400dcfc1:0x3ffcbed0
+
+
+
+
+ELF file SHA256: d42fa6ca5ddd42af
+
+Rebooting...
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13232
+load:0x40080400,len:3028
+entry 0x400805e4
+Starting
+Starting
+Stepper Pin:14
+1073494624
+1073494288
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1830) wifi:Association refused temporarily, comeback time 299 mSec
+E (2134) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2439) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: -3238
+HARD MAXIMUM LIMIT: 382
+
+TOTAL HARD RANGE: 
+3620
+
+strokeBaseSpeed
+1983
+OSSM Connected
+X:OSSM
+X:APP
+X:OSSM
+L2000
+strokeBaseSpeed
+4959
+Z9977
+Set maximum range to: 374
+
+strokeBaseSpeed
+4948
+Z9862
+Set maximum range to: 332
+
+strokeBaseSpeed
+4890
+Z9622
+Set maximum range to: 245
+
+strokeBaseSpeed
+4770
+Z9392
+Set maximum range to: 162
+
+strokeBaseSpeed
+4658
+Z9151
+Set maximum range to: 74
+
+strokeBaseSpeed
+4537
+Z8922
+Set maximum range to: -8
+
+strokeBaseSpeed
+4425
+Z8704
+Set maximum range to: -87
+
+strokeBaseSpeed
+4315
+Z8521
+Set maximum range to: -154
+
+strokeBaseSpeed
+4225
+Z8303
+Set maximum range to: -233
+
+strokeBaseSpeed
+4115
+Z8131
+Set maximum range to: -295
+
+strokeBaseSpeed
+4030
+Z7970
+Set maximum range to: -353
+
+strokeBaseSpeed
+3951
+Z7798
+Set maximum range to: -415
+
+strokeBaseSpeed
+3866
+Z7649
+Set maximum range to: -469
+
+strokeBaseSpeed
+3792
+Z7489
+Set maximum range to: -527
+
+strokeBaseSpeed
+3712
+Z7362
+Set maximum range to: -573
+
+strokeBaseSpeed
+3649
+Z7190
+Set maximum range to: -635
+
+strokeBaseSpeed
+3564
+Z7030
+Set maximum range to: -693
+
+strokeBaseSpeed
+3485
+Z6904
+Set maximum range to: -739
+
+strokeBaseSpeed
+3422
+Z6789
+Set maximum range to: -781
+
+strokeBaseSpeed
+3364
+Z6651
+Set maximum range to: -831
+
+strokeBaseSpeed
+3296
+Z6502
+Set maximum range to: -885
+
+strokeBaseSpeed
+3222
+Z6342
+Set maximum range to: -942
+
+strokeBaseSpeed
+3145
+Z6250
+Set maximum range to: -976
+
+strokeBaseSpeed
+3098
+Z6216
+Set maximum range to: -988
+
+strokeBaseSpeed
+3082
+Z6101
+Set maximum range to: -1030
+
+strokeBaseSpeed
+3024
+Z5963
+Set maximum range to: -1080
+
+strokeBaseSpeed
+2956
+Z5860
+Set maximum range to: -1117
+
+strokeBaseSpeed
+2904
+Z5768
+Set maximum range to: -1150
+
+strokeBaseSpeed
+2860
+Z5745
+Set maximum range to: -1159
+
+strokeBaseSpeed
+2846
+Z5745
+Set maximum range to: -1159
+
+strokeBaseSpeed
+2846
+L500
+strokeBaseSpeed
+11392
+Z5734
+Set maximum range to: -1163
+
+strokeBaseSpeed
+11371
+Z5723
+Set maximum range to: -1167
+
+strokeBaseSpeed
+11349
+Z5700
+Set maximum range to: -1175
+
+strokeBaseSpeed
+11305
+Z5631
+Set maximum range to: -1200
+
+strokeBaseSpeed
+11168
+Z5539
+Set maximum range to: -1233
+
+strokeBaseSpeed
+10987
+Z5470
+Set maximum range to: -1258
+
+strokeBaseSpeed
+10850
+Z5413
+Set maximum range to: -1279
+
+strokeBaseSpeed
+10735
+Z5333
+Set maximum range to: -1308
+
+strokeBaseSpeed
+10576
+Z5252
+Set maximum range to: -1337
+
+strokeBaseSpeed
+10417
+Z5149
+Set maximum range to: -1374
+
+strokeBaseSpeed
+10214
+Z5080
+Set maximum range to: -1399
+
+strokeBaseSpeed
+10077
+Z5034
+Set maximum range to: -1416
+
+strokeBaseSpeed
+9984
+Z5000
+Set maximum range to: -1428
+
+strokeBaseSpeed
+9918
+Z4931
+Set maximum range to: -1453
+
+strokeBaseSpeed
+9781
+Z4851
+Set maximum range to: -1482
+
+strokeBaseSpeed
+9622
+Z4771
+Set maximum range to: -1511
+
+strokeBaseSpeed
+9463
+Z4690
+Set maximum range to: -1541
+
+strokeBaseSpeed
+9299
+Z4633
+Set maximum range to: -1561
+
+strokeBaseSpeed
+9189
+Z4553
+Set maximum range to: -1590
+
+strokeBaseSpeed
+9031
+Z4404
+Set maximum range to: -1644
+
+strokeBaseSpeed
+8735
+Z4335
+Set maximum range to: -1669
+
+strokeBaseSpeed
+8598
+Z4301
+Set maximum range to: -1681
+
+strokeBaseSpeed
+8532
+Z4289
+Set maximum range to: -1686
+
+strokeBaseSpeed
+8504
+Z4278
+Set maximum range to: -1690
+
+strokeBaseSpeed
+8483
+L300
+strokeBaseSpeed
+14138
+L200
+strokeBaseSpeed
+21207
+L100
+strokeBaseSpeed
+42415
+S49943
+Set speed limit to: 49943
+
+S49885
+Set speed limit to: 49885
+
+S49771
+Set speed limit to: 49771
+
+S49369
+Set speed limit to: 49369
+
+S49140
+Set speed limit to: 49140
+
+S49083
+Set speed limit to: 49083
+
+S49025
+Set speed limit to: 49025
+
+S48739
+Set speed limit to: 48739
+
+S48509
+Set speed limit to: 48509
+
+S48452
+Set speed limit to: 48452
+
+S48222
+Set speed limit to: 48222
+
+S48165
+Set speed limit to: 48165
+
+S48108
+Set speed limit to: 48108
+
+S47878
+Set speed limit to: 47878
+
+S47706
+Set speed limit to: 47706
+
+S47534
+Set speed limit to: 47534
+
+S47420
+Set speed limit to: 47420
+
+S47305
+Set speed limit to: 47305
+
+S47190
+Set speed limit to: 47190
+
+S47018
+Set speed limit to: 47018
+
+S46789
+Set speed limit to: 46789
+
+S46502
+Set speed limit to: 46502
+
+S45872
+Set speed limit to: 45872
+
+S45012
+Set speed limit to: 45012
+
+S43807
+Set speed limit to: 43807
+
+S42603
+Set speed limit to: 42603
+
+S41858
+Set speed limit to: 41858
+
+S41284
+Set speed limit to: 41284
+
+S41055
+Set speed limit to: 41055
+
+S41055
+Set speed limit to: 41055
+
+S40940
+Set speed limit to: 40940
+
+S40482
+Set speed limit to: 40482
+
+S40310
+Set speed limit to: 40310
+
+S40195
+Set speed limit to: 40195
+
+S40023
+Set speed limit to: 40023
+
+S39966
+Set speed limit to: 39966
+
+S39851
+Set speed limit to: 39851
+
+S39622
+Set speed limit to: 39622
+
+S39335
+Set speed limit to: 39335
+
+S39106
+Set speed limit to: 39106
+
+S38991
+Set speed limit to: 38991
+
+S38934
+Set speed limit to: 38934
+
+S38876
+Set speed limit to: 38876
+
+S38704
+Set speed limit to: 38704
+
+S38303
+Set speed limit to: 38303
+
+S37959
+Set speed limit to: 37959
+
+S37672
+Set speed limit to: 37672
+
+S37500
+Set speed limit to: 37500
+
+S37443
+Set speed limit to: 37443
+
+S37443
+Set speed limit to: 37443
+
+S37385
+Set speed limit to: 37385
+
+S36927
+Set speed limit to: 36927
+
+S36640
+Set speed limit to: 36640
+
+S36468
+Set speed limit to: 36468
+
+S36411
+Set speed limit to: 36411
+
+S36353
+Set speed limit to: 36353
+
+S36124
+Set speed limit to: 36124
+
+S35780
+Set speed limit to: 35780
+
+S35379
+Set speed limit to: 35379
+
+S34805
+Set speed limit to: 34805
+
+S34060
+Set speed limit to: 34060
+
+S33028
+Set speed limit to: 33028
+
+S31996
+Set speed limit to: 31996
+
+S31136
+Set speed limit to: 31136
+
+S30161
+Set speed limit to: 30161
+
+S29587
+Set speed limit to: 29587
+
+S29301
+Set speed limit to: 29301
+
+S29243
+Set speed limit to: 29243
+
+S29243
+Set speed limit to: 29243
+
+S29071
+Set speed limit to: 29071
+
+S28555
+Set speed limit to: 28555
+
+S28211
+Set speed limit to: 28211
+
+S27867
+Set speed limit to: 27867
+
+S27810
+Set speed limit to: 27810
+
+S27638
+Set speed limit to: 27638
+
+S27466
+Set speed limit to: 27466
+
+S27122
+Set speed limit to: 27122
+
+S26491
+Set speed limit to: 26491
+
+S25459
+Set speed limit to: 25459
+
+S23739
+Set speed limit to: 23739
+
+S21732
+Set speed limit to: 21732
+
+S20126
+Set speed limit to: 20126
+
+S18636
+Set speed limit to: 18636
+
+S17776
+Set speed limit to: 17776
+
+S17088
+Set speed limit to: 17088
+
+S16743
+Set speed limit to: 16743
+
+S16629
+Set speed limit to: 16629
+
+S16399
+Set speed limit to: 16399
+
+S16113
+Set speed limit to: 16113
+
+S15826
+Set speed limit to: 15826
+
+S15310
+Set speed limit to: 15310
+
+S14565
+Set speed limit to: 14565
+
+S13475
+Set speed limit to: 13475
+
+S13360
+Set speed limit to: 13360
+
+S12500
+Set speed limit to: 12500
+
+S11583
+Set speed limit to: 11583
+
+S11124
+Set speed limit to: 11124
+
+S10952
+Set speed limit to: 10952
+
+S10666
+Set speed limit to: 10666
+
+S10494
+Set speed limit to: 10494
+
+S10551
+Set speed limit to: 10551
+
+S10608
+Set speed limit to: 10608
+
+S10666
+Set speed limit to: 10666
+
+S10838
+Set speed limit to: 10838
+
+S11124
+Set speed limit to: 11124
+
+S11755
+Set speed limit to: 11755
+
+S12844
+Set speed limit to: 12844
+
+S14622
+Set speed limit to: 14622
+
+S16227
+Set speed limit to: 16227
+
+S17604
+Set speed limit to: 17604
+
+S18636
+Set speed limit to: 18636
+
+S19954
+Set speed limit to: 19954
+
+S21331
+Set speed limit to: 21331
+
+S22592
+Set speed limit to: 22592
+
+S24255
+Set speed limit to: 24255
+
+S26720
+Set speed limit to: 26720
+
+S29358
+Set speed limit to: 29358
+
+S31996
+Set speed limit to: 31996
+
+S35321
+Set speed limit to: 35321
+
+S38762
+Set speed limit to: 38762
+
+S42202
+Set speed limit to: 42202
+
+S44725
+Set speed limit to: 44725
+
+S46904
+Set speed limit to: 46904
+
+S48739
+Set speed limit to: 48739
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S49713
+Set speed limit to: 49713
+
+S48567
+Set speed limit to: 48567
+
+S47362
+Set speed limit to: 47362
+
+S45298
+Set speed limit to: 45298
+
+S43865
+Set speed limit to: 43865
+
+S42087
+Set speed limit to: 42087
+
+S40080
+Set speed limit to: 40080
+
+S38074
+Set speed limit to: 38074
+
+S36296
+Set speed limit to: 36296
+
+S34519
+Set speed limit to: 34519
+
+S32397
+Set speed limit to: 32397
+
+S29989
+Set speed limit to: 29989
+
+S27122
+Set speed limit to: 27122
+
+S24198
+Set speed limit to: 24198
+
+S22076
+Set speed limit to: 22076
+
+S20413
+Set speed limit to: 20413
+
+S18865
+Set speed limit to: 18865
+
+S18120
+Set speed limit to: 18120
+
+S17604
+Set speed limit to: 17604
+
+S17432
+Set speed limit to: 17432
+
+S17374
+Set speed limit to: 17374
+
+S16686
+Set speed limit to: 16686
+
+S15769
+Set speed limit to: 15769
+
+S14565
+Set speed limit to: 14565
+
+S13360
+Set speed limit to: 13360
+
+S12156
+Set speed limit to: 12156
+
+S11526
+Set speed limit to: 11526
+
+S11067
+Set speed limit to: 11067
+
+S10723
+Set speed limit to: 10723
+
+S10436
+Set speed limit to: 10436
+
+S10264
+Set speed limit to: 10264
+
+S10150
+Set speed limit to: 10150
+
+S10092
+Set speed limit to: 10092
+
+S10035
+Set speed limit to: 10035
+
+S9863
+Set speed limit to: 9863
+
+S9633
+Set speed limit to: 9633
+
+S9461
+Set speed limit to: 9461
+
+S9175
+Set speed limit to: 9175
+
+S9060
+Set speed limit to: 9060
+
+S9003
+Set speed limit to: 9003
+
+S8945
+Set speed limit to: 8945
+
+S8773
+Set speed limit to: 8773
+
+S8200
+Set speed limit to: 8200
+
+S7799
+Set speed limit to: 7799
+
+S7455
+Set speed limit to: 7455
+
+S7053
+Set speed limit to: 7053
+
+S6709
+Set speed limit to: 6709
+
+S6480
+Set speed limit to: 6480
+
+S6365
+Set speed limit to: 6365
+
+S6308
+Set speed limit to: 6308
+
+S6250
+Set speed limit to: 6250
+
+S6021
+Set speed limit to: 6021
+
+S5734
+Set speed limit to: 5734
+
+S5620
+Set speed limit to: 5620
+
+S5276
+Set speed limit to: 5276
+
+S4989
+Set speed limit to: 4989
+
+S4817
+Set speed limit to: 4817
+
+S4760
+Set speed limit to: 4760
+
+S4702
+Set speed limit to: 4702
+
+S4645
+Set speed limit to: 4645
+
+S4588
+Set speed limit to: 4588
+
+S4358
+Set speed limit to: 4358
+
+S4244
+Set speed limit to: 4244
+
+S4072
+Set speed limit to: 4072
+
+S4014
+Set speed limit to: 4014
+
+S3957
+Set speed limit to: 3957
+
+S3728
+Set speed limit to: 3728
+
+S3556
+Set speed limit to: 3556
+
+S3441
+Set speed limit to: 3441
+
+S3384
+Set speed limit to: 3384
+
+S3326
+Set speed limit to: 3326
+
+S3269
+Set speed limit to: 3269
+
+S3097
+Set speed limit to: 3097
+
+S3040
+Set speed limit to: 3040
+
+S2982
+Set speed limit to: 2982
+
+S2925
+Set speed limit to: 2925
+
+S2810
+Set speed limit to: 2810
+
+S2695
+Set speed limit to: 2695
+
+S2638
+Set speed limit to: 2638
+
+S2466
+Set speed limit to: 2466
+
+S2351
+Set speed limit to: 2351
+
+S2179
+Set speed limit to: 2179
+
+S2122
+Set speed limit to: 2122
+
+S2122
+Set speed limit to: 2122
+
+S2065
+Set speed limit to: 2065
+
+S1893
+Set speed limit to: 1893
+
+S1721
+Set speed limit to: 1721
+
+S1606
+Set speed limit to: 1606
+
+S1377
+Set speed limit to: 1377
+
+S1262
+Set speed limit to: 1262
+
+S1205
+Set speed limit to: 1205
+
+S1262
+Set speed limit to: 1262
+
+S1319
+Set speed limit to: 1319
+
+S1377
+Set speed limit to: 1377
+
+S1434
+Set speed limit to: 1434
+
+S1491
+Set speed limit to: 1491
+
+S1549
+Set speed limit to: 1549
+
+S1606
+Set speed limit to: 1606
+
+S1663
+Set speed limit to: 1663
+
+S1721
+Set speed limit to: 1721
+
+S1778
+Set speed limit to: 1778
+
+S1893
+Set speed limit to: 1893
+
+S2007
+Set speed limit to: 2007
+
+S2122
+Set speed limit to: 2122
+
+S2294
+Set speed limit to: 2294
+
+S2523
+Set speed limit to: 2523
+
+S2753
+Set speed limit to: 2753
+
+S2810
+Set speed limit to: 2810
+
+S2867
+Set speed limit to: 2867
+
+S3040
+Set speed limit to: 3040
+
+S3154
+Set speed limit to: 3154
+
+S3441
+Set speed limit to: 3441
+
+S3728
+Set speed limit to: 3728
+
+S3957
+Set speed limit to: 3957
+
+S4186
+Set speed limit to: 4186
+
+S4301
+Set speed limit to: 4301
+
+S4473
+Set speed limit to: 4473
+
+S4530
+Set speed limit to: 4530
+
+S4588
+Set speed limit to: 4588
+
+S4645
+Set speed limit to: 4645
+
+S4702
+Set speed limit to: 4702
+
+S4932
+Set speed limit to: 4932
+
+S5104
+Set speed limit to: 5104
+
+S5333
+Set speed limit to: 5333
+
+S5562
+Set speed limit to: 5562
+
+S5849
+Set speed limit to: 5849
+
+S6136
+Set speed limit to: 6136
+
+S6422
+Set speed limit to: 6422
+
+S6652
+Set speed limit to: 6652
+
+S6767
+Set speed limit to: 6767
+
+S6824
+Set speed limit to: 6824
+
+S6881
+Set speed limit to: 6881
+
+S6939
+Set speed limit to: 6939
+
+S6881
+Set speed limit to: 6881
+
+S6824
+Set speed limit to: 6824
+
+S6709
+Set speed limit to: 6709
+
+S6652
+Set speed limit to: 6652
+
+S6595
+Set speed limit to: 6595
+
+S6537
+Set speed limit to: 6537
+
+S6308
+Set speed limit to: 6308
+
+S6021
+Set speed limit to: 6021
+
+S5849
+Set speed limit to: 5849
+
+S5620
+Set speed limit to: 5620
+
+S5276
+Set speed limit to: 5276
+
+S4932
+Set speed limit to: 4932
+
+S4645
+Set speed limit to: 4645
+
+S4588
+Set speed limit to: 4588
+
+S4530
+Set speed limit to: 4530
+
+S4530
+Set speed limit to: 4530
+
+S4473
+Set speed limit to: 4473
+
+S4358
+Set speed limit to: 4358
+
+S4301
+Set speed limit to: 4301
+
+S4244
+Set speed limit to: 4244
+
+S4186
+Set speed limit to: 4186
+
+S4014
+Set speed limit to: 4014
+
+S3957
+Set speed limit to: 3957
+
+S3785
+Set speed limit to: 3785
+
+S3785
+Set speed limit to: 3785
+
+S3728
+Set speed limit to: 3728
+
+S3613
+Set speed limit to: 3613
+
+S3441
+Set speed limit to: 3441
+
+S3269
+Set speed limit to: 3269
+
+S3097
+Set speed limit to: 3097
+
+S2925
+Set speed limit to: 2925
+
+S2868
+Set speed limit to: 2868
+
+S2810
+Set speed limit to: 2810
+
+S2695
+Set speed limit to: 2695
+
+S2638
+Set speed limit to: 2638
+
+S2581
+Set speed limit to: 2581
+
+S2466
+Set speed limit to: 2466
+
+S2409
+Set speed limit to: 2409
+
+S2351
+Set speed limit to: 2351
+
+S2294
+Set speed limit to: 2294
+
+S2179
+Set speed limit to: 2179
+
+S2122
+Set speed limit to: 2122
+
+S2122
+Set speed limit to: 2122
+
+S2065
+Set speed limit to: 2065
+
+S2007
+Set speed limit to: 2007
+
+S1950
+Set speed limit to: 1950
+
+S1893
+Set speed limit to: 1893
+
+S1721
+Set speed limit to: 1721
+
+S1606
+Set speed limit to: 1606
+
+S1491
+Set speed limit to: 1491
+
+S1434
+Set speed limit to: 1434
+
+S1377
+Set speed limit to: 1377
+
+S1319
+Set speed limit to: 1319
+
+S1262
+Set speed limit to: 1262
+
+S1262
+Set speed limit to: 1262
+
+S1262
+Set speed limit to: 1262
+
+S1319
+Set speed limit to: 1319
+
+S1491
+Set speed limit to: 1491
+
+S1778
+Set speed limit to: 1778
+
+S2065
+Set speed limit to: 2065
+
+S2351
+Set speed limit to: 2351
+
+S2753
+Set speed limit to: 2753
+
+S3212
+Set speed limit to: 3212
+
+S3842
+Set speed limit to: 3842
+
+S4530
+Set speed limit to: 4530
+
+S5276
+Set speed limit to: 5276
+
+S5734
+Set speed limit to: 5734
+
+S6136
+Set speed limit to: 6136
+
+S6308
+Set speed limit to: 6308
+
+S6480
+Set speed limit to: 6480
+
+S6595
+Set speed limit to: 6595
+
+S6652
+Set speed limit to: 6652
+
+S6595
+Set speed limit to: 6595
+
+S6537
+Set speed limit to: 6537
+
+S6365
+Set speed limit to: 6365
+
+S6193
+Set speed limit to: 6193
+
+S6021
+Set speed limit to: 6021
+
+S5677
+Set speed limit to: 5677
+
+S5333
+Set speed limit to: 5333
+
+S5161
+Set speed limit to: 5161
+
+S5104
+Set speed limit to: 5104
+
+S5046
+Set speed limit to: 5046
+
+S4932
+Set speed limit to: 4932
+
+S4874
+Set speed limit to: 4874
+
+S4817
+Set speed limit to: 4817
+
+S4645
+Set speed limit to: 4645
+
+S4244
+Set speed limit to: 4244
+
+S3957
+Set speed limit to: 3957
+
+S3728
+Set speed limit to: 3728
+
+S3613
+Set speed limit to: 3613
+
+S3498
+Set speed limit to: 3498
+
+S3441
+Set speed limit to: 3441
+
+S3441
+Set speed limit to: 3441
+
+S3269
+Set speed limit to: 3269
+
+S3154
+Set speed limit to: 3154
+
+S3097
+Set speed limit to: 3097
+
+S3040
+Set speed limit to: 3040
+
+S3097
+Set speed limit to: 3097
+
+S3154
+Set speed limit to: 3154
+
+S3212
+Set speed limit to: 3212
+
+S3269
+Set speed limit to: 3269
+
+S3441
+Set speed limit to: 3441
+
+S3498
+Set speed limit to: 3498
+
+S3556
+Set speed limit to: 3556
+
+S3670
+Set speed limit to: 3670
+
+S3785
+Set speed limit to: 3785
+
+S3957
+Set speed limit to: 3957
+
+S4186
+Set speed limit to: 4186
+
+S4358
+Set speed limit to: 4358
+
+S4416
+Set speed limit to: 4416
+
+S4530
+Set speed limit to: 4530
+
+S4588
+Set speed limit to: 4588
+
+S4645
+Set speed limit to: 4645
+
+S4760
+Set speed limit to: 4760
+
+S5333
+Set speed limit to: 5333
+
+S5734
+Set speed limit to: 5734
+
+S5964
+Set speed limit to: 5964
+
+S6193
+Set speed limit to: 6193
+
+S6423
+Set speed limit to: 6423
+
+S6480
+Set speed limit to: 6480
+
+S6537
+Set speed limit to: 6537
+
+S6595
+Set speed limit to: 6595
+
+S6652
+Set speed limit to: 6652
+
+S6939
+Set speed limit to: 6939
+
+S7168
+Set speed limit to: 7168
+
+S7397
+Set speed limit to: 7397
+
+S7684
+Set speed limit to: 7684
+
+S7913
+Set speed limit to: 7913
+
+S8085
+Set speed limit to: 8085
+
+S8143
+Set speed limit to: 8143
+
+S8200
+Set speed limit to: 8200
+
+S8257
+Set speed limit to: 8257
+
+S8315
+Set speed limit to: 8315
+
+S8372
+Set speed limit to: 8372
+
+S8544
+Set speed limit to: 8544
+
+S8601
+Set speed limit to: 8601
+
+S8659
+Set speed limit to: 8659
+
+S8716
+Set speed limit to: 8716
+
+S8716
+Set speed limit to: 8716
+
+S8773
+Set speed limit to: 8773
+
+S8601
+Set speed limit to: 8601
+
+S8429
+Set speed limit to: 8429
+
+S8315
+Set speed limit to: 8315
+
+S8257
+Set speed limit to: 8257
+
+S8315
+Set speed limit to: 8315
+
+S8372
+Set speed limit to: 8372
+
+S8429
+Set speed limit to: 8429
+
+S8487
+Set speed limit to: 8487
+
+S8659
+Set speed limit to: 8659
+
+S9461
+Set speed limit to: 9461
+
+S10264
+Set speed limit to: 10264
+
+S10952
+Set speed limit to: 10952
+
+S11526
+Set speed limit to: 11526
+
+S11870
+Set speed limit to: 11870
+
+S11984
+Set speed limit to: 11984
+
+S11984
+Set speed limit to: 11984
+
+S11984
+Set speed limit to: 11984
+
+S12099
+Set speed limit to: 12099
+
+S12443
+Set speed limit to: 12443
+
+S12902
+Set speed limit to: 12902
+
+S13475
+Set speed limit to: 13475
+
+S13647
+Set speed limit to: 13647
+
+S13762
+Set speed limit to: 13762
+
+S13934
+Set speed limit to: 13934
+
+S14278
+Set speed limit to: 14278
+
+S14507
+Set speed limit to: 14507
+
+S14794
+Set speed limit to: 14794
+
+S15195
+Set speed limit to: 15195
+
+S15539
+Set speed limit to: 15539
+
+S15654
+Set speed limit to: 15654
+
+S15711
+Set speed limit to: 15711
+
+S16113
+Set speed limit to: 16113
+
+S16916
+Set speed limit to: 16916
+
+S17661
+Set speed limit to: 17661
+
+S18234
+Set speed limit to: 18234
+
+S18521
+Set speed limit to: 18521
+
+S18636
+Set speed limit to: 18636
+
+S18808
+Set speed limit to: 18808
+
+S19037
+Set speed limit to: 19037
+
+S19381
+Set speed limit to: 19381
+
+S19668
+Set speed limit to: 19668
+
+S19897
+Set speed limit to: 19897
+
+S20356
+Set speed limit to: 20356
+
+S20987
+Set speed limit to: 20987
+
+S21961
+Set speed limit to: 21961
+
+S22821
+Set speed limit to: 22821
+
+S23108
+Set speed limit to: 23108
+
+S23280
+Set speed limit to: 23280
+
+S23337
+Set speed limit to: 23337
+
+S24140
+Set speed limit to: 24140
+
+S25000
+Set speed limit to: 25000
+
+S25918
+Set speed limit to: 25918
+
+S26491
+Set speed limit to: 26491
+
+S26892
+Set speed limit to: 26892
+
+S27064
+Set speed limit to: 27064
+
+S27122
+Set speed limit to: 27122
+
+S27351
+Set speed limit to: 27351
+
+S27466
+Set speed limit to: 27466
+
+S27523
+Set speed limit to: 27523
+
+S27695
+Set speed limit to: 27695
+
+S27810
+Set speed limit to: 27810
+
+S27867
+Set speed limit to: 27867
+
+S27925
+Set speed limit to: 27925
+
+S28613
+Set speed limit to: 28613
+
+S29587
+Set speed limit to: 29587
+
+S30447
+Set speed limit to: 30447
+
+S31308
+Set speed limit to: 31308
+
+S32397
+Set speed limit to: 32397
+
+S33601
+Set speed limit to: 33601
+
+S34633
+Set speed limit to: 34633
+
+S35665
+Set speed limit to: 35665
+
+S36583
+Set speed limit to: 36583
+
+S37500
+Set speed limit to: 37500
+
+S38590
+Set speed limit to: 38590
+
+S39966
+Set speed limit to: 39966
+
+S42087
+Set speed limit to: 42087
+
+S44495
+Set speed limit to: 44495
+
+S46502
+Set speed limit to: 46502
+
+S48739
+Set speed limit to: 48739
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+L10
+strokeBaseSpeed
+424152
+L50
+strokeBaseSpeed
+84830
+L100
+strokeBaseSpeed
+42415
+L75
+strokeBaseSpeed
+56553
+L20
+strokeBaseSpeed
+212076
+L30
+strokeBaseSpeed
+141384
+L15
+strokeBaseSpeed
+282768
+L10
+strokeBaseSpeed
+424152
+L200
+strokeBaseSpeed
+21207
+L150
+strokeBaseSpeed
+28276
+L100
+strokeBaseSpeed
+42415
+Z4289
+Set maximum range to: -1686
+
+strokeBaseSpeed
+42524
+Z4301
+Set maximum range to: -1681
+
+strokeBaseSpeed
+42661
+Z4323
+Set maximum range to: -1673
+
+strokeBaseSpeed
+42881
+Z4346
+Set maximum range to: -1665
+
+strokeBaseSpeed
+43100
+Z4404
+Set maximum range to: -1644
+
+strokeBaseSpeed
+43675
+Z4507
+Set maximum range to: -1607
+
+strokeBaseSpeed
+44689
+Z4679
+Set maximum range to: -1545
+
+strokeBaseSpeed
+46388
+Z4897
+Set maximum range to: -1466
+
+strokeBaseSpeed
+48552
+Z5092
+Set maximum range to: -1395
+
+strokeBaseSpeed
+50498
+Z5206
+Set maximum range to: -1354
+
+strokeBaseSpeed
+51621
+Z5275
+Set maximum range to: -1329
+
+strokeBaseSpeed
+52306
+Z5321
+Set maximum range to: -1312
+
+strokeBaseSpeed
+52772
+Z5333
+Set maximum range to: -1308
+
+strokeBaseSpeed
+52882
+Z5356
+Set maximum range to: -1299
+
+strokeBaseSpeed
+53128
+Z5436
+Set maximum range to: -1270
+
+strokeBaseSpeed
+53923
+Z5562
+Set maximum range to: -1225
+
+strokeBaseSpeed
+55156
+Z5700
+Set maximum range to: -1175
+
+strokeBaseSpeed
+56526
+Z5917
+Set maximum range to: -1096
+
+strokeBaseSpeed
+58690
+Z6181
+Set maximum range to: -1001
+
+strokeBaseSpeed
+61293
+Z6514
+Set maximum range to: -880
+
+strokeBaseSpeed
+64609
+Z6846
+Set maximum range to: -760
+
+strokeBaseSpeed
+67897
+Z7053
+Set maximum range to: -685
+
+strokeBaseSpeed
+69952
+Z7167
+Set maximum range to: -644
+
+strokeBaseSpeed
+71075
+Z7236
+Set maximum range to: -619
+
+strokeBaseSpeed
+71760
+Z7248
+Set maximum range to: -614
+
+strokeBaseSpeed
+71897
+Z7248
+Set maximum range to: -614
+
+strokeBaseSpeed
+71897
+S49943
+Set speed limit to: 49943
+
+S49828
+Set speed limit to: 49828
+
+S49599
+Set speed limit to: 49599
+
+S49541
+Set speed limit to: 49541
+
+S49484
+Set speed limit to: 49484
+
+S49197
+Set speed limit to: 49197
+
+S48911
+Set speed limit to: 48911
+
+S48452
+Set speed limit to: 48452
+
+S48165
+Set speed limit to: 48165
+
+S47993
+Set speed limit to: 47993
+
+S47821
+Set speed limit to: 47821
+
+S47649
+Set speed limit to: 47649
+
+S47534
+Set speed limit to: 47534
+
+S47477
+Set speed limit to: 47477
+
+S46961
+Set speed limit to: 46961
+
+S46502
+Set speed limit to: 46502
+
+S45986
+Set speed limit to: 45986
+
+S45642
+Set speed limit to: 45642
+
+S45356
+Set speed limit to: 45356
+
+S45241
+Set speed limit to: 45241
+
+S45184
+Set speed limit to: 45184
+
+S45012
+Set speed limit to: 45012
+
+S44495
+Set speed limit to: 44495
+
+S44037
+Set speed limit to: 44037
+
+S43578
+Set speed limit to: 43578
+
+S43349
+Set speed limit to: 43349
+
+S43119
+Set speed limit to: 43119
+
+S42890
+Set speed limit to: 42890
+
+S42603
+Set speed limit to: 42603
+
+S42489
+Set speed limit to: 42489
+
+S42431
+Set speed limit to: 42431
+
+S42317
+Set speed limit to: 42317
+
+S42145
+Set speed limit to: 42145
+
+S41801
+Set speed limit to: 41801
+
+S41284
+Set speed limit to: 41284
+
+S40883
+Set speed limit to: 40883
+
+S40482
+Set speed limit to: 40482
+
+S40367
+Set speed limit to: 40367
+
+S40195
+Set speed limit to: 40195
+
+S39966
+Set speed limit to: 39966
+
+S39794
+Set speed limit to: 39794
+
+S39736
+Set speed limit to: 39736
+
+S39679
+Set speed limit to: 39679
+
+S39564
+Set speed limit to: 39564
+
+S39335
+Set speed limit to: 39335
+
+S39048
+Set speed limit to: 39048
+
+S38704
+Set speed limit to: 38704
+
+S38303
+Set speed limit to: 38303
+
+S37729
+Set speed limit to: 37729
+
+S37156
+Set speed limit to: 37156
+
+S36640
+Set speed limit to: 36640
+
+S36181
+Set speed limit to: 36181
+
+S35952
+Set speed limit to: 35952
+
+S35895
+Set speed limit to: 35895
+
+S35723
+Set speed limit to: 35723
+
+S35207
+Set speed limit to: 35207
+
+S34633
+Set speed limit to: 34633
+
+S34002
+Set speed limit to: 34002
+
+S33486
+Set speed limit to: 33486
+
+S33085
+Set speed limit to: 33085
+
+S32913
+Set speed limit to: 32913
+
+S32741
+Set speed limit to: 32741
+
+S32684
+Set speed limit to: 32684
+
+S32626
+Set speed limit to: 32626
+
+S32569
+Set speed limit to: 32569
+
+S32340
+Set speed limit to: 32340
+
+S31996
+Set speed limit to: 31996
+
+S31766
+Set speed limit to: 31766
+
+S31652
+Set speed limit to: 31652
+
+S31652
+Set speed limit to: 31652
+
+S31594
+Set speed limit to: 31594
+
+S31308
+Set speed limit to: 31308
+
+S31078
+Set speed limit to: 31078
+
+S30791
+Set speed limit to: 30791
+
+S30505
+Set speed limit to: 30505
+
+S30275
+Set speed limit to: 30275
+
+S30161
+Set speed limit to: 30161
+
+S30103
+Set speed limit to: 30103
+
+S29874
+Set speed limit to: 29874
+
+S29645
+Set speed limit to: 29645
+
+S29473
+Set speed limit to: 29473
+
+S29358
+Set speed limit to: 29358
+
+S29301
+Set speed limit to: 29301
+
+S29186
+Set speed limit to: 29186
+
+S28842
+Set speed limit to: 28842
+
+S28383
+Set speed limit to: 28383
+
+S27982
+Set speed limit to: 27982
+
+S27753
+Set speed limit to: 27753
+
+S27523
+Set speed limit to: 27523
+
+S27466
+Set speed limit to: 27466
+
+S27408
+Set speed limit to: 27408
+
+S27236
+Set speed limit to: 27236
+
+S26778
+Set speed limit to: 26778
+
+S26491
+Set speed limit to: 26491
+
+S26204
+Set speed limit to: 26204
+
+S25918
+Set speed limit to: 25918
+
+S25860
+Set speed limit to: 25860
+
+S25860
+Set speed limit to: 25860
+
+S25631
+Set speed limit to: 25631
+
+S25287
+Set speed limit to: 25287
+
+S24886
+Set speed limit to: 24886
+
+S24542
+Set speed limit to: 24542
+
+S24312
+Set speed limit to: 24312
+
+S24255
+Set speed limit to: 24255
+
+S24198
+Set speed limit to: 24198
+
+S23911
+Set speed limit to: 23911
+
+S23681
+Set speed limit to: 23681
+
+S23337
+Set speed limit to: 23337
+
+S23108
+Set speed limit to: 23108
+
+S23051
+Set speed limit to: 23051
+
+S22821
+Set speed limit to: 22821
+
+S22707
+Set speed limit to: 22707
+
+S22649
+Set speed limit to: 22649
+
+S22592
+Set speed limit to: 22592
+
+S22535
+Set speed limit to: 22535
+
+S22363
+Set speed limit to: 22363
+
+S22305
+Set speed limit to: 22305
+
+S22305
+Set speed limit to: 22305
+
+S22248
+Set speed limit to: 22248
+
+S22133
+Set speed limit to: 22133
+
+S21675
+Set speed limit to: 21675
+
+S21101
+Set speed limit to: 21101
+
+S20528
+Set speed limit to: 20528
+
+S20184
+Set speed limit to: 20184
+
+S19897
+Set speed limit to: 19897
+
+S19725
+Set speed limit to: 19725
+
+S19668
+Set speed limit to: 19668
+
+S19496
+Set speed limit to: 19496
+
+S19152
+Set speed limit to: 19152
+
+S18693
+Set speed limit to: 18693
+
+S18292
+Set speed limit to: 18292
+
+S18062
+Set speed limit to: 18062
+
+S17890
+Set speed limit to: 17890
+
+S17776
+Set speed limit to: 17776
+
+S17604
+Set speed limit to: 17604
+
+S17432
+Set speed limit to: 17432
+
+S17202
+Set speed limit to: 17202
+
+S16858
+Set speed limit to: 16858
+
+S16399
+Set speed limit to: 16399
+
+S15769
+Set speed limit to: 15769
+
+S14966
+Set speed limit to: 14966
+
+S14106
+Set speed limit to: 14106
+
+S13532
+Set speed limit to: 13532
+
+S13303
+Set speed limit to: 13303
+
+S13246
+Set speed limit to: 13246
+
+S13131
+Set speed limit to: 13131
+
+S12787
+Set speed limit to: 12787
+
+S12328
+Set speed limit to: 12328
+
+S11468
+Set speed limit to: 11468
+
+S10666
+Set speed limit to: 10666
+
+S10092
+Set speed limit to: 10092
+
+S9920
+Set speed limit to: 9920
+
+S9863
+Set speed limit to: 9863
+
+S9805
+Set speed limit to: 9805
+
+S9805
+Set speed limit to: 9805
+
+S9805
+Set speed limit to: 9805
+
+S9461
+Set speed limit to: 9461
+
+S9175
+Set speed limit to: 9175
+
+S8945
+Set speed limit to: 8945
+
+S8888
+Set speed limit to: 8888
+
+S8487
+Set speed limit to: 8487
+
+S8028
+Set speed limit to: 8028
+
+S7455
+Set speed limit to: 7455
+
+S7053
+Set speed limit to: 7053
+
+S6709
+Set speed limit to: 6709
+
+S6652
+Set speed limit to: 6652
+
+S6594
+Set speed limit to: 6594
+
+S6422
+Set speed limit to: 6422
+
+S6308
+Set speed limit to: 6308
+
+S5906
+Set speed limit to: 5906
+
+S5620
+Set speed limit to: 5620
+
+S5505
+Set speed limit to: 5505
+
+S5218
+Set speed limit to: 5218
+
+S4932
+Set speed limit to: 4932
+
+S4817
+Set speed limit to: 4817
+
+S4760
+Set speed limit to: 4760
+
+S4702
+Set speed limit to: 4702
+
+S4416
+Set speed limit to: 4416
+
+S4072
+Set speed limit to: 4072
+
+S3785
+Set speed limit to: 3785
+
+S3556
+Set speed limit to: 3556
+
+S3556
+Set speed limit to: 3556
+
+S3326
+Set speed limit to: 3326
+
+S3154
+Set speed limit to: 3154
+
+S2867
+Set speed limit to: 2867
+
+S2409
+Set speed limit to: 2409
+
+S1893
+Set speed limit to: 1893
+
+S1434
+Set speed limit to: 1434
+
+S1262
+Set speed limit to: 1262
+
+S1205
+Set speed limit to: 1205
+
+S918
+Set speed limit to: 918
+
+S861
+Set speed limit to: 861
+
+S689
+Set speed limit to: 689
+
+S631
+Set speed limit to: 631
+
+S689
+Set speed limit to: 689
+
+S803
+Set speed limit to: 803
+
+S975
+Set speed limit to: 975
+
+S1262
+Set speed limit to: 1262
+
+S1434
+Set speed limit to: 1434
+
+S1491
+Set speed limit to: 1491
+
+S1606
+Set speed limit to: 1606
+
+S1778
+Set speed limit to: 1778
+
+S1893
+Set speed limit to: 1893
+
+S1950
+Set speed limit to: 1950
+
+S2007
+Set speed limit to: 2007
+
+S2065
+Set speed limit to: 2065
+
+S2466
+Set speed limit to: 2466
+
+S3326
+Set speed limit to: 3326
+
+S4588
+Set speed limit to: 4588
+
+S6709
+Set speed limit to: 6709
+
+S10092
+Set speed limit to: 10092
+
+S13016
+Set speed limit to: 13016
+
+S17432
+Set speed limit to: 17432
+
+S21159
+Set speed limit to: 21159
+
+S25058
+Set speed limit to: 25058
+
+S28670
+Set speed limit to: 28670
+
+S32741
+Set speed limit to: 32741
+
+S36353
+Set speed limit to: 36353
+
+S38762
+Set speed limit to: 38762
+
+S40826
+Set speed limit to: 40826
+
+S42489
+Set speed limit to: 42489
+
+S43979
+Set speed limit to: 43979
+
+S45929
+Set speed limit to: 45929
+
+S47764
+Set speed limit to: 47764
+
+S49656
+Set speed limit to: 49656
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+
+S50000
+Set speed limit to: 50000
+

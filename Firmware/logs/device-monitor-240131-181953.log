@@ -1,0 +1,25 @@
+Starting
+Starting
+Stepper Pin:14
+1073494580
+1073494244
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1821) wifi:Association refused temporarily, comeback time 299 mSec
+E (2126) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2431) wifi:Association refused temporarily, comeback time 299 mSec
+E (2738) wifi:Association refused temporarily, comeback time 299 mSec
+E (3044) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3348) wifi:Association refused temporarily, comeback time 299 mSec
+E (3652) wifi:Association refused temporarily, comeback time 299 mSec
+E (3958) wifi:Association refused temporarily, comeback time 299 mSec
+.E (4263) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: 3125
+HARD MAXIMUM LIMIT: -497
+
+TOTAL HARD RANGE: 
+3622
+

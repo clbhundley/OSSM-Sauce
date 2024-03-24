@@ -1,0 +1,31 @@
+Starting
+Stepper Pin:14
+1073494692
+1073494496
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+
+-- OSSM Sauce v1.0 --
+ _____  ___  ___  __  __        
+(  _  )/ __)/ __)(  \/  )       
+ )(_)( \__ \__ \ )    (        
+(_____)(___/(___/(_/\/\_)  ____ 
+/ __)  /__\  (  )(  )/ __)( ___)
+\__ \ /(__)\  )(__)(( (__  )__) 
+(___/(__)(__)(______)\___)(____)
+ v1.0
+
+-- CONNECTING TO WIFI --
+--     PLEASE WAIT    --
+
+.E (1802) wifi:Association refused temporarily, comeback time 299 mSec
+E (2108) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2414) wifi:Association refused temporarily, comeback time 299 mSec
+E (2722) wifi:Association refused temporarily, comeback time 299 mSec
+E (3026) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3330) wifi:Association refused temporarily, comeback time 299 mSec
+E (3635) wifi:Association refused temporarily, comeback time 299 mSec
+E (3939) wifi:Association refused temporarily, comeback time 299 mSec
+.
+-- WiFi connected! --
+

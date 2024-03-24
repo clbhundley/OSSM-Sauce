@@ -1,0 +1,21 @@
+Starting
+Starting
+Stepper Pin:14
+1073494684
+1073494452
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+*wm:AutoConnect 
+*wm:Connecting to SAVED AP: Kinetic_400945
+*wm:connectTimeout not set, ESP waitForConnectResult... 
+E (3418) wifi:Association refused temporarily, comeback time 299 mSec
+E (3722) wifi:Association refused temporarily, comeback time 299 mSec
+E (4028) wifi:Association refused temporarily, comeback time 299 mSec
+E (4338) wifi:Association refused temporarily, comeback time 299 mSec
+E (4645) wifi:Association refused temporarily, comeback time 299 mSec
+E (4952) wifi:Association refused temporarily, comeback time 299 mSec
+E (5257) wifi:Association refused temporarily, comeback time 299 mSec
+*wm:AutoConnect: SUCCESS 
+*wm:STA IP Address: 192.168.254.68
+Connected to Wifi, Connecting to server.
+Connected!

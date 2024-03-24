@@ -1,0 +1,15 @@
+{
+    "name": "OSSM Sauce",
+    "new_install_prompt_erase": true,
+    "builds": [
+      {
+        "chipFamily": "ESP32",
+        "parts": [
+          { "path": "ossm_sauce/boot_app0.bin", "offset": 57344 },
+          { "path": "ossm_sauce/firmware.bin", "offset": 65536 },
+          { "path": "ossm_sauce/bootloader.bin", "offset": 4096 },
+          { "path": "ossm_sauce/partitions.bin", "offset": 32768 }
+        ]
+      }
+    ]
+  }

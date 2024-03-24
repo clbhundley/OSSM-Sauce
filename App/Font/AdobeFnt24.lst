@@ -1,0 +1,42 @@
+%!Adobe-FontList 1.24
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\OFL.txt
+FileModTime:1698906860
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Rubik-Light
+FamilyName:Rubik
+StyleName:Light
+FullName:Rubik Light
+MenuName:Rubik Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\Rubik-Light.ttf
+DataFormat:sfntData
+hasSVG:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:136816
+FileModTime:1698906860
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Rubik Light
+NameArray:0,Win,1,Rubik Light
+NameArray:0,Win,16,Rubik
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\Rubik-Light.ttf.import
+FileModTime:1703435678
+%EndFont
+

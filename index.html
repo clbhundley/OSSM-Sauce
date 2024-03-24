@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>OSSM Sauce Downloads and Installer</title>
+    <meta
+      name="description"
+      content="Install OSSM Sauce firmware from the web."
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="dark light" />
+	<link rel="stylesheet" href="Webflash/styles.css">
+    <script type="module" src="https://unpkg.com/esp-web-tools@8.0.1/dist/web/install-button.js?module"></script>
+  </head>
+  <body>
+    <div class="content">
+
+      <h1>Requirements:</h1>
+      <a class="download-link" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads/" target="_blank" rel="noopener noreferrer">CP210x Universal COM Port Driver</a>
+      <br>
+      <br>
+      <a class="download-link" href="https://nodejs.org/en/download/current/" target="_blank" rel="noopener noreferrer">Node.js</a>
+      <br>
+      <br>
+      <a class="download-link" href="https://nodejs.org/en/download/current/" target="_blank" rel="noopener noreferrer">WebSocket Relay Server</a>
+
+      <br>
+      <br>
+
+      <h1>OSSM Sauce App</h1>
+      <div class="icon-container">
+        <img class="icon" src="Webflash/img/android.svg" alt="Android Icon">
+        <a class="download-link icon-text" href="your-download-link-for-android">Download for Android</a>
+      </div>
+
+      <div class="icon-container">
+        <img class="icon" src="Webflash/img/windows.svg" alt="Windows Icon">
+        <a class="download-link icon-text" href="your-download-link-for-windows">Download for Windows</a>
+      </div>
+
+      <div class="icon-container">
+        <img class="icon" src="Webflash/img/linux.svg" alt="Linux Icon">
+        <a class="download-link icon-text" href="your-download-link-for-linux">Download for Linux</a>
+      </div>
+	
+      <br>
+
+      <h1>Firmware Installer</h1>
+      <p>Make sure to close anything else using your device's COM port (e.g. Serial Monitor).</p>
+      <p>If install gets stuck on "Preparing installation" close your browser and try again.</p>
+      <p></p>
+        
+      <h3>Select firmware to install:</h3>
+        <ul class="radios">
+          <li>
+            <label><input type="radio" name="type" value="ossm_sauce" /> OSSM Sauce</label>
+          </li>
+          <li>
+            <label><input type="radio" name="type" value="km_ossm" /> KinkyMakers OSSM Firmware v0.23</label>
+          </li>
+        </ul>
+        <p class="button-row" align="center">
+          <esp-web-install-button class="invisible"></esp-web-install-button>
+        </p>
+
+      <div class="footer">
+        <a href="https://github.com/clbhundley/OSSM-Sauce/">OSSM Sauce GitHub</a>
+        <br>
+        <a href="https://github.com/balloob/squeezelite-esp32-install/">Template used for this page</a>
+        <br>
+            Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll('input[name="type"]').forEach(radio =>
+        radio.addEventListener("change", () => {
+          const button = document.querySelector('esp-web-install-button');
+          button.manifest = `./Webflash/manifest_${radio.value}.json`;
+          button.classList.remove('invisible');
+        }
+      ));
+    </script>
+  </body>
+</html>

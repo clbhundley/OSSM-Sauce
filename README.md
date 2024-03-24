@@ -1,2 +1,2 @@
 # OSSM-Sauce
-App and firmware for controlling OSSM devices with WebSockets
+App and firmware for controlling OSSM devices using WebSockets

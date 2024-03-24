@@ -1,0 +1,244 @@
+Starting
+Starting
+Stepper Pin:14
+1073494632
+1073494296
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1970) wifi:Association refused temporarily, comeback time 299 mSec
+E (2275) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2581) wifi:Association refused temporarily, comeback time 299 mSec
+E (2885) wifi:Association refused temporarily, comeback time 299 mSec
+E (3192) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3497) wifi:Association refused temporarily, comeback time 299 mSec
+E (3801) wifi:Association refused temporarily, comeback time 299 mSec
+E (4110) wifi:Association refused temporarily, comeback time 299 mSec
+.E (4418) wifi:Association refused temporarily, comeback time 299 mSec
+E (4727) wifi:Association refused temporarily, comeback time 299 mSec
+..Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: -12
+HARD MAXIMUM LIMIT: 3609
+
+TOTAL HARD RANGE: 
+3621
+
+Set speed limit to: 49866
+
+Set speed limit to: 49329
+
+Set speed limit to: 48120
+
+Set speed limit to: 45837
+
+Set speed limit to: 43554
+
+Set speed limit to: 41136
+
+Set speed limit to: 38585
+
+Set speed limit to: 35899
+
+Set speed limit to: 33616
+
+Set speed limit to: 31870
+
+Set speed limit to: 30796
+
+Set speed limit to: 30258
+
+Set speed limit to: 29184
+
+Set speed limit to: 27438
+
+Set speed limit to: 25692
+
+Set speed limit to: 23678
+
+Set speed limit to: 22066
+
+Set speed limit to: 20455
+
+Set speed limit to: 19246
+
+Set speed limit to: 18172
+
+Set speed limit to: 17769
+
+Set speed limit to: 17634
+
+Set speed limit to: 16963
+
+Set speed limit to: 16157
+
+Set speed limit to: 15351
+
+Set speed limit to: 14546
+
+Set speed limit to: 13606
+
+Set speed limit to: 12397
+
+Set speed limit to: 12128
+
+Set speed limit to: 11994
+
+Set speed limit to: 11725
+
+Set speed limit to: 11591
+
+Set speed limit to: 11054
+
+Set speed limit to: 10517
+
+Set speed limit to: 10248
+
+Set speed limit to: 9980
+
+Set speed limit to: 9442
+
+Set speed limit to: 8771
+
+Set speed limit to: 8234
+
+Set speed limit to: 8099
+
+Set speed limit to: 7965
+
+Set speed limit to: 7696
+
+Set speed limit to: 7696
+
+Set speed limit to: 7562
+
+Set speed limit to: 7562
+
+Set speed limit to: 7428
+
+Set speed limit to: 7159
+
+Set speed limit to: 6891
+
+Set speed limit to: 6756
+
+Set speed limit to: 6622
+
+Set speed limit to: 6622
+
+Set speed limit to: 6488
+
+Set speed limit to: 6488
+
+Set speed limit to: 6488
+
+Set speed limit to: 6488
+
+Set speed limit to: 6354
+
+Set speed limit to: 6354
+
+Set speed limit to: 5682
+
+Set speed limit to: 5548
+
+Set speed limit to: 5413
+
+Set speed limit to: 5413
+
+Set speed limit to: 5279
+
+Set speed limit to: 5279
+
+Set speed limit to: 5011
+
+Set speed limit to: 4742
+
+Set speed limit to: 4608
+
+Set speed limit to: 4473
+
+Set speed limit to: 4339
+
+Set speed limit to: 4070
+
+Set speed limit to: 3533
+
+Set speed limit to: 3399
+
+Set speed limit to: 3130
+
+Set speed limit to: 2996
+
+Set speed limit to: 2862
+
+Set speed limit to: 2728
+
+Set speed limit to: 2459
+
+Set speed limit to: 2325
+
+Set speed limit to: 2325
+
+Set speed limit to: 2056
+
+Set speed limit to: 1787
+
+Set speed limit to: 1653
+
+Set speed limit to: 1519
+
+Set speed limit to: 1653
+
+Set speed limit to: 2056
+
+Set speed limit to: 3130
+
+Set speed limit to: 4339
+
+Set speed limit to: 6891
+
+Set speed limit to: 8099
+
+Set speed limit to: 11591
+
+Set speed limit to: 14949
+
+Set speed limit to: 18575
+
+Set speed limit to: 23275
+
+Set speed limit to: 27572
+
+Set speed limit to: 32139
+
+Set speed limit to: 35227
+
+Set speed limit to: 38048
+
+Set speed limit to: 40331
+
+Set speed limit to: 42748
+
+Set speed limit to: 46777
+
+Set speed limit to: 49329
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+
+Set speed limit to: 50000
+

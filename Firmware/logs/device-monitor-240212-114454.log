@@ -1,0 +1,308 @@
+Starting
+Starting
+Stepper Pin:14
+1073494636
+1073494300
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: -3531
+HARD MAXIMUM LIMIT: 83
+
+TOTAL HARD RANGE: 
+3614
+
+strokeBaseSpeed
+1978
+OSSM Connected
+X:OSSM
+X:APP
+X:OSSM
+L2000
+strokeBaseSpeed
+4951
+Z9922
+Set maximum range to: 55
+
+strokeBaseSpeed
+4912
+Z9751
+Set maximum range to: -7
+
+strokeBaseSpeed
+4827
+Z9487
+Set maximum range to: -103
+
+strokeBaseSpeed
+4696
+Z9145
+Set maximum range to: -226
+
+strokeBaseSpeed
+4526
+Z8741
+Set maximum range to: -372
+
+strokeBaseSpeed
+4326
+Z8291
+Set maximum range to: -535
+
+strokeBaseSpeed
+4104
+Z7840
+Set maximum range to: -698
+
+strokeBaseSpeed
+3879
+Z7358
+Set maximum range to: -872
+
+strokeBaseSpeed
+3641
+Z6768
+Set maximum range to: -1085
+
+strokeBaseSpeed
+3351
+Z6317
+Set maximum range to: -1248
+
+strokeBaseSpeed
+3126
+Z6069
+Set maximum range to: -1338
+
+strokeBaseSpeed
+3003
+Z5867
+Set maximum range to: -1411
+
+strokeBaseSpeed
+2904
+Z5649
+Set maximum range to: -1490
+
+strokeBaseSpeed
+2794
+Z5525
+Set maximum range to: -1535
+
+strokeBaseSpeed
+2734
+Z5494
+Set maximum range to: -1546
+
+strokeBaseSpeed
+2718
+Z5494
+Set maximum range to: -1546
+
+strokeBaseSpeed
+2718
+Z5447
+Set maximum range to: -1563
+
+strokeBaseSpeed
+2696
+Z5276
+Set maximum range to: -1625
+
+strokeBaseSpeed
+2611
+Z5058
+Set maximum range to: -1703
+
+strokeBaseSpeed
+2504
+Z4872
+Set maximum range to: -1771
+
+strokeBaseSpeed
+2411
+Z4732
+Set maximum range to: -1821
+
+strokeBaseSpeed
+2342
+Z4577
+Set maximum range to: -1877
+
+strokeBaseSpeed
+2265
+Z4421
+Set maximum range to: -1934
+
+strokeBaseSpeed
+2186
+Z4313
+Set maximum range to: -1973
+
+strokeBaseSpeed
+2134
+Z4173
+Set maximum range to: -2023
+
+strokeBaseSpeed
+2065
+Z4017
+Set maximum range to: -2080
+
+strokeBaseSpeed
+1986
+Z3893
+Set maximum range to: -2124
+
+strokeBaseSpeed
+1926
+Z3862
+Set maximum range to: -2136
+
+strokeBaseSpeed
+1909
+Z3815
+Set maximum range to: -2153
+
+strokeBaseSpeed
+1887
+Z3800
+Set maximum range to: -2158
+
+strokeBaseSpeed
+1879
+Z3769
+Set maximum range to: -2169
+
+strokeBaseSpeed
+1865
+Z3769
+Set maximum range to: -2169
+
+strokeBaseSpeed
+1865
+L500
+strokeBaseSpeed
+7463
+Z3784
+Set maximum range to: -2164
+
+strokeBaseSpeed
+7491
+Z3846
+Set maximum range to: -2141
+
+strokeBaseSpeed
+7617
+Z3940
+Set maximum range to: -2107
+
+strokeBaseSpeed
+7803
+Z4002
+Set maximum range to: -2085
+
+strokeBaseSpeed
+7924
+Z4095
+Set maximum range to: -2051
+
+strokeBaseSpeed
+8110
+Z4188
+Set maximum range to: -2018
+
+strokeBaseSpeed
+8291
+Z4266
+Set maximum range to: -1990
+
+strokeBaseSpeed
+8444
+Z4328
+Set maximum range to: -1967
+
+strokeBaseSpeed
+8570
+Z4390
+Set maximum range to: -1945
+
+strokeBaseSpeed
+8691
+Z4437
+Set maximum range to: -1928
+
+strokeBaseSpeed
+8784
+Z4499
+Set maximum range to: -1905
+
+strokeBaseSpeed
+8910
+Z4530
+Set maximum range to: -1894
+
+strokeBaseSpeed
+8970
+Z4546
+Set maximum range to: -1888
+
+strokeBaseSpeed
+9003
+L
+strokeBaseSpeed
+2147483647
+Guru Meditation Error: Core  1 panic'ed (IntegerDivideByZero). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x400d32a9  PS      : 0x00060930  A0      : 0x800d3a97  A1      : 0x3ffcbe90  
+A2      : 0x00000000  A3      : 0xd91fe6ea  A4      : 0xd91fe6ea  A5      : 0x3ffc506c  
+A6      : 0x3ffc38e8  A7      : 0x3ffc38c4  A8      : 0x800d329e  A9      : 0x3ffcbe70  
+A10     : 0x00035b67  A11     : 0x00000000  A12     : 0x00005b67  A13     : 0x00003cc0  
+A14     : 0x7ff00000  A15     : 0x7ff68000  SAR     : 0x0000000a  EXCCAUSE: 0x00000006  
+EXCVADDR: 0x00000000  LBEG    : 0x40084fd1  LEND    : 0x40084fd9  LCOUNT  : 0x00000027  
+
+
+Backtrace: 0x400d32a6:0x3ffcbe90 0x400d3a94:0x3ffcbec0 0x400dcfbd:0x3ffcbee0
+
+
+
+
+ELF file SHA256: e060282290007777
+
+Rebooting...
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:1184
+load:0x40078000,len:13232
+load:0x40080400,len:3028
+entry 0x400805e4
+Starting
+Starting
+Stepper Pin:14
+1073494636
+1073494300
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1818) wifi:Association refused temporarily, comeback time 299 mSec
+E (2123) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2429) wifi:Association refused temporarily, comeback time 299 mSec
+.Connected to Wifi, Connecting to server.
+Connected!
+
+HARD MINIMUM LIMIT: 230
+HARD MAXIMUM LIMIT: 3856
+
+TOTAL HARD RANGE: 
+3626
+
+strokeBaseSpeed
+1986
+OSSM Connected
+X:OSSM

@@ -1,0 +1,20 @@
+Starting
+Starting
+Stepper Pin:14
+1073494584
+1073494248
+    F_CPU=240000000
+    TICKS_PER_S=16000000
+.E (1965) wifi:Association refused temporarily, comeback time 299 mSec
+E (2271) wifi:Association refused temporarily, comeback time 299 mSec
+.E (2576) wifi:Association refused temporarily, comeback time 299 mSec
+E (2880) wifi:Association refused temporarily, comeback time 299 mSec
+E (3185) wifi:Association refused temporarily, comeback time 299 mSec
+.E (3489) wifi:Association refused temporarily, comeback time 299 mSec
+E (3793) wifi:Association refused temporarily, comeback time 299 mSec
+E (4099) wifi:Association refused temporarily, comeback time 299 mSec
+.E (4406) wifi:Association refused temporarily, comeback time 299 mSec
+.Connected to Wifi, Connecting to server.
+Connected!
+OSSM Connected
+X:OSSM

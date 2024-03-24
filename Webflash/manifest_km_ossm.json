@@ -1,0 +1,15 @@
+{
+    "name": "OSSM Default Firmware",
+    "new_install_prompt_erase": true,
+    "builds": [
+      {
+        "chipFamily": "ESP32",
+        "parts": [
+          { "path": "km_ossm/boot_app0.bin", "offset": 57344 },
+          { "path": "km_ossm/firmware.bin", "offset": 65536 },
+          { "path": "km_ossm/bootloader_dio_40m.bin", "offset": 4096 },
+          { "path": "km_ossm/partitions.bin", "offset": 32768 }
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="716" height="716" viewBox="0 0 716 716">
+  <defs>
+    <style>
+      .b {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 16px;
+      }
+    </style>
+  </defs>
+  <path class="b" d="m635.4,571.49c96.8-125.45,96.8-301.52,0-426.98"/>
+  <path class="b" d="m571.49,80.6c-125.45-96.8-301.52-96.8-426.98,0"/>
+  <path class="b" d="m80.6,144.51c-96.8,125.45-96.8,301.52,0,426.98"/>
+  <path class="b" d="m144.51,635.4c125.45,96.8,301.52,96.8,426.98,0"/>
+</svg>
