@@ -15,7 +15,7 @@ func show_paths():
 	$HBox/LoadPlaylist.hide()
 	create_file_list(owner.paths_dir, ".bx")
 	if OS.get_name() == 'Android':
-		$Label.text = "Internal Storage/OSSMx/Paths"
+		$Label.text = "Internal Storage/OSSM Sauce/Paths"
 	else:
 		$Label.text = "Documents/OSSM Sauce/Paths"
 
@@ -28,9 +28,9 @@ func show_playlists():
 	$HBox/AddPath.hide()
 	create_file_list(owner.playlists_dir, ".bxpl")
 	if OS.get_name() == 'Android':
-		$Label.text = "Internal Storage/OSSMx/Playlists"
+		$Label.text = "Internal Storage/OSSM Sauce/Playlists"
 	else:
-		$Label.text = "Documents/OSSMx/Playlists"
+		$Label.text = "Documents/OSSM Sauce/Playlists"
 
 func _on_path_list_item_selected(index):
 	$HBox/AddPath.disabled = false

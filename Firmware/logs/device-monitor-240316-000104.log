@@ -1,8 +1,0 @@
-Starting
-*wm:AutoConnect 
-*wm:Connecting to SAVED AP: Kinetic_400945
-*wm:connectTimeout not set, ESP waitForConnectResult... 
-*wm:AutoConnect: FAILED for  60602 ms
-*wm:StartAP with SSID:  AutoConnectAP
-*wm:AP IP address: 192.168.4.1
-*wm:Starting Web Portal 
