@@ -254,9 +254,15 @@ func _on_mode_selected(index:int):
 			owner.paused = true
 			owner.set_physics_process(false)
 			%PositionControls.set_physics_process(false)
+			var stop_pos = %LoopControls.slider_max_pos
+			%LoopControls.touch_pos = stop_pos
+			%LoopControls/StrokeDurationSlider/Slider.position.y = stop_pos
+			%LoopControls.stroke_duration = 0
+			%LoopControls.update_stroke_duration_text()
 			%LoopControls.set_physics_process(true)
 			%LoopControls.input_active = false
 			%LoopControls.active = true
+			%LoopControls/Pause.hide()
 			%ActionPanel.clear_selections()
 			%ActionPanel/Play.hide()
 			%ActionPanel/Pause.show()

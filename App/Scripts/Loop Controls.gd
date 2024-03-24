@@ -26,12 +26,22 @@ var tween_map:Dictionary = {
 
 var stroke_duration:float
 
-var slider_min_pos:float
+var slider_min_pos:float #these seem reversed
 var slider_max_pos:float
 @onready var slider:TextureRect = $StrokeDurationSlider/Slider
 @onready var slider_stop:TextureRect = $StrokeDurationSlider/SliderStop
 
 @onready var touch_pos:float = slider_min_pos
+
+func _ready():
+	slider_min_pos = slider_stop.position.y
+	slider_max_pos = slider.position.y
+	A.x = $Control.position.x
+	A.y = $Control.position.y + $Control.size.y
+	B.x = $Control.position.x + $Control.size.x / 2
+	B.y = $Control.position.y
+	C.x = $Control.position.x + $Control.size.x
+	C.y = $Control.position.y + $Control.size.y
 
 func _physics_process(delta):
 	if not input_active:
@@ -48,6 +58,7 @@ func _physics_process(delta):
 		1)
 	if slider_position_percent < 0.005:
 		$StrokeDurationLabel.text = "OFF"
+		stroke_duration = 0
 		if owner.connected_to_server:
 			owner.websocket.send_text("L0")
 		return
@@ -101,23 +112,14 @@ var input_active:bool
 func _input(event):
 	if input_active:
 		var offset = 225
-		touch_pos = event.position.x - offset
+		if 'position' in event:
+			touch_pos = event.position.x - offset
 
 func _on_slider_gui_input(event):
 	if event is InputEventScreenDrag:
 		input_active = true
 	elif event is InputEventScreenTouch and not event.pressed:
 		input_active = false
-
-func _ready():
-	slider_min_pos = slider_stop.position.y
-	slider_max_pos = slider.position.y
-	A.x = $Control.position.x
-	A.y = $Control.position.y + $Control.size.y
-	B.x = $Control.position.x + $Control.size.x / 2
-	B.y = $Control.position.y
-	C.x = $Control.position.x + $Control.size.x
-	C.y = $Control.position.y + $Control.size.y
 
 func rmt(input:int):
 	return tween_map[input]

@@ -533,7 +533,7 @@ offset_right = 315.0
 offset_bottom = 123.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 56
-text = "Stroke Duration: 10s"
+text = "OFF"
 
 [node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls"]
 layout_mode = 1
@@ -1763,7 +1763,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "App v1.0.1"
+text = "App v1.0.2"
 
 [node name="Settings" type="Panel" parent="."]
 unique_name_in_owner = true
