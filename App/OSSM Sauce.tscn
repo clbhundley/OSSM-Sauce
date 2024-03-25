@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://rcaxkukbqghe" path="res://Textures/Restart.svg" id="26_aqrhn"]
 [ext_resource type="Texture2D" uid="uid://bd8t1o4bylcx0" path="res://Textures/Trash.svg" id="27_jm1bm"]
 [ext_resource type="Texture2D" uid="uid://6v1hvd7m2vhs" path="res://Textures/t3.svg" id="28_wynws"]
+[ext_resource type="Script" path="res://Scripts/Playlist.gd" id="28_ycvea"]
 [ext_resource type="Script" path="res://Scripts/Settings.gd" id="29_ui4fx"]
 [ext_resource type="Script" path="res://Scripts/Add File.gd" id="30_0ohdi"]
 [ext_resource type="Script" path="res://Scripts/File List.gd" id="31_476hc"]
@@ -54,101 +55,6 @@ func _on_timer_timeout():
 		%CircleSelection.show_play()
 	else:
 		%CircleSelection.show_pause()
-"
-
-[sub_resource type="GDScript" id="GDScript_et6nu"]
-script/source = "extends Panel
-
-@onready var Item:Panel = $Scroll/VBox/Item
-
-var selected_index
-
-var drag_delta:float
-
-func _ready():
-	$Scroll/VBox.remove_child(Item)
-
-func _on_item_selected(item):
-	if drag_delta > 7:
-		return
-	deselect_all()
-	item.select()
-	var index = item.get_index()
-	selected_index = index
-	var restart_button = %Menu/PathControls/HBox/Restart
-	if owner.active_path_index == index and owner.frame > 0:
-		restart_button.show()
-	else:
-		restart_button.hide()
-	if not owner.paused and owner.active_path_index == index:
-		%Menu.show_pause()
-	else:
-		%Menu.show_play()
-	var timer = item.get_node('Timer')
-	if timer.time_left:
-		%Menu._on_play_pressed()
-	else:
-		timer.start()
-
-func add_item(item_text:String):
-	var item = Item.duplicate()
-	item.get_node('Label').text = item_text
-	$Scroll/VBox.add_child(item)
-	var item_button = item.get_node('Button')
-	item_button.connect('pressed', _on_item_selected.bind(item))
-	%Menu/Main/PlaylistButtons/SavePlaylist.disabled = false
-
-func move_item(current_index, new_index):
-	var item = $Scroll/VBox.get_child(current_index)
-	var path = %PathDisplay/Paths.get_child(current_index)
-	$Scroll/VBox.move_child(item, new_index)
-	%PathDisplay/Paths.move_child(path, new_index)
-	selected_index = new_index
-	
-	var path_data = owner.paths[current_index]
-	owner.paths.remove_at(current_index)
-	owner.paths.insert(new_index, path_data)
-	
-	var marker_data = owner.markers[current_index]
-	owner.markers.remove_at(current_index)
-	owner.markers.insert(new_index, path_data)
-	
-	if owner.active_path_index == current_index:
-		owner.active_path_index = new_index
-	elif owner.active_path_index == new_index:
-		owner.active_path_index = current_index
-
-func get_items() -> Array:
-	var items:Array
-	for item in $Scroll/VBox.get_children():
-		items.append(item.get_node('Label').text)
-	return items
-
-func _input(event):
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			drag_delta = 0
-	if event is InputEventMouseMotion:
-		if event.button_mask & MOUSE_BUTTON_LEFT:
-			drag_delta += abs(event.relative.y)
-			$Scroll.scroll_vertical -= event.relative.y
-
-func deselect_all():
-	for item in $Scroll/VBox.get_children():
-		item.deselect()
-
-func clear():
-	if owner.active_path_index != null:
-		owner.active_path_index = null
-		%Menu/PathControls.hide()
-		if not owner.paused:
-			%Menu._on_pause_pressed()
-	owner.paths.clear()
-	for item in $Scroll/VBox.get_children():
-		$Scroll/VBox.remove_child(item)
-	for path in %PathDisplay/Paths.get_children():
-		%PathDisplay/Paths.remove_child(path)
-	%PathDisplay/Ball.hide()
 "
 
 [sub_resource type="GDScript" id="GDScript_pigvm"]
@@ -339,7 +245,7 @@ func _on_accept_pressed():
 	hide()
 
 func _on_dont_show_toggled(toggled_on):
-	owner.user_settings.set_value('app_settings', 'show_splash', false)
+	owner.user_settings.set_value('app_settings', 'show_splash', !toggled_on)
 "
 
 [node name="OSSMSauce" type="Control"]
@@ -1522,7 +1428,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = SubResource("GDScript_et6nu")
+script = ExtResource("28_ycvea")
 metadata/_edit_use_anchors_ = true
 
 [node name="Scroll" type="ScrollContainer" parent="Menu/Playlist"]
@@ -1763,7 +1669,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "App v1.0.2"
+text = "App v1.0.3"
 
 [node name="Settings" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -2274,7 +2180,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 87.0
 offset_top = 482.0
-offset_right = -538.0
+offset_right = -459.0
 offset_bottom = 561.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -2282,7 +2188,7 @@ grow_vertical = 2
 [node name="CheckBox" type="CheckBox" parent="Splash/DontShow"]
 layout_mode = 2
 offset_top = 2.0
-offset_right = 24.0
+offset_right = 178.0
 offset_bottom = 26.0
 scale = Vector2(3, 3)
 theme_override_font_sizes/font_size = 54

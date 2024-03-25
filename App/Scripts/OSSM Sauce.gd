@@ -370,3 +370,5 @@ func _on_window_size_changed():
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		user_settings.save(cfg_path)
+		if connected_to_server:
+			websocket.send_text("H0")
