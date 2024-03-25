@@ -49,10 +49,9 @@ func _input(event):
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			drag_delta = 0
-	if event is InputEventMouseMotion:
-		if event.button_mask & MOUSE_BUTTON_LEFT:
-			drag_delta += abs(event.relative.y)
-			$Scroll.scroll_vertical -= event.relative.y
+	if event is InputEventScreenDrag:
+		drag_delta += abs(event.relative.y)
+		$Scroll.scroll_vertical -= event.relative.y
 
 func deselect_all():
 	for item in $Scroll/VBox.get_children():
