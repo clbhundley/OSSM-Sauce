@@ -6,8 +6,10 @@ var selected_index
 
 var drag_delta:float
 
+
 func _ready():
 	$Scroll/VBox.remove_child(Item)
+
 
 func _on_item_selected(item):
 	if drag_delta > 7:
@@ -31,6 +33,7 @@ func _on_item_selected(item):
 	else:
 		timer.start()
 
+
 func add_item(item_text:String):
 	var item = Item.duplicate()
 	item.get_node('Label').text = item_text
@@ -38,6 +41,7 @@ func add_item(item_text:String):
 	var item_button = item.get_node('Button')
 	item_button.connect('pressed', _on_item_selected.bind(item))
 	%Menu/Main/PlaylistButtons/SavePlaylist.disabled = false
+
 
 func move_item(current_index, new_index):
 	var item = $Scroll/VBox.get_child(current_index)
@@ -52,18 +56,24 @@ func move_item(current_index, new_index):
 	
 	var marker_data = owner.markers[current_index]
 	owner.markers.remove_at(current_index)
-	owner.markers.insert(new_index, path_data)
+	owner.markers.insert(new_index, marker_data)
+	
+	var network_data = owner.network_paths[current_index]
+	owner.network_paths.remove_at(current_index)
+	owner.network_paths.insert(new_index, network_data)
 	
 	if owner.active_path_index == current_index:
 		owner.active_path_index = new_index
 	elif owner.active_path_index == new_index:
 		owner.active_path_index = current_index
 
+
 func get_items() -> Array:
 	var items:Array
 	for item in $Scroll/VBox.get_children():
 		items.append(item.get_node('Label').text)
 	return items
+
 
 func _input(event):
 	if event is InputEventMouseButton and event.is_pressed():
@@ -73,9 +83,11 @@ func _input(event):
 		drag_delta += abs(event.relative.y)
 		$Scroll.scroll_vertical -= event.relative.y
 
+
 func deselect_all():
 	for item in $Scroll/VBox.get_children():
 		item.deselect()
+
 
 func clear():
 	if owner.active_path_index != null:

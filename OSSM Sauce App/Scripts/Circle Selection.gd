@@ -1,7 +1,9 @@
 extends Control
 
+
 func _ready():
 	$AnimationPlayer.play('Spin')
+
 
 var homing_lock:bool
 var restart_ready:bool
@@ -10,20 +12,23 @@ func _on_inside_button_pressed():
 		return
 	if restart_ready:
 		hide()
+		owner.active_path_index = 0
+		%Menu/Playlist/Scroll/VBox.get_child(0).set_active()
 		%Menu._on_restart_pressed()
 		restart_ready = false
 		return
 	elif owner.paused:
-		owner.paused = false
+		owner.play()
 		%ActionPanel/Pause/Selection.hide()
 		%ActionPanel/Pause.show()
 		%ActionPanel/Play.hide()
 	else:
-		owner.paused = true
+		owner.pause()
 		%ActionPanel/Play/Selection.hide()
 		%ActionPanel/Pause.hide()
 		%ActionPanel/Play.show()
 	hide()
+
 
 func _on_outside_button_pressed():
 	if homing_lock:
@@ -32,9 +37,11 @@ func _on_outside_button_pressed():
 		restart_ready = false
 	hide()
 
+
 func hide_and_reset():
 	restart_ready = false
 	hide()
+
 
 func show_pause():
 	$Hourglass.hide()
@@ -43,12 +50,14 @@ func show_pause():
 	$Play.hide()
 	show()
 
+
 func show_play():
 	$Hourglass.hide()
 	$Restart.hide()
 	$Pause.hide()
 	$Play.show()
 	show()
+
 
 func show_restart():
 	restart_ready = true
@@ -57,6 +66,7 @@ func show_restart():
 	$Pause.hide()
 	$Play.hide()
 	show()
+
 
 func show_hourglass():
 	homing_lock = true

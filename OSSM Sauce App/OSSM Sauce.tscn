@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://d3cq3b5o0feo0"]
+[gd_scene load_steps=53 format=3 uid="uid://d3cq3b5o0feo0"]
 
 [ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
 [ext_resource type="Script" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
@@ -56,6 +56,284 @@ func _on_timer_timeout():
 	else:
 		%CircleSelection.show_pause()
 "
+
+[sub_resource type="GDScript" id="GDScript_mmyal"]
+script/source = "extends Control
+
+var stroke_duration:float
+
+var slider_min_pos:float #these seem reversed
+var slider_max_pos:float
+@onready var slider:TextureRect = $StrokeDurationSlider/Slider
+@onready var slider_stop:TextureRect = $StrokeDurationSlider/SliderStop
+
+@onready var touch_pos:float = slider_min_pos
+
+@onready var link_button:Button = get_node('../LinkSpeedSliders')
+
+@onready var out = get_node('../Out')
+
+
+func _ready():
+	slider_min_pos = slider_stop.position.y
+	slider_max_pos = slider.position.y
+
+
+func _physics_process(delta):
+	if not input_active:
+		return
+	var slider_resist = get_parent().slider_resist
+	var pos = lerp(slider.position.y, touch_pos, delta * slider_resist)
+	var clamped_pos = clamp(pos, slider_max_pos, slider_min_pos)
+	slider.position.y = clamped_pos
+	if link_button.button_pressed:
+		out.slider.position.y = clamped_pos
+		out.map_stroke_duration()
+		out.update_stroke_duration_text()
+	map_stroke_duration()
+	update_stroke_duration_text()
+	get_parent().send_command()
+
+
+var input_active:bool
+func _input(event):
+	if input_active:
+		var offset = 140
+		if 'position' in event:
+			touch_pos = event.position.x - offset
+
+
+func _on_slider_gui_input(event):
+	if event is InputEventScreenDrag:
+		input_active = true
+	elif event is InputEventScreenTouch and not event.pressed:
+		input_active = false
+
+
+func map_stroke_duration():
+	var slider_position_percent = remap(
+			slider.position.y,
+			slider_max_pos,
+			slider_min_pos,
+			0,
+			1)
+	if slider_position_percent < 0.005:
+		stroke_duration = 0
+		return
+	stroke_duration = snappedf(remap(
+			slider.position.y,
+			slider_min_pos,
+			slider_max_pos,
+			owner.min_stroke_duration,
+			owner.max_stroke_duration), 0.01)
+
+
+func reset_stroke_duration_slider():
+	slider.position.y = slider_max_pos
+	var stroke_duration = snappedf(remap(
+			slider.position.y,
+			slider_min_pos,
+			slider_max_pos,
+			owner.min_stroke_duration,
+			owner.max_stroke_duration), 0.01)
+	if owner.connected_to_server:
+		get_parent().send_command()
+	update_stroke_duration_text()
+
+
+func update_stroke_duration_text():
+	var slider_position_percent = remap(
+		slider.position.y,
+		slider_max_pos,
+		slider_min_pos,
+		0,
+		1)
+	if slider_position_percent < 0.005:
+		$StrokeDurationLabel.text = \"IN: OFF\"
+	else:
+		var display_text:String
+		if %Menu/LoopSettings/DisplayMode/OptionButton.selected == 0:
+			display_text = \"IN: \" + str(stroke_duration) + \"s\"
+		else:
+			var map = snappedf(remap(
+				slider.position.y,
+				slider_max_pos,
+				slider_min_pos,
+				1,
+				100), 0.01)
+			display_text = \"IN: \" + str(map) + \"%\"
+		$StrokeDurationLabel.text = display_text
+
+
+func _on_transition_item_selected(index):
+	if link_button.button_pressed:
+		out.get_node('AccelerationControls/Transition').select(index)
+	get_parent().send_command()
+
+
+func _on_easing_item_selected(index):
+	if link_button.button_pressed:
+		out.get_node('AccelerationControls/Easing').select(index)
+	get_parent().send_command()
+"
+
+[sub_resource type="GDScript" id="GDScript_j6k60"]
+script/source = "extends Control
+
+var stroke_duration:float
+
+var slider_min_pos:float #these seem reversed
+var slider_max_pos:float
+@onready var slider:TextureRect = $StrokeDurationSlider/Slider
+@onready var slider_stop:TextureRect = $StrokeDurationSlider/SliderStop
+
+@onready var touch_pos:float = slider_min_pos
+
+@onready var link_button:Button = get_node('../LinkSpeedSliders')
+
+@onready var _in = get_node('../In')
+
+
+func _ready():
+	slider_min_pos = slider_stop.position.y
+	slider_max_pos = slider.position.y
+
+
+func _physics_process(delta):
+	if not input_active:
+		return
+	var slider_resist = get_parent().slider_resist
+	var pos = lerp(slider.position.y, touch_pos, delta * slider_resist)
+	var clamped_pos = clamp(pos, slider_max_pos, slider_min_pos)
+	slider.position.y = clamped_pos
+	if link_button.button_pressed:
+		_in.slider.position.y = clamped_pos
+		_in.map_stroke_duration()
+		_in.update_stroke_duration_text()
+	map_stroke_duration()
+	update_stroke_duration_text()
+	get_parent().send_command()
+
+
+var input_active:bool
+func _input(event):
+	if input_active:
+		var offset = 140
+		if 'position' in event:
+			touch_pos = event.position.x - offset
+
+
+func _on_slider_gui_input(event):
+	if event is InputEventScreenDrag:
+		input_active = true
+	elif event is InputEventScreenTouch and not event.pressed:
+		input_active = false
+
+
+func map_stroke_duration():
+	var slider_position_percent = remap(
+			slider.position.y,
+			slider_max_pos,
+			slider_min_pos,
+			0,
+			1)
+	if slider_position_percent < 0.005:
+		stroke_duration = 0
+		return
+	stroke_duration = snappedf(remap(
+			slider.position.y,
+			slider_min_pos,
+			slider_max_pos,
+			owner.min_stroke_duration,
+			owner.max_stroke_duration), 0.01)
+
+
+func reset_stroke_duration_slider():
+	slider.position.y = slider_max_pos
+	var stroke_duration = snappedf(remap(
+		slider.position.y,
+		slider_min_pos,
+		slider_max_pos,
+		owner.min_stroke_duration,
+		owner.max_stroke_duration), 0.01)
+	if owner.connected_to_server:
+		get_parent().send_command()
+	update_stroke_duration_text()
+
+
+func update_stroke_duration_text():
+	var slider_position_percent = remap(
+		slider.position.y,
+		slider_max_pos,
+		slider_min_pos,
+		0,
+		1)
+	if slider_position_percent < 0.005:
+		$StrokeDurationLabel.text = \"OUT: OFF\"
+	else:
+		var display_text:String
+		if %Menu/LoopSettings/DisplayMode/OptionButton.selected == 0:
+			display_text = \"OUT: \" + str(stroke_duration) + \"s\"
+		else:
+			var map = snappedf(remap(
+				slider.position.y,
+				slider_max_pos,
+				slider_min_pos,
+				1,
+				100), 0.01)
+			display_text = \"OUT: \" + str(map) + \"%\"
+		$StrokeDurationLabel.text = display_text
+
+
+func _on_transition_item_selected(index):
+	if link_button.button_pressed:
+		_in.get_node('AccelerationControls/Transition').select(index)
+	get_parent().send_command()
+
+
+func _on_easing_item_selected(index):
+	if link_button.button_pressed:
+		_in.get_node('AccelerationControls/Easing').select(index)
+	get_parent().send_command()
+"
+
+[sub_resource type="Animation" id="Animation_il416"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7gpwe"]
+resource_name = "Spin"
+length = 90.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 90),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u5ydg"]
+_data = {
+"RESET": SubResource("Animation_il416"),
+"Spin": SubResource("Animation_7gpwe")
+}
 
 [sub_resource type="GDScript" id="GDScript_pigvm"]
 script/source = "extends Panel
@@ -121,13 +399,12 @@ _data = {
 [sub_resource type="GDScript" id="GDScript_3psro"]
 script/source = "extends Control
 
+
 func _on_add_delay_pressed():
 	var duration:float = $Box/SpinBox.value
 	owner.create_delay(duration)
 	show_menu_buttons()
 
-func _on_back_pressed():
-	show_menu_buttons()
 
 func show_menu_buttons():
 	var buttons = [
@@ -140,10 +417,15 @@ func show_menu_buttons():
 		button.show()
 	%Menu.refresh_selection()
 	hide()
+
+
+func _on_back_pressed():
+	show_menu_buttons()
 "
 
 [sub_resource type="GDScript" id="GDScript_kgmbj"]
 script/source = "extends Control
+
 
 func _on_text_edit_text_changed():
 	var filter:Array = ['\\\\', '/', ':', '*', '?', '\"', '<', '>', '|', '\\n']
@@ -158,6 +440,7 @@ func _on_text_edit_text_changed():
 	else:
 		$HBox/Save.disabled = true
 
+
 func _on_save_pressed():
 	var filename:String = $TextEdit.text
 	var path:String = owner.playlists_dir + \"/\" + filename + \".bxpl\"
@@ -167,8 +450,6 @@ func _on_save_pressed():
 	file.close()
 	show_menu_buttons()
 
-func _on_back_pressed():
-	show_menu_buttons()
 
 func show_menu_buttons():
 	var buttons = [
@@ -181,6 +462,10 @@ func show_menu_buttons():
 		button.show()
 	%Menu.refresh_selection()
 	hide()
+
+
+func _on_back_pressed():
+	show_menu_buttons()
 "
 
 [sub_resource type="GDScript" id="GDScript_rckrg"]
@@ -197,52 +482,17 @@ func deselect():
 	self_modulate = Color.WHITE
 "
 
-[sub_resource type="Animation" id="Animation_il416"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Circle:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_7gpwe"]
-resource_name = "Spin"
-length = 90.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Circle:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 90),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_u5ydg"]
-_data = {
-"RESET": SubResource("Animation_il416"),
-"Spin": SubResource("Animation_7gpwe")
-}
-
 [sub_resource type="GDScript" id="GDScript_dqjk0"]
 script/source = "extends Panel
+
 
 func _ready():
 	self_modulate.a = 2
 
+
 func _on_accept_pressed():
 	hide()
+
 
 func _on_dont_show_toggled(toggled_on):
 	owner.user_settings.set_value('app_settings', 'show_splash', !toggled_on)
@@ -416,47 +666,43 @@ grow_vertical = 2
 script = ExtResource("9_ggpkr")
 metadata/_edit_use_anchors_ = true
 
-[node name="ActiveSwitch" type="Button" parent="LoopControls"]
-visible = false
-self_modulate = Color(1, 0, 0, 1)
+[node name="In" type="Control" parent="LoopControls"]
 layout_mode = 1
-offset_left = 215.0
-offset_top = 45.0
-offset_right = 480.0
-offset_bottom = 127.0
-theme_override_font_sizes/font_size = 54
-toggle_mode = true
-text = "OFF"
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 26.0
+offset_bottom = 288.0
+grow_horizontal = 2
+script = SubResource("GDScript_mmyal")
 
-[node name="StrokeDurationLabel" type="Label" parent="LoopControls"]
+[node name="StrokeDurationLabel" type="Label" parent="LoopControls/In"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -292.0
-offset_top = 46.0
-offset_right = 315.0
-offset_bottom = 123.0
+offset_left = -303.5
+offset_right = 303.5
+offset_bottom = 77.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 56
-text = "OFF"
+text = "IN: OFF"
 
-[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls"]
+[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls/In"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -386.0
-offset_top = 323.0
-offset_right = -216.0
-offset_bottom = 1092.0
+offset_left = -468.0
+offset_top = 248.0
+offset_right = -298.0
+offset_bottom = 1184.0
 grow_horizontal = 2
 rotation = 4.71239
 texture = ExtResource("7_vkr47")
 patch_margin_top = 80
 patch_margin_bottom = 80
 
-[node name="Slider" type="TextureRect" parent="LoopControls/StrokeDurationSlider"]
+[node name="Slider" type="TextureRect" parent="LoopControls/In/StrokeDurationSlider"]
 self_modulate = Color(0.858824, 0.439216, 0.576471, 1)
 layout_mode = 1
 anchors_preset = 5
@@ -469,7 +715,7 @@ offset_bottom = 154.0
 grow_horizontal = 2
 texture = ExtResource("8_gc26k")
 
-[node name="SliderStop" type="TextureRect" parent="LoopControls/StrokeDurationSlider"]
+[node name="SliderStop" type="TextureRect" parent="LoopControls/In/StrokeDurationSlider"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -477,62 +723,35 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -69.0
-offset_top = 230.0
-offset_right = 69.0
-offset_bottom = 368.0
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_gc26k")
 
-[node name="Label" type="Label" parent="LoopControls"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = 136.0
-offset_right = 26.0
-offset_bottom = 210.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 54
-horizontal_alignment = 1
-
-[node name="Controls" type="VBoxContainer" parent="LoopControls"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -350.0
-offset_top = 362.0
-offset_right = 350.0
-offset_bottom = 707.0
-grow_horizontal = 2
-theme_override_constants/separation = 45
-
-[node name="Labels" type="HBoxContainer" parent="LoopControls/Controls"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 240
-
-[node name="In" type="Label" parent="LoopControls/Controls/Labels"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "IN"
-
-[node name="Out" type="Label" parent="LoopControls/Controls/Labels"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "OUT"
-
-[node name="Transitions" type="HBoxContainer" parent="LoopControls/Controls"]
+[node name="AccelerationControls" type="HBoxContainer" parent="LoopControls/In"]
 custom_minimum_size = Vector2(700, 0)
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.5
+offset_top = 18.0
+offset_right = 401.5
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
 alignment = 1
 
-[node name="In" type="OptionButton" parent="LoopControls/Controls/Transitions"]
+[node name="Transition" type="OptionButton" parent="LoopControls/In/AccelerationControls"]
+custom_minimum_size = Vector2(346, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 item_count = 8
 selected = 1
 popup/item_0/text = "Linear"
@@ -552,34 +771,9 @@ popup/item_6/id = 6
 popup/item_7/text = "Quint"
 popup/item_7/id = 7
 
-[node name="Out" type="OptionButton" parent="LoopControls/Controls/Transitions"]
+[node name="Easing" type="OptionButton" parent="LoopControls/In/AccelerationControls"]
 layout_mode = 2
-size_flags_horizontal = 3
-item_count = 8
-selected = 1
-popup/item_0/text = "Linear"
-popup/item_0/id = 0
-popup/item_1/text = "Sine"
-popup/item_1/id = 1
-popup/item_2/text = "Circ"
-popup/item_2/id = 2
-popup/item_3/text = "Expo"
-popup/item_3/id = 3
-popup/item_4/text = "Quad"
-popup/item_4/id = 4
-popup/item_5/text = "Cubic"
-popup/item_5/id = 5
-popup/item_6/text = "Quart"
-popup/item_6/id = 6
-popup/item_7/text = "Quint"
-popup/item_7/id = 7
-
-[node name="Easings" type="HBoxContainer" parent="LoopControls/Controls"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="In" type="OptionButton" parent="LoopControls/Controls/Easings"]
-layout_mode = 2
+size_flags_horizontal = 8
 item_count = 4
 selected = 2
 popup/item_0/text = "Ease In"
@@ -591,25 +785,150 @@ popup/item_2/id = 2
 popup/item_3/text = "Ease Out/In"
 popup/item_3/id = 3
 
-[node name="Out" type="OptionButton" parent="LoopControls/Controls/Easings"]
-layout_mode = 2
-item_count = 4
-selected = 2
-popup/item_0/text = "Ease In"
-popup/item_0/id = 0
-popup/item_1/text = "Ease Out"
-popup/item_1/id = 1
-popup/item_2/text = "Ease In/Out"
-popup/item_2/id = 2
-popup/item_3/text = "Ease Out/In"
-popup/item_3/id = 3
+[node name="Out" type="Control" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 542.0
+offset_bottom = 804.0
+grow_horizontal = 2
+script = SubResource("GDScript_j6k60")
 
-[node name="ttc" type="Button" parent="LoopControls/Controls"]
+[node name="StrokeDurationLabel" type="Label" parent="LoopControls/Out"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -303.5
+offset_right = 303.5
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "OUT: OFF"
+
+[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls/Out"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -468.0
+offset_top = 248.0
+offset_right = -298.0
+offset_bottom = 1184.0
+grow_horizontal = 2
+rotation = 4.71239
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="LoopControls/Out/StrokeDurationSlider"]
+self_modulate = Color(0.356863, 0.423529, 0.643137, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderStop" type="TextureRect" parent="LoopControls/Out/StrokeDurationSlider"]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="AccelerationControls" type="HBoxContainer" parent="LoopControls/Out"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.5
+offset_top = 18.0
+offset_right = 401.5
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Transition" type="OptionButton" parent="LoopControls/Out/AccelerationControls"]
+custom_minimum_size = Vector2(346, 0)
 layout_mode = 2
+size_flags_horizontal = 0
+item_count = 8
+selected = 1
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Easing" type="OptionButton" parent="LoopControls/Out/AccelerationControls"]
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 4
+selected = 2
+popup/item_0/text = "Ease In"
+popup/item_0/id = 0
+popup/item_1/text = "Ease Out"
+popup/item_1/id = 1
+popup/item_2/text = "Ease In/Out"
+popup/item_2/id = 2
+popup/item_3/text = "Ease Out/In"
+popup/item_3/id = 3
+
+[node name="LinkSpeedSliders" type="Button" parent="LoopControls"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = 421.0
+offset_right = 54.0
+offset_bottom = 521.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 54
 toggle_mode = true
-text = "Tap to Cycle: OFF"
+button_pressed = true
+
+[node name="Label" type="Label" parent="LoopControls/LinkSpeedSliders"]
+modulate = Color(0, 0.72549, 0.490196, 1)
+layout_mode = 0
+offset_left = 13.0
+offset_top = 14.0
+offset_right = 98.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 62
+text = "🔗"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Line2D" type="Line2D" parent="LoopControls"]
 position = Vector2(0, 25.9997)
@@ -624,14 +943,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = 104.5
+offset_top = 231.5
 offset_right = 150.0
-offset_bottom = 563.5
+offset_bottom = 690.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("10_txgs1")
 
 [node name="Control" type="Control" parent="LoopControls"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -639,9 +959,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -383.0
-offset_top = 28.0
+offset_top = 131.0
 offset_right = 383.0
-offset_bottom = 640.0
+offset_bottom = 743.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -661,37 +981,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MouseInput" type="Label" parent="LoopControls"]
-visible = false
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 10.0
-offset_top = -39.5
-offset_right = 350.0
-offset_bottom = 29.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 50
-text = "MOUSE INPUT"
-
-[node name="TouchInput" type="Label" parent="LoopControls"]
-visible = false
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -39.5
-offset_right = -10.0
-offset_bottom = 29.5
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 50
-text = "TOUCH INPUT"
 
 [node name="ActionPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -913,6 +1202,138 @@ metadata/_edit_use_anchors_ = true
 [node name="Timer" type="Timer" parent="ActionPanel"]
 wait_time = 0.8
 one_shot = true
+
+[node name="CircleSelection" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.313726)
+layout_mode = 1
+anchor_left = 0.244444
+anchor_top = 0.305729
+anchor_right = 0.755556
+anchor_bottom = 0.593229
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_6g672")
+metadata/_edit_use_anchors_ = true
+
+[node name="Circle" type="TextureRect" parent="CircleSelection"]
+self_modulate = Color(1, 1, 1, 0.666667)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -258.0
+offset_right = 258.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(258, 258)
+texture = ExtResource("33_onotn")
+
+[node name="Pause" type="TextureRect" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.5
+offset_top = -121.5
+offset_right = 73.5
+offset_bottom = 121.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_txgs1")
+
+[node name="Play" type="TextureRect" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.360507
+anchor_top = 0.271739
+anchor_right = 0.719203
+anchor_bottom = 0.728261
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_0psch")
+metadata/_edit_use_anchors_ = true
+
+[node name="Restart" type="TextureButton" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -188.5
+offset_right = 147.0
+offset_bottom = 154.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("35_yhpak")
+stretch_mode = 3
+
+[node name="Hourglass" type="TextureRect" parent="CircleSelection"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -154.0
+offset_right = 125.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("36_fybvn")
+stretch_mode = 3
+
+[node name="HomingLabel" type="Label" parent="CircleSelection/Hourglass"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -273.5
+offset_top = -363.0
+offset_right = 273.5
+offset_bottom = -118.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 88
+text = "HOMING
+PLEASE WAIT"
+horizontal_alignment = 1
+
+[node name="OutsideButton" type="TextureButton" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.478261
+anchor_top = -1.06341
+anchor_right = 1.47826
+anchor_bottom = 2.06341
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InsideButton" type="TextureButton" parent="CircleSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CircleSelection"]
+libraries = {
+"": SubResource("AnimationLibrary_u5ydg")
+}
 
 [node name="SpeedPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -1253,11 +1674,11 @@ expand_icon = true
 item_count = 3
 selected = 0
 popup/item_0/text = "Path Mode"
-popup/item_0/id = 0
+popup/item_0/id = 2
 popup/item_1/text = "Position Mode"
-popup/item_1/id = 1
+popup/item_1/id = 3
 popup/item_2/text = "Loop Mode"
-popup/item_2/id = 2
+popup/item_2/id = 4
 
 [node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main"]
 layout_mode = 2
@@ -1669,7 +2090,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "App v1.0.3"
+text = "App v1.1.0"
 
 [node name="Settings" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -1719,7 +2140,7 @@ text = "WebSocket Server Address:"
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-placeholder_text = "192.168.254...:120"
+placeholder_text = "192.168.254..."
 
 [node name="Port" type="VBoxContainer" parent="Settings/Network"]
 visible = false
@@ -1747,6 +2168,10 @@ visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "CONNECTED"
+
+[node name="ConnectionTimeout" type="Timer" parent="Settings/Network"]
+wait_time = 3.0
+one_shot = true
 
 [node name="Sliders" type="VBoxContainer" parent="Settings"]
 layout_mode = 1
@@ -2001,138 +2426,6 @@ grow_vertical = 2
 wait_time = 0.5
 one_shot = true
 
-[node name="CircleSelection" type="Control" parent="."]
-unique_name_in_owner = true
-visible = false
-modulate = Color(1, 1, 1, 0.313726)
-layout_mode = 1
-anchor_left = 0.244444
-anchor_top = 0.305729
-anchor_right = 0.755556
-anchor_bottom = 0.593229
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("32_6g672")
-metadata/_edit_use_anchors_ = true
-
-[node name="Circle" type="TextureRect" parent="CircleSelection"]
-self_modulate = Color(1, 1, 1, 0.666667)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -258.0
-offset_top = -258.0
-offset_right = 258.0
-offset_bottom = 258.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(258, 258)
-texture = ExtResource("33_onotn")
-
-[node name="Pause" type="TextureRect" parent="CircleSelection"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -67.5
-offset_top = -121.5
-offset_right = 73.5
-offset_bottom = 121.5
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("10_txgs1")
-
-[node name="Play" type="TextureRect" parent="CircleSelection"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.360507
-anchor_top = 0.271739
-anchor_right = 0.719203
-anchor_bottom = 0.728261
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("34_0psch")
-metadata/_edit_use_anchors_ = true
-
-[node name="Restart" type="TextureButton" parent="CircleSelection"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -145.0
-offset_top = -188.5
-offset_right = 147.0
-offset_bottom = 154.5
-grow_horizontal = 2
-grow_vertical = 2
-texture_normal = ExtResource("35_yhpak")
-stretch_mode = 3
-
-[node name="Hourglass" type="TextureRect" parent="CircleSelection"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -154.0
-offset_right = 125.0
-offset_bottom = 154.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("36_fybvn")
-stretch_mode = 3
-
-[node name="HomingLabel" type="Label" parent="CircleSelection/Hourglass"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -273.5
-offset_top = -363.0
-offset_right = 273.5
-offset_bottom = -118.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 88
-text = "HOMING
-PLEASE WAIT"
-horizontal_alignment = 1
-
-[node name="OutsideButton" type="TextureButton" parent="CircleSelection"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.478261
-anchor_top = -1.06341
-anchor_right = 1.47826
-anchor_bottom = 2.06341
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="InsideButton" type="TextureButton" parent="CircleSelection"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CircleSelection"]
-libraries = {
-"": SubResource("AnimationLibrary_u5ydg")
-}
-
 [node name="Wifi" type="Sprite2D" parent="."]
 visible = false
 position = Vector2(1031, 45)
@@ -2218,17 +2511,34 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 60
 text = "ACCEPT"
 
+[node name="ConnectingLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -381.0
+offset_top = -76.0
+offset_right = 381.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "Connecting to network..."
+
 [connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
 [connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
 [connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
 [connection signal="gui_input" from="PositionControls/MovementBar/Slider" to="PositionControls" method="_on_slider_gui_input"]
-[connection signal="toggled" from="LoopControls/ActiveSwitch" to="LoopControls" method="_on_active_switch_toggled"]
-[connection signal="gui_input" from="LoopControls/StrokeDurationSlider/Slider" to="LoopControls" method="_on_slider_gui_input"]
-[connection signal="item_selected" from="LoopControls/Controls/Transitions/In" to="LoopControls" method="send_command"]
-[connection signal="item_selected" from="LoopControls/Controls/Transitions/Out" to="LoopControls" method="send_command"]
-[connection signal="item_selected" from="LoopControls/Controls/Easings/In" to="LoopControls" method="send_command"]
-[connection signal="item_selected" from="LoopControls/Controls/Easings/Out" to="LoopControls" method="send_command"]
-[connection signal="toggled" from="LoopControls/Controls/ttc" to="LoopControls" method="_on_ttc_toggled"]
+[connection signal="gui_input" from="LoopControls/In/StrokeDurationSlider/Slider" to="LoopControls/In" method="_on_slider_gui_input"]
+[connection signal="item_selected" from="LoopControls/In/AccelerationControls/Transition" to="LoopControls/In" method="_on_transition_item_selected"]
+[connection signal="item_selected" from="LoopControls/In/AccelerationControls/Easing" to="LoopControls/In" method="_on_easing_item_selected"]
+[connection signal="gui_input" from="LoopControls/Out/StrokeDurationSlider/Slider" to="LoopControls/Out" method="_on_slider_gui_input"]
+[connection signal="item_selected" from="LoopControls/Out/AccelerationControls/Transition" to="LoopControls/Out" method="_on_transition_item_selected"]
+[connection signal="item_selected" from="LoopControls/Out/AccelerationControls/Easing" to="LoopControls/Out" method="_on_easing_item_selected"]
+[connection signal="toggled" from="LoopControls/LinkSpeedSliders" to="LoopControls" method="_on_link_speed_sliders_toggled"]
 [connection signal="pressed" from="LoopControls/Control/Tap" to="LoopControls" method="_on_tap_pressed"]
 [connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
@@ -2236,6 +2546,9 @@ text = "ACCEPT"
 [connection signal="pressed" from="ActionPanel/Range/Button" to="ActionPanel" method="_on_range_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Menu/Button" to="ActionPanel" method="_on_menu_button_pressed"]
 [connection signal="timeout" from="ActionPanel/Timer" to="ActionPanel" method="_on_timer_timeout"]
+[connection signal="pressed" from="CircleSelection/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="CircleSelection/OutsideButton" to="CircleSelection" method="_on_outside_button_pressed"]
+[connection signal="pressed" from="CircleSelection/InsideButton" to="CircleSelection" method="_on_inside_button_pressed"]
 [connection signal="pressed" from="SpeedPanel/BackButton" to="SpeedPanel" method="_on_back_button_pressed"]
 [connection signal="pressed" from="RangePanel/BackButton" to="RangePanel" method="_on_back_button_pressed"]
 [connection signal="pressed" from="Menu/Header/Back" to="Menu" method="_on_Back_pressed"]
@@ -2272,8 +2585,5 @@ text = "ACCEPT"
 [connection signal="pressed" from="AddFile/HBox/LoadPlaylist" to="AddFile" method="_on_load_playlist_pressed"]
 [connection signal="pressed" from="AddFile/HBox/Back" to="AddFile" method="_on_back_pressed"]
 [connection signal="item_selected" from="AddFile/PathListOG" to="AddFile" method="_on_path_list_item_selected"]
-[connection signal="pressed" from="CircleSelection/Restart" to="Menu" method="_on_restart_pressed"]
-[connection signal="pressed" from="CircleSelection/OutsideButton" to="CircleSelection" method="_on_outside_button_pressed"]
-[connection signal="pressed" from="CircleSelection/InsideButton" to="CircleSelection" method="_on_inside_button_pressed"]
 [connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]

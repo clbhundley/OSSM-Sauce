@@ -1,10 +1,12 @@
 extends Panel
 
+
 func create_file_list(directory:String, file_extension:String):
 	var dir = DirAccess.open(directory)
 	for file_name in dir.get_files():
 		if file_name.ends_with(file_extension):
 			$FileList.add_item(file_name)
+
 
 func show_paths():
 	show()
@@ -19,6 +21,7 @@ func show_paths():
 	else:
 		$Label.text = "Documents/OSSM Sauce/Paths"
 
+
 func show_playlists():
 	show()
 	$FileList.clear()
@@ -32,8 +35,10 @@ func show_playlists():
 	else:
 		$Label.text = "Documents/OSSM Sauce/Playlists"
 
+
 func _on_path_list_item_selected(index):
 	$HBox/AddPath.disabled = false
+
 
 func _on_add_path_pressed():
 	var file_name:String = $FileList.get_item_text($FileList.selected_index)
@@ -41,6 +46,7 @@ func _on_add_path_pressed():
 		%Menu/Playlist.add_item(file_name)
 	%Menu.show()
 	hide()
+
 
 func _on_load_playlist_pressed():
 	var file_name:String = $FileList.get_item_text($FileList.selected_index)
@@ -59,6 +65,7 @@ func _on_load_playlist_pressed():
 			%Menu/Playlist.add_item(line)
 	%Menu.show()
 	hide()
+
 
 func _on_back_pressed():
 	%Menu.show()
