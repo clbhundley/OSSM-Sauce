@@ -5,7 +5,7 @@
 #define enablePinStepper 26
 #define stepPinStepper 14
 
-#define limitSwitchPin 2
+#define limitSwitchPin 12
 
 FastAccelStepperEngine engine = FastAccelStepperEngine();
 FastAccelStepper *stepper = NULL;
