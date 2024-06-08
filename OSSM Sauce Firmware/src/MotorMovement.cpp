@@ -5,6 +5,8 @@
 #define enablePinStepper 26
 #define stepPinStepper 14
 
+#define limitSwitchPin 2
+
 FastAccelStepperEngine engine = FastAccelStepperEngine();
 FastAccelStepper *stepper = NULL;
 
@@ -64,6 +66,71 @@ float getAnalogAvgPercent(int pinNumber, int samples) { //From OSSM 'Utilities.c
   // TODO: Might want to add a deadband
   percentage = 100.0 * average / 4096.0; // 12 bit resolution
   return percentage;
+}
+
+
+void limitSwitchHoming() {
+  pinMode(limitSwitchPin, INPUT);
+  delay(100);
+
+  //relax motor
+  digitalWrite(enablePinStepper, HIGH);
+  delay(600);
+  digitalWrite(enablePinStepper, LOW);
+  delay(100);
+
+  int limitSwitchInitialState = digitalRead(limitSwitchPin);
+  if (limitSwitchInitialState == HIGH)
+    Serial.println("Initial switch state is HIGH");
+  else
+    Serial.println("Initial switch state is LOW");
+  
+  delay(300);
+
+  stepper->setAcceleration(160000);
+  stepper->setSpeedInUs(1800);
+
+  //get physical maximum limit from initial position
+  int limitPhysicalMax = stepper->getCurrentPosition();
+  Serial.print("Physical maximum limit is ");
+  Serial.println(limitPhysicalMax);
+
+  delay(400);
+
+  //find physical minimum limit
+  stepper->runBackward();
+  while (digitalRead(limitSwitchPin) == limitSwitchInitialState);
+  stepper->stopMove();
+  int limitPhysicalMin = stepper->getCurrentPosition();
+  Serial.print("Physical minimum limit is ");
+  Serial.println(limitPhysicalMin);
+
+  delay(200);
+
+  //lock motor movement
+  stepper->setAutoEnable(false);
+  digitalWrite(enablePinStepper, LOW);
+
+  //set hard limits
+  float hardLimitBuffer = abs(limitPhysicalMax - limitPhysicalMin) * 0.06;
+  rangeLimitHardMin = limitPhysicalMin + hardLimitBuffer;
+  rangeLimitHardMax = limitPhysicalMax - hardLimitBuffer;
+
+  stepper->setAcceleration(globalAcceleration);
+  stepper->moveTo(rangeLimitHardMin);
+
+  rangeLimitUserMin = rangeLimitHardMin;
+  rangeLimitUserMax = rangeLimitHardMax;
+
+  Serial.println("");
+  Serial.print("MINIMUM RANGE LIMIT: ");
+  Serial.println(rangeLimitHardMin);
+  Serial.print("MAXIMUM RANGE LIMIT: ");
+  Serial.println(rangeLimitHardMax);
+  Serial.println("");
+  Serial.println("TOTAL RANGE: ");
+  Serial.println(abs(rangeLimitHardMax - rangeLimitHardMin));
+  Serial.println("");
 }
 
 

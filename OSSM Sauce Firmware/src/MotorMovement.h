@@ -60,6 +60,8 @@ extern enum LoopPhase {PUSH, PULL} activeLoopPhase;
 
 void initializeMotor();
 
+void limitSwitchHoming();
+
 void sensorlessHoming();
 
 u_int32_t getMoveBaseSpeedHz(StrokeCommand stroke, uint32_t moveDuration, bool useFullUserRange = false);

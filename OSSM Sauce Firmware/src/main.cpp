@@ -97,8 +97,11 @@ void setup() {
   moveQueue = xQueueCreate(moveQueueSize, 9);
   positionQueue = xQueueCreate(positionQueueSize, 4);
 
-  sensorlessHoming();
+  //sensorlessHoming();
+  limitSwitchHoming();
+
   delay(400);
+  
   Serial.println("-- OSSM Ready! --");
   sendResponse(CONNECTION);
 

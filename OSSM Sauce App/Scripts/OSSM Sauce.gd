@@ -119,7 +119,7 @@ func _physics_process(delta):
 	
 	if frame >= paths[active_path_index].size() - 1:
 		
-		if network_paths.size() > active_path_index + 1:
+		if active_path_index < network_paths.size() - 1:
 			var overreach_index = marker_index - network_paths[active_path_index].size() + 1
 			var next_path = network_paths[active_path_index + 1]
 			websocket.send(next_path[overreach_index])
@@ -148,7 +148,7 @@ func _physics_process(delta):
 		if connected_to_server:
 			if marker_index < active_path.size():
 				websocket.send(active_path[marker_index])
-			elif network_paths.size() > active_path_index + 1:
+			elif active_path_index < network_paths.size() - 1:
 				var overreach_index = marker_index - active_path.size()
 				var next_path = network_paths[active_path_index + 1]
 				websocket.send(next_path[overreach_index])
@@ -497,6 +497,48 @@ func create_delay(duration:float):
 		delay_path.append(-1)
 	paths.append(delay_path)
 	markers.append({0:message})
+	markers.append({1:message})
+	markers.append({2:message})
+	markers.append({3:message})
+	markers.append({4:message})
+	markers.append({5:message})
+	markers.append({6:message})
+	
+	var network_packets:Array
+	
+	var network_packet_start:PackedByteArray
+	network_packet_start.resize(10)
+	network_packet_start.encode_u8(0, CommandType.MOVE)
+	network_packet_start.encode_u32(1, 0)
+	network_packet_start.encode_u16(5, 0)
+	network_packet_start.encode_u8(7, 0)
+	network_packet_start.encode_u8(8, 2)
+	network_packet_start.encode_u8(9, 0)
+	network_packets.append(network_packet_start)
+	
+	for i in 5:
+		var network_packet_fill:PackedByteArray
+		network_packet_fill.resize(10)
+		network_packet_fill.encode_u8(0, CommandType.MOVE)
+		network_packet_fill.encode_u32(1, i)
+		network_packet_fill.encode_u16(5, 0)
+		network_packet_fill.encode_u8(7, 0)
+		network_packet_fill.encode_u8(8, 2)
+		network_packet_fill.encode_u8(9, 0)
+		network_packets.append(network_packet_start)
+	
+	var network_packet_end:PackedByteArray
+	network_packet_end.resize(10)
+	network_packet_end.encode_u8(0, CommandType.MOVE)
+	network_packet_end.encode_u32(1, duration * 1000)
+	network_packet_end.encode_u16(5, 0)
+	network_packet_end.encode_u8(7, 0)
+	network_packet_end.encode_u8(8, 2)
+	network_packet_end.encode_u8(9, 0)
+	network_packets.append(network_packet_end)
+	
+	network_paths.append(network_packets)
+	
 	$PathDisplay/Paths.add_child(path_line)
 	$Menu/Playlist.add_item("delay(%s)" % [duration])
 
