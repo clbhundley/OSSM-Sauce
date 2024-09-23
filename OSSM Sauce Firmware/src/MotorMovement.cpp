@@ -56,7 +56,7 @@ void initializeMotor() {
 
 
 int powerSampleSize = 10;
-float stdDevMultiplier = 0.4;
+float stdDevMultiplier = 0.333;
 
 float powerEMA;
 float powerEMASmooth;
