@@ -56,7 +56,7 @@ void initializeMotor() {
 
 
 int powerSampleSize = 10;
-float stdDevMultiplier = 0.5;
+float stdDevMultiplier = 0.4;
 
 float powerEMA;
 float powerEMASmooth;
@@ -81,7 +81,7 @@ float getPowerReading() {
   }
   standardDeviation = sqrt(sum / powerSampleSize);
 
-  powerEMA = ((average + (standardDeviation * 0.3) - powerEMA) * 0.02) + powerEMA;
+  powerEMA = ((average + (standardDeviation * stdDevMultiplier) - powerEMA) * 0.02) + powerEMA;
   powerEMASmooth = ((powerEMA - powerEMASmooth) * 0.02) + powerEMASmooth;
   powerEMADoubleSmooth = ((powerEMASmooth - powerEMADoubleSmooth) * 0.01) + powerEMADoubleSmooth;
 
