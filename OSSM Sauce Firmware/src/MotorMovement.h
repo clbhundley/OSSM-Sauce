@@ -62,7 +62,7 @@ void initializeMotor();
 
 void sensorlessHoming();
 
-u_int32_t getMoveBaseSpeedHz(StrokeCommand stroke, uint32_t moveDuration, bool useFullUserRange = false);
+uint32_t getMoveBaseSpeedHz(StrokeCommand stroke, uint32_t moveDuration, bool useFullUserRange = false);
 
 void processSafeAccel();
 

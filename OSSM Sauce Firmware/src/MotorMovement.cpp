@@ -1,9 +1,12 @@
 #include <Arduino.h>
 #include "MotorMovement.h"
 
+#define powerSensorPin 36
 #define dirPinStepper 27
 #define enablePinStepper 26
 #define stepPinStepper 14
+
+#define limitSwitchPin 12
 
 FastAccelStepperEngine engine = FastAccelStepperEngine();
 FastAccelStepper *stepper = NULL;
@@ -52,27 +55,57 @@ void initializeMotor() {
 }
 
 
-float getAnalogAvgPercent(int pinNumber, int samples) { //From OSSM 'Utilities.cpp'
-  float sum = 0;
-  float average = 0;
-  float percentage = 0;
-  for (int i = 0; i < samples; i++) {
-    // TODO: Possibly use fancier filters?
-    sum += analogRead(pinNumber);
+int powerSampleSize = 10;
+float stdDevMultiplier = 0.5;
+
+float powerEMA;
+float powerEMASmooth;
+float powerEMADoubleSmooth;
+float getPowerReading() {
+  float sum;
+  float average;
+  float sample;
+  float percentage;
+  float standardDeviation;
+  float readings[powerSampleSize];
+  for (int i = 0; i < powerSampleSize; i++) {
+    sample = analogRead(powerSensorPin);
+    sum += sample;
+    readings[i] = sample;
   }
-  average = sum / samples;
-  // TODO: Might want to add a deadband
-  percentage = 100.0 * average / 4096.0; // 12 bit resolution
-  return percentage;
+  average = sum / powerSampleSize;
+
+  sum = 0.0;
+  for (int i = 0; i < powerSampleSize; i++) {
+      sum += pow(readings[i] - average, 2);
+  }
+  standardDeviation = sqrt(sum / powerSampleSize);
+
+  powerEMA = ((average + (standardDeviation * 0.3) - powerEMA) * 0.02) + powerEMA;
+  powerEMASmooth = ((powerEMA - powerEMASmooth) * 0.02) + powerEMASmooth;
+  powerEMADoubleSmooth = ((powerEMASmooth - powerEMADoubleSmooth) * 0.01) + powerEMADoubleSmooth;
+
+  /*
+  Serial.print(average);
+  Serial.print(", ");
+  Serial.println(powerEMADoubleSmooth);
+  */
+  return average;
 }
 
 
 void sensorlessHoming() {
   Serial.println("");
   Serial.println("Beginning sensorless homing...");
-  float currentLimit = 1.5;
-  float currentSensorOffset = (getAnalogAvgPercent(36, 1000));
-  float current = getAnalogAvgPercent(36, 200) - currentSensorOffset;
+  powerEMA = 0;
+  powerEMASmooth = 0;
+  powerEMADoubleSmooth = 0;
+  float avgPower;
+
+  //stabilize EMA
+  for (int i = 0; i < 1200; i++) {
+      getPowerReading();
+  }
 
   //relax motor
   digitalWrite(enablePinStepper, HIGH);
@@ -86,9 +119,9 @@ void sensorlessHoming() {
   //find physical maximum limit
   int limitPhysicalMax;
   stepper->runForward();
-  current = getAnalogAvgPercent(36, 200) - currentSensorOffset;
-  while (current < currentLimit) {
-    current = getAnalogAvgPercent(36, 25) - currentSensorOffset;
+  avgPower = getPowerReading();
+  while (avgPower < powerEMADoubleSmooth) {
+    avgPower = getPowerReading();
   }
   stepper->stopMove();
   limitPhysicalMax = stepper->getCurrentPosition();
@@ -98,13 +131,14 @@ void sensorlessHoming() {
   //find physical minimum limit
   int limitPhysicalMin;
   stepper->runBackward();
-  current = getAnalogAvgPercent(36, 200) - currentSensorOffset;
-  while (current < currentLimit) {
-    current = getAnalogAvgPercent(36, 25) - currentSensorOffset;
+  avgPower = getPowerReading();
+  while (avgPower < powerEMADoubleSmooth) {
+    avgPower = getPowerReading();
   }
   stepper->stopMove();
   limitPhysicalMin = stepper->getCurrentPosition();
 
+  Serial.println("------------");
   delay(200);
 
   //lock motor movement
@@ -207,7 +241,7 @@ double interpolate(double weight, TransType transType, EaseType easeType) {
 
 
 //amplifying base move speed to match traversal time with linear move
-u_int32_t getMoveBaseSpeedHz(StrokeCommand stroke, uint32_t moveDuration, bool useFullUserRange) {
+uint32_t getMoveBaseSpeedHz(StrokeCommand stroke, uint32_t moveDuration, bool useFullUserRange) {
   int moveDelta;
   if (useFullUserRange)
     moveDelta = rangeLimitUserMax - rangeLimitUserMin;
