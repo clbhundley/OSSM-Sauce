@@ -1,14 +1,5 @@
 extends Panel
 
-@onready var buttons:Array = [
-	$PathControls/Up,
-	$PathControls/Down,
-	$PathControls/HBox/Play,
-	$PathControls/HBox/Pause,
-	$PathControls/HBox/Restart,
-	$PathControls/HBox/Delete]
-
-
 func _on_Back_pressed():
 	tween(false)
 	$Playlist.deselect_all()
@@ -42,12 +33,8 @@ func _on_play_pressed():
 	flash_button($PathControls/HBox/Play)
 	tween(false)
 	%ActionPanel.clear_selections()
-	%ActionPanel/Play.hide()
-	%ActionPanel/Pause.show()
 	var index = $Playlist.selected_index
-	if owner.active_path_index == index:
-		owner.play()
-	else:
+	if not owner.active_path_index == index:
 		owner.active_path_index = index
 		owner.display_active_path_index()
 		$Playlist/Scroll/VBox.get_child(index).set_active()
@@ -55,8 +42,8 @@ func _on_play_pressed():
 			%CircleSelection.show_hourglass()
 			%PositionControls.modulate.a = 0.05
 			owner.home_to(0)
-		else:
-			%CircleSelection.show_play()
+			return
+	%CircleSelection.show_play()
 
 
 func _on_pause_pressed():
@@ -94,6 +81,7 @@ func _on_delete_pressed():
 	$Playlist/Scroll/VBox.remove_child(pl_item)
 	owner.paths.remove_at(selected_item)
 	owner.markers.remove_at(selected_item)
+	owner.network_paths.remove_at(selected_item)
 	$Playlist.selected_index = null
 	if $Playlist/Scroll/VBox.get_child_count() == 0:
 		$Main/PlaylistButtons/SavePlaylist.disabled = true
@@ -125,6 +113,7 @@ func _on_add_delay_pressed():
 func hide_menu_buttons():
 	$Main/PlaylistButtons.hide()
 	$Main/PathButtons.hide()
+	$Main/LoopPlaylistButton.hide()
 	$PathControls.hide()
 	$Main/Mode.hide()
 
@@ -161,6 +150,14 @@ func flash_button(button:Node):
 	tween.tween_method(button.set_self_modulate, start_color, end_color, 0.6)
 
 
+@onready var buttons:Array = [
+	$PathControls/Up,
+	$PathControls/Down,
+	$PathControls/HBox/Play,
+	$PathControls/HBox/Pause,
+	$PathControls/HBox/Restart,
+	$PathControls/HBox/Delete]
+
 const ANIM_TIME = 0.35
 func tween(activating:bool = true):
 	var tween = get_tree().create_tween()
@@ -188,6 +185,15 @@ func anim_finished():
 		button.disabled = false
 	%ActionPanel/Menu/Selection.hide()
 	hide()
+
+
+var loop_playlist:bool
+func _on_loop_playlist_button_toggled(toggled_on: bool) -> void:
+	loop_playlist = toggled_on
+	if toggled_on:
+		$Main/LoopPlaylistButton.text = "Loop Playlist: ON"
+	else:
+		$Main/LoopPlaylistButton.text = "Loop Playlist: OFF"
 
 
 func set_min_stroke_duration(value):
@@ -249,6 +255,7 @@ func _on_mode_selected(index:int):
 			%PathDisplay/Ball.show()
 			$Main/PlaylistButtons.show()
 			$Main/PathButtons.show()
+			$Main/LoopPlaylistButton.show()
 			$PathControls.show()
 			$Playlist.show()
 			if owner.active_path_index != null:
@@ -276,6 +283,7 @@ func _on_mode_selected(index:int):
 			%PathDisplay/Ball.hide()
 			$Main/PlaylistButtons.hide()
 			$Main/PathButtons.hide()
+			$Main/LoopPlaylistButton.hide()
 			$PathControls.hide()
 			$Playlist.hide()
 			owner.play()
@@ -308,5 +316,6 @@ func _on_mode_selected(index:int):
 			%PathDisplay/Ball.hide()
 			$Main/PlaylistButtons.hide()
 			$Main/PathButtons.hide()
+			$Main/LoopPlaylistButton.hide()
 			$PathControls.hide()
 			$Playlist.hide()

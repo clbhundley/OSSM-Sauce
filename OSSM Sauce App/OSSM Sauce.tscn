@@ -410,6 +410,7 @@ func show_menu_buttons():
 	var buttons = [
 		%Menu/Main/PlaylistButtons,
 		%Menu/Main/PathButtons,
+		%Menu/Main/LoopPlaylistButton,
 		%Menu/PathControls,
 		%Menu/Header,
 		%Menu/Main/Mode]
@@ -455,6 +456,7 @@ func show_menu_buttons():
 	var buttons = [
 		%Menu/Main/PlaylistButtons,
 		%Menu/Main/PathButtons,
+		%Menu/Main/LoopPlaylistButton,
 		%Menu/PathControls,
 		%Menu/Header,
 		%Menu/Main/Mode]
@@ -752,10 +754,9 @@ alignment = 1
 custom_minimum_size = Vector2(346, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-item_count = 8
 selected = 1
+item_count = 8
 popup/item_0/text = "Linear"
-popup/item_0/id = 0
 popup/item_1/text = "Sine"
 popup/item_1/id = 1
 popup/item_2/text = "Circ"
@@ -774,10 +775,9 @@ popup/item_7/id = 7
 [node name="Easing" type="OptionButton" parent="LoopControls/In/AccelerationControls"]
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 4
 selected = 2
+item_count = 4
 popup/item_0/text = "Ease In"
-popup/item_0/id = 0
 popup/item_1/text = "Ease Out"
 popup/item_1/id = 1
 popup/item_2/text = "Ease In/Out"
@@ -871,10 +871,9 @@ alignment = 1
 custom_minimum_size = Vector2(346, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-item_count = 8
 selected = 1
+item_count = 8
 popup/item_0/text = "Linear"
-popup/item_0/id = 0
 popup/item_1/text = "Sine"
 popup/item_1/id = 1
 popup/item_2/text = "Circ"
@@ -893,10 +892,9 @@ popup/item_7/id = 7
 [node name="Easing" type="OptionButton" parent="LoopControls/Out/AccelerationControls"]
 layout_mode = 2
 size_flags_horizontal = 8
-item_count = 4
 selected = 2
+item_count = 4
 popup/item_0/text = "Ease In"
-popup/item_0/id = 0
 popup/item_1/text = "Ease Out"
 popup/item_1/id = 1
 popup/item_2/text = "Ease In/Out"
@@ -1307,7 +1305,7 @@ offset_right = 273.5
 offset_bottom = -118.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 88
-text = "HOMING
+text = "SYNCING
 PLEASE WAIT"
 horizontal_alignment = 1
 
@@ -1654,25 +1652,26 @@ layout_mode = 2
 texture_normal = ExtResource("23_nlut4")
 stretch_mode = 3
 
-[node name="Main" type="VBoxContainer" parent="Menu"]
+[node name="Main" type="Control" parent="Menu"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_top = -723.0
-offset_bottom = -307.0
+offset_bottom = -203.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 71
 
 [node name="Mode" type="OptionButton" parent="Menu/Main"]
 layout_mode = 2
+offset_right = 1080.0
+offset_bottom = 82.0
 theme_override_colors/font_color = Color(1, 0.498039, 0.313726, 1)
 alignment = 1
 expand_icon = true
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Path Mode"
 popup/item_0/id = 2
 popup/item_1/text = "Position Mode"
@@ -1682,6 +1681,9 @@ popup/item_2/id = 4
 
 [node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main"]
 layout_mode = 2
+offset_top = 153.0
+offset_right = 1080.0
+offset_bottom = 249.0
 theme_override_constants/separation = 117
 alignment = 1
 
@@ -1698,6 +1700,9 @@ text = "Save Playlist"
 
 [node name="PathButtons" type="HBoxContainer" parent="Menu/Main"]
 layout_mode = 2
+offset_top = 299.0
+offset_right = 1080.0
+offset_bottom = 395.0
 theme_override_constants/separation = 175
 alignment = 1
 
@@ -1710,6 +1715,23 @@ text = "Add Path"
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "Add Delay"
+
+[node name="LoopPlaylistButton" type="Button" parent="Menu/Main"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -82.0
+offset_right = 233.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_pressed_color = Color(0, 0.815686, 0.627451, 1)
+theme_override_font_sizes/font_size = 54
+toggle_mode = true
+text = "Loop Playlist: OFF"
 
 [node name="LoopSettings" type="VBoxContainer" parent="Menu"]
 visible = false
@@ -1738,10 +1760,9 @@ text = "Stroke Speed Display:"
 [node name="OptionButton" type="OptionButton" parent="Menu/LoopSettings/DisplayMode"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-item_count = 2
 selected = 0
+item_count = 2
 popup/item_0/text = "Seconds"
-popup/item_0/id = 0
 popup/item_1/text = "Percentage"
 popup/item_1/id = 1
 
@@ -1781,10 +1802,10 @@ value = 0.2
 suffix = "sec"
 
 [node name="PathControls" type="Control" parent="Menu"]
-anchors_preset = 0
-anchor_top = 0.35625
+layout_mode = 1
+anchor_top = 0.397917
 anchor_right = 1.0
-anchor_bottom = 0.446354
+anchor_bottom = 0.488021
 metadata/_edit_use_anchors_ = true
 
 [node name="Down" type="TextureButton" parent="Menu/PathControls"]
@@ -1844,7 +1865,7 @@ stretch_mode = 3
 [node name="Playlist" type="Panel" parent="Menu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.453646
+anchor_top = 0.492708
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -1942,6 +1963,15 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="Panel" type="Panel" parent="Menu/AddDelay/Box"]
+modulate = Color(0.27, 0.27, 0.27, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="HBox" type="HBoxContainer" parent="Menu/AddDelay/Box"]
 layout_mode = 1
 anchors_preset = 14
@@ -1978,8 +2008,8 @@ offset_right = 156.5
 offset_bottom = 41.0
 grow_horizontal = 2
 grow_vertical = 2
-min_value = 0.01
-max_value = 999999.0
+min_value = 0.2
+max_value = 99999.0
 step = 0.01
 value = 1.5
 
@@ -2015,6 +2045,15 @@ offset_bottom = -90.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_kgmbj")
+
+[node name="Panel" type="Panel" parent="Menu/SavePlaylist"]
+modulate = Color(0.27, 0.27, 0.27, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBox" type="HBoxContainer" parent="Menu/SavePlaylist"]
 layout_mode = 1
@@ -2090,7 +2129,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "App v1.1.0"
+text = "App v1.1.1"
 
 [node name="Settings" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -2559,6 +2598,7 @@ text = "Connecting to network..."
 [connection signal="pressed" from="Menu/Main/PlaylistButtons/SavePlaylist" to="Menu" method="_on_save_playlist_pressed"]
 [connection signal="pressed" from="Menu/Main/PathButtons/AddPath" to="Menu" method="_on_add_path_pressed"]
 [connection signal="pressed" from="Menu/Main/PathButtons/AddDelay" to="Menu" method="_on_add_delay_pressed"]
+[connection signal="toggled" from="Menu/Main/LoopPlaylistButton" to="Menu" method="_on_loop_playlist_button_toggled"]
 [connection signal="item_selected" from="Menu/LoopSettings/DisplayMode/OptionButton" to="Menu" method="_on_stroke_duration_display_mode_changed"]
 [connection signal="value_changed" from="Menu/LoopSettings/MaxStrokeDuration/SpinBox" to="Menu" method="_on_max_stroke_duration_changed"]
 [connection signal="value_changed" from="Menu/LoopSettings/MinStrokeDuration/SpinBox" to="Menu" method="_on_min_stroke_duration_changed"]

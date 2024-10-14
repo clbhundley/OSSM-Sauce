@@ -44,8 +44,8 @@ extern enum MovementMode:byte {
 } movementMode;
 
 struct StrokeCommand {
-  uint32_t timingMs;
-  short positionInput;
+  uint32_t endTimeMs;
+  short depth;
   TransType transType;
   EaseType easeType;
   byte auxiliary;

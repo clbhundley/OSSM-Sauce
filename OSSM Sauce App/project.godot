@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="OSSM Sauce"
-config/version="1.1.0"
+config/description="WebSocket controller for OSSM hardware"
+config/version="1.1.1"
 run/main_scene="res://OSSM Sauce.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://S-curve.svg"
 config/windows_native_icon="res://S-curve.ico"
 

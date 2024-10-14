@@ -14,24 +14,29 @@ func _ready():
 func _on_item_selected(item):
 	if drag_delta > 7:
 		return
+	
 	deselect_all()
 	item.select()
+	
 	var index = item.get_index()
 	selected_index = index
+	
 	var restart_button = %Menu/PathControls/HBox/Restart
 	if owner.active_path_index == index and owner.frame > 0:
 		restart_button.show()
 	else:
 		restart_button.hide()
+	
 	if not owner.paused and owner.active_path_index == index:
 		%Menu.show_pause()
 	else:
 		%Menu.show_play()
-	var timer = item.get_node('Timer')
-	if timer.time_left:
+	
+	var double_tap_timer = item.get_node('Timer')
+	if double_tap_timer.time_left:
 		%Menu._on_play_pressed()
 	else:
-		timer.start()
+		double_tap_timer.start()
 
 
 func add_item(item_text:String):
@@ -96,6 +101,8 @@ func clear():
 		if not owner.paused:
 			%Menu._on_pause_pressed()
 	owner.paths.clear()
+	owner.markers.clear()
+	owner.network_paths.clear()
 	for item in $Scroll/VBox.get_children():
 		$Scroll/VBox.remove_child(item)
 	for path in %PathDisplay/Paths.get_children():

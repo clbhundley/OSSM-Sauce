@@ -1,6 +1,6 @@
 extends Control
 
-var app_version_number:String = "1.1.0"
+var app_version_number:String = "1.1.1"
 
 var storage_dir:String
 var paths_dir:String
@@ -118,26 +118,34 @@ func _physics_process(delta):
 		return
 	
 	if frame >= paths[active_path_index].size() - 1:
-		
-		if network_paths.size() > active_path_index + 1:
+		if active_path_index < network_paths.size() - 1:
 			var overreach_index = marker_index - network_paths[active_path_index].size() + 1
 			var next_path = network_paths[active_path_index + 1]
 			websocket.send(next_path[overreach_index])
-		
-		if active_path_index < paths.size() - 1:
 			var path_list = $Menu/Playlist/Scroll/VBox
 			var next_index = active_path_index + 1
-			var next_path = path_list.get_child(next_index) 
+			var next_path_item = path_list.get_child(next_index) 
 			active_path_index = next_index
 			display_active_path_index(false, false)
-			$Menu/Playlist._on_item_selected(next_path)
+			$Menu/Playlist._on_item_selected(next_path_item)
 			path_list.get_child(next_index).set_active()
 		else:
-			pause()
-			$Menu.show_play()
-			$CircleSelection.show_restart()
-			paused = true
-		
+			if $Menu.loop_playlist:
+				var overreach_index = marker_index - network_paths[active_path_index].size() + 1
+				var next_path = network_paths[0]
+				websocket.send(next_path[overreach_index])
+				var path_list = $Menu/Playlist/Scroll/VBox
+				var next_path_item = path_list.get_child(0) 
+				active_path_index = 0
+				display_active_path_index(false, false)
+				$Menu/Playlist._on_item_selected(next_path_item)
+				path_list.get_child(0).set_active()
+			else:
+				pause()
+				$Menu.show_play()
+				$Menu
+				$CircleSelection.show_restart()
+				paused = true
 		return
 	
 	var marker_list = markers[active_path_index]
@@ -148,9 +156,13 @@ func _physics_process(delta):
 		if connected_to_server:
 			if marker_index < active_path.size():
 				websocket.send(active_path[marker_index])
-			elif network_paths.size() > active_path_index + 1:
+			elif active_path_index < network_paths.size() - 1:
 				var overreach_index = marker_index - active_path.size()
 				var next_path = network_paths[active_path_index + 1]
+				websocket.send(next_path[overreach_index])
+			elif $Menu.loop_playlist:
+				var overreach_index = marker_index - active_path.size()
+				var next_path = network_paths[0]
 				websocket.send(next_path[overreach_index])
 		if current_marker < marker_list.size() - 1:
 			marker_index += 1
@@ -179,7 +191,6 @@ func _process(delta):
 			var packet:PackedByteArray = websocket.get_packet()
 			if packet[0] == CommandType.RESPONSE:
 				match packet[1]:
-					
 					CommandType.CONNECTION:
 						connected_to_ossm = true
 						ossm_connection_timeout.emit_signal('timeout')
@@ -305,11 +316,15 @@ func apply_user_settings():
 		if user_settings.has_section_key('window', 'size'):
 			DisplayServer.window_set_size(
 					user_settings.get_value('window', 'size'))
+		else:
+			DisplayServer.window_set_size(Vector2(435, 774))
+		
 		if user_settings.has_section_key('window', 'always_on_top'):
 			var checkbox = $Settings/Window/AlwaysOnTop/CheckBox
 			checkbox.button_pressed = user_settings.get_value(
 					'window',
 					'always_on_top')
+		
 		if user_settings.has_section_key('window', 'transparent_background'):
 			var checkbox = $Settings/Window/TransparentBg/CheckBox
 			checkbox.button_pressed = user_settings.get_value(
@@ -406,19 +421,34 @@ func apply_user_settings():
 		$Menu.select_mode(user_settings.get_value('app_settings', 'mode'))
 	else:
 		$Menu.select_mode(0)
-	
+
+
+func create_move_command(ms_timing:int, depth:float, trans:int, ease:int, auxiliary:int):
+	var network_packet:PackedByteArray
+	network_packet.resize(10)
+	network_packet.encode_u8(0, CommandType.MOVE)
+	network_packet.encode_u32(1, ms_timing)
+	network_packet.encode_u16(5, round(remap(depth, 0, 1, 0, 10000)))
+	network_packet.encode_u8(7, trans)
+	network_packet.encode_u8(8, ease)
+	network_packet.encode_u8(9, auxiliary)
+	return network_packet
 
 
 func load_path(file_name:String) -> bool:
 	var file = FileAccess.open(paths_dir + file_name, FileAccess.READ)
 	if not file:
+		printerr("Error: Failed to read file.")
 		return false
+	
 	var file_data = JSON.parse_string(file.get_line())
 	if not file_data:
+		printerr("Error: No JSON data found in file.")
 		return false
-	var marker_data:Dictionary = file_data
 	
-	if marker_data.is_empty():
+	var marker_data:Dictionary = file_data
+	if marker_data.size() < 6:
+		printerr("Error: Insufficient path data in file.")
 		return false
 	
 	var network_packets:Array
@@ -495,8 +525,17 @@ func create_delay(duration:float):
 	var message:String = headers%[0, duration * 1000, 0, 2]
 	for point in round(duration * ticks_per_second):
 		delay_path.append(-1)
+	var marker_path:Dictionary
+	var network_packets:Array
+	for timing in 6:
+		var move_command = create_move_command(timing, 0, 0, 0, 0)
+		network_packets.append(move_command)
+		marker_path[timing] = message
+	var end_move = create_move_command(duration * 1000, 0, 0, 0, 0)
+	network_packets.append(end_move)
+	network_paths.append(network_packets)
 	paths.append(delay_path)
-	markers.append({0:message})
+	markers.append(marker_path)
 	$PathDisplay/Paths.add_child(path_line)
 	$Menu/Playlist.add_item("delay(%s)" % [duration])
 
@@ -505,7 +544,6 @@ func display_active_path_index(pause := true, send_buffer := true):
 	paused = pause
 	frame = 0
 	marker_index = 0
-	
 	if send_buffer:
 		if connected_to_server:
 			send_command(CommandType.RESET)

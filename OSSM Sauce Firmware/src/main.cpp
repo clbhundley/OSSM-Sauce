@@ -5,7 +5,6 @@
 #include "Network.h"
 
 unsigned long playStartTime;
-unsigned long stopTime;
 unsigned long playTimeMs;
 
 StrokeCommand activeMove;
@@ -46,18 +45,18 @@ struct Response {
 
 void moveStart() {
   activeMove.active = false;
-  short lastPositionInput = activeMove.positionInput;
+  short lastTargetDepth = activeMove.depth;
   if (!xQueueReceive(moveQueue, &activeMove, (TickType_t)10))
     Serial.println("ERROR: Queue empty.");
-  if (activeMove.timingMs == 0 && uxQueueSpacesAvailable(moveQueue) < moveQueueSize) { // start of next path
+  if (activeMove.endTimeMs == 0 && uxQueueSpacesAvailable(moveQueue) < moveQueueSize) { // start of next path
     playTimeMs = 0;
     playStartTime = millis();
-  } else if (activeMove.timingMs == 0 || activeMove.positionInput == lastPositionInput)
+  } else if (activeMove.endTimeMs == 0 || activeMove.depth == lastTargetDepth)
     return;
-  short constrainedPosition = constrain(activeMove.positionInput, 0, 10000);
+  short constrainedPosition = constrain(activeMove.depth, 0, 10000);
   activeMove.targetPosition = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
   activeMove.playTimeStartedMs = playTimeMs;
-  u32_t durationMs = activeMove.timingMs - activeMove.playTimeStartedMs;
+  u32_t durationMs = activeMove.endTimeMs - activeMove.playTimeStartedMs;
   activeMove.durationReciprocal = 1.0 / durationMs;
   activeMove.baseSpeedHz = getMoveBaseSpeedHz(activeMove, durationMs);
   activeMove.active = true;
@@ -89,8 +88,9 @@ void setup() {
   Serial.println("/ __)  /__\\  (  )(  )/ __)( ___) ");
   Serial.println("\\__ \\ /(__)\\  )(__)(( (__  )__)");
   Serial.println("(___/(__)(__)(______)\\___)(____) ");
-  Serial.println(" Firmware v1.1");
+  Serial.println(" Firmware v1.2");
   Serial.println("");
+
   connectToWiFi();
   connectToWebSocketServer();
 
@@ -98,7 +98,9 @@ void setup() {
   positionQueue = xQueueCreate(positionQueueSize, 4);
 
   sensorlessHoming();
+  
   delay(400);
+
   Serial.println("-- OSSM Ready! --");
   sendResponse(CONNECTION);
 
@@ -114,24 +116,8 @@ void setup() {
       case MOVE:
         if (message.length() != 10)
           break;
-
         if(!xQueueSend(moveQueue, &(message.rawData().c_str()[1]), (TickType_t)10))
           Serial.println("ERROR: Failed to add move command to queue. Is queue full?");
-        
-        struct {
-          uint32_t timingMs;
-          short positionInput;
-          TransType transType;
-          EaseType easeType;
-          byte auxiliary;
-          long targetPosition;
-          uint32_t playTimeStartedMs;
-          float durationReciprocal;
-          uint32_t baseSpeedHz;
-          bool active;
-        } sample;
-        memcpy(&sample, message.rawData().c_str() + 1, 9);
-
         if (moveQueueIsEmpty)
           moveStart();
         moveQueueIsEmpty = false;
@@ -142,15 +128,15 @@ void setup() {
           break;
         memcpy(&loopPush, message.rawData().c_str() + 1, 9);
         memcpy(&loopPull, message.rawData().c_str() + 10, 9);
-        if (loopPush.timingMs != 0) {
+        if (loopPush.endTimeMs != 0) {
           loopPush.targetPosition = rangeLimitUserMax;
-          loopPush.durationReciprocal = 1.0 / loopPush.timingMs;
-          loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.timingMs, true);
+          loopPush.durationReciprocal = 1.0 / loopPush.endTimeMs;
+          loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.endTimeMs, true);
         }
-        if (loopPull.timingMs != 0) {
+        if (loopPull.endTimeMs != 0) {
           loopPull.targetPosition = rangeLimitUserMin;
-          loopPull.durationReciprocal = 1.0 / loopPull.timingMs;
-          loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.timingMs, true);
+          loopPull.durationReciprocal = 1.0 / loopPull.endTimeMs;
+          loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.endTimeMs, true);
         }
         break;
 
@@ -240,13 +226,13 @@ void setup() {
             break;
         }
         if (movementMode == MODE_LOOP) {
-          if (loopPush.timingMs != 0) {
+          if (loopPush.endTimeMs != 0) {
             loopPush.targetPosition = rangeLimitUserMax;
-            loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.timingMs, true);
+            loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.endTimeMs, true);
           }
-          if (loopPull.timingMs != 0) {
+          if (loopPull.endTimeMs != 0) {
             loopPull.targetPosition = rangeLimitUserMin;
-            loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.timingMs, true);
+            loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.endTimeMs, true);
           }
         }
         break;
@@ -262,6 +248,7 @@ void setup() {
   });
 }
 
+
 void loop() {
   if (client.available())
     client.poll();
@@ -269,7 +256,7 @@ void loop() {
   switch (movementMode) {
     case MODE_MOVE:
       playTimeMs = millis() - playStartTime;
-      if (playTimeMs >= activeMove.timingMs)
+      if (playTimeMs >= activeMove.endTimeMs)
         moveStart();
       else if (activeMove.active)
         processStroke(&activeMove, playTimeMs - activeMove.playTimeStartedMs);
@@ -278,7 +265,7 @@ void loop() {
     case MODE_LOOP: {
       playTimeMs = millis() - playStartTime;
       StrokeCommand* loopPhase = (activeLoopPhase == PUSH) ? &loopPush : &loopPull;
-      if (playTimeMs <= loopPhase->timingMs)
+      if (playTimeMs <= loopPhase->endTimeMs)
         processStroke(loopPhase, playTimeMs);
       else {
         activeLoopPhase = (activeLoopPhase == PUSH) ? PULL : PUSH;
@@ -296,7 +283,6 @@ void loop() {
         stepper->moveTo(homingTargetPosition);
       }
       break;
-    
   }
   delay(1);
 }

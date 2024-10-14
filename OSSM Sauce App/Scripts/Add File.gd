@@ -63,6 +63,7 @@ func _on_load_playlist_pressed():
 			owner.create_delay(delay_duration)
 		elif owner.load_path(line):
 			%Menu/Playlist.add_item(line)
+	owner.send_command(owner.CommandType.RESET)
 	%Menu.show()
 	hide()
 
