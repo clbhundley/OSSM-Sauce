@@ -98,6 +98,8 @@ void setup() {
   positionQueue = xQueueCreate(positionQueueSize, 4);
 
   sensorlessHoming();
+
+  stepper->setAcceleration(globalAcceleration);
   
   delay(400);
 
@@ -157,7 +159,6 @@ void setup() {
         u32_t speed = abs(positionDelta) * 50;
         stepper->setSpeedInHz(min(speed, globalSpeedLimitHz));
         stepper->moveTo(targetPosition);
-        Serial.println(movementMode);
         processSafeAccel();
         break;
       }
@@ -187,7 +188,6 @@ void setup() {
         memcpy(&inputPosition, message.rawData().c_str() + 1, 4);
         int constrainedPosition = constrain(inputPosition, 0, 10000);
         homingTargetPosition = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
-        Serial.println(homingTargetPosition);
         movementMode = MODE_HOMING;
         break;
       }
@@ -284,5 +284,6 @@ void loop() {
       }
       break;
   }
+  
   delay(1);
 }

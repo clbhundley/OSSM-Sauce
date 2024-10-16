@@ -89,7 +89,7 @@ void getPowerReading(bool takeDeltaSample = false, int deltaSampleIndex = 0) {
 }
 
 
-void sensorlessHoming() { 
+void sensorlessHoming() {
 // root mean square could be a better way to determine averages
   Serial.println("");
   Serial.println("Scanning power consumption variance...");
@@ -130,14 +130,14 @@ void sensorlessHoming() {
     }
   }
 
-  //get average of lowest 15 samples
+  //get average of lowest 10 samples
   float outliersAvgLow = 0;
   for (int i = 0; i < outliersSampleSize; i++) {
     outliersAvgLow += deltaArray[i];
   }
   outliersAvgLow = outliersAvgLow / outliersSampleSize;
 
-  //get average of highest 15 samples
+  //get average of highest 10 samples
   float outliersAvgHigh = 0;
   for (int i = 1; i < outliersSampleSize; i++) {
     outliersAvgHigh += deltaArray[deltaSampleLength - i];
@@ -185,13 +185,12 @@ void sensorlessHoming() {
   stepper->setAutoEnable(false);
   digitalWrite(motorEnablePin, LOW);
 
+  stepper->moveTo(rangeLimitHardMin);
+
   //set hard limits
   float hardLimitBuffer = abs(limitPhysicalMax - limitPhysicalMin) * 0.06;
   rangeLimitHardMin = limitPhysicalMin + hardLimitBuffer;
   rangeLimitHardMax = limitPhysicalMax - hardLimitBuffer;
-
-  stepper->setAcceleration(globalAcceleration);
-  stepper->moveTo(rangeLimitHardMin);
 
   rangeLimitUserMin = rangeLimitHardMin;
   rangeLimitUserMax = rangeLimitHardMax;

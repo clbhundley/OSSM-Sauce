@@ -69,6 +69,7 @@ func show_restart():
 
 
 func show_hourglass():
+	print_stack()
 	homing_lock = true
 	$Hourglass.show()
 	$Restart.hide()
