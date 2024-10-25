@@ -2567,6 +2567,12 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 64
 text = "Connecting to network..."
 
+[node name="Button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 650.0
+offset_bottom = 197.0
+
 [connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
 [connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
 [connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
@@ -2627,3 +2633,4 @@ text = "Connecting to network..."
 [connection signal="item_selected" from="AddFile/PathListOG" to="AddFile" method="_on_path_list_item_selected"]
 [connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

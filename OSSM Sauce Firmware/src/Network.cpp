@@ -1,12 +1,11 @@
-#include <Preferences.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
 #include "Network.h"
 
 Preferences preferences;
 
-using namespace websockets;
-WebsocketsClient client;
-
+esp_websocket_client_config_t wsConfig;
+esp_websocket_client_handle_t wsClient;
 
 void connectToWiFi() {
   WiFi.mode(WIFI_STA);
@@ -57,7 +56,7 @@ void connectToWiFi() {
   Serial.println("");
 }
 
-
+/*
 bool wsConnect(String serverAddress) {
   String address;
   int port = 120;
@@ -68,7 +67,7 @@ bool wsConnect(String serverAddress) {
   } else {
       address = serverAddress;
   }
-  return client.connect(address.c_str(), port, "/");
+  return clientWS.connect(address.c_str(), port, "/");
 }
 
 
@@ -98,3 +97,4 @@ void connectToWebSocketServer() {
     delay(1000);
   }
 }
+*/

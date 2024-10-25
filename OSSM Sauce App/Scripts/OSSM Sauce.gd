@@ -75,6 +75,9 @@ func _init():
 
 
 func _ready():
+	
+	OS.request_permissions()
+	
 	var physics_ticks = "physics/common/physics_ticks_per_second"
 	ticks_per_second = ProjectSettings.get_setting(physics_ticks)
 	set_process(false)
@@ -589,3 +592,12 @@ func _notification(what):
 			command.encode_u16(2, 0)
 			websocket.send(command)
 			home_to(0)
+
+
+func _on_button_pressed() -> void:
+	var command:PackedByteArray
+	command.resize(4)
+	command.encode_u8(0, CommandType.SET_RANGE_LIMIT)
+	command.encode_u8(1, 4)
+	command.encode_u16(2, 8)
+	websocket.send(command)

@@ -1,10 +1,13 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include <ArduinoWebsockets.h>
+#include "esp_websocket_client.h"
+#include <Preferences.h>
 
-using namespace websockets;
-extern WebsocketsClient client;
+extern esp_websocket_client_config_t wsConfig;
+extern esp_websocket_client_handle_t wsClient;
+
+extern Preferences preferences;
 
 void connectToWiFi();
 
