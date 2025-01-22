@@ -8,7 +8,7 @@
 #define limitSwitchPin 12
 #define powerSensorPin 36
 
-const int powerAvgRangeMultiplier = 1.7; //raise to decrease, or lower to increase sensitivity of sensorless homing
+const int powerAvgRangeMultiplier = 1.8; //raise to decrease, or lower to increase sensitivity of sensorless homing
 const int outliersSampleSize = 10;
 const int powerSampleSize = 10;
 const int deltaSampleLength = 6000;
