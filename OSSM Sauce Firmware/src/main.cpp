@@ -159,7 +159,7 @@ void parseMessage(esp_websocket_event_data_t *data) {
       if (messageLength != 13)
         break;
       
-      memcpy(&vibration, message + 1, 15);
+      memcpy(&vibration, message + 1, 12);
 
       int constrainedPosition = constrain(vibration.position, 0, 10000);
       vibration.origin = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
@@ -368,7 +368,7 @@ void setup() {
   Serial.println("/ __)  /__\\  (  )(  )/ __)( ___) ");
   Serial.println("\\__ \\ /(__)\\  )(__)(( (__  )__)");
   Serial.println("(___/(__)(__)(______)\\___)(____) ");
-  Serial.println(" Firmware v1.2");
+  Serial.println(" Firmware v1.3");
   Serial.println("");
 
   moveQueue = xQueueCreate(moveQueueSize, 9);
