@@ -30,6 +30,7 @@ func _on_down_pressed():
 
 
 func _on_play_pressed():
+	#owner.vid_play()
 	flash_button($PathControls/HBox/Play)
 	tween(false)
 	%ActionPanel.clear_selections()
@@ -47,6 +48,7 @@ func _on_play_pressed():
 
 
 func _on_pause_pressed():
+	#owner.vid_pause()
 	owner.pause()
 	%ActionPanel.clear_selections()
 	%ActionPanel/Play.show()
@@ -239,83 +241,29 @@ func _on_mode_selected(index:int):
 	owner.home_to(0)
 	if owner.connected_to_ossm:
 		await owner.homing_complete
+	owner.paused = true
+	%ActionPanel.clear_selections()
 	match mode_id:
 		owner.Mode.MOVE:
-			owner.set_physics_process(true)
-			%PositionControls.set_physics_process(false)
-			%LoopControls/In.set_physics_process(false)
-			%LoopControls/Out.set_physics_process(false)
-			%ActionPanel.clear_selections()
-			%ActionPanel/Play.show()
-			%ActionPanel/Pause.hide()
-			%PositionControls.hide()
-			%LoopControls.hide()
-			$LoopSettings.hide()
-			%PathDisplay/Paths.show()
-			%PathDisplay/Ball.show()
-			$Main/PlaylistButtons.show()
-			$Main/PathButtons.show()
-			$Main/LoopPlaylistButton.show()
-			$PathControls.show()
-			$Playlist.show()
-			if owner.active_path_index != null:
-				owner.display_active_path_index()
-			refresh_selection()
+			%PositionControls.deactivate()
+			%LoopControls.deactivate()
+			%VibrationControls.deactivate()
+			owner.activate_move_mode()
 		
 		owner.Mode.POSITION:
-			owner.paused = true
-			owner.set_physics_process(false)
-			%LoopControls/In.set_physics_process(false)
-			%LoopControls/Out.set_physics_process(false)
-			var min_pos = %PositionControls.min_range
-			%PositionControls.touch_pos = min_pos
-			%PositionControls.last_position = 0
-			%PositionControls/MovementBar/Slider.position.y = min_pos
-			%PositionControls.set_physics_process(true)
-			%PositionControls.set_process_input(true)
-			%ActionPanel.clear_selections()
-			%ActionPanel/Play.hide()
-			%ActionPanel/Pause.show()
-			%PositionControls.show()
-			%LoopControls.hide()
-			$LoopSettings.hide()
-			%PathDisplay/Paths.hide()
-			%PathDisplay/Ball.hide()
-			$Main/PlaylistButtons.hide()
-			$Main/PathButtons.hide()
-			$Main/LoopPlaylistButton.hide()
-			$PathControls.hide()
-			$Playlist.hide()
-			owner.play()
+			owner.deactivate_move_mode()
+			%LoopControls.deactivate()
+			%VibrationControls.deactivate()
+			%PositionControls.activate()
 		
 		owner.Mode.LOOP:
-			owner.paused = true
-			owner.set_physics_process(false)
-			%PositionControls.set_physics_process(false)
-			var stop_pos = %LoopControls/In.slider_max_pos
-			%LoopControls/In.touch_pos = stop_pos
-			%LoopControls/Out.touch_pos = stop_pos
-			%LoopControls/In/StrokeDurationSlider/Slider.position.y = stop_pos
-			%LoopControls/Out/StrokeDurationSlider/Slider.position.y = stop_pos
-			%LoopControls/In.stroke_duration = 0
-			%LoopControls/Out.stroke_duration = 0
-			%LoopControls.update_stroke_duration_text()
-			%LoopControls/In.set_physics_process(true)
-			%LoopControls/Out.set_physics_process(true)
-			%LoopControls/In.input_active = false
-			%LoopControls/Out.input_active = false
-			%LoopControls.active = false
-			%LoopControls/Pause.hide()
-			%ActionPanel.clear_selections()
-			%ActionPanel/Play.hide()
-			%ActionPanel/Pause.show()
-			%PositionControls.hide()
-			%LoopControls.show()
-			$LoopSettings.show()
-			%PathDisplay/Paths.hide()
-			%PathDisplay/Ball.hide()
-			$Main/PlaylistButtons.hide()
-			$Main/PathButtons.hide()
-			$Main/LoopPlaylistButton.hide()
-			$PathControls.hide()
-			$Playlist.hide()
+			owner.deactivate_move_mode()
+			%VibrationControls.deactivate()
+			%PositionControls.deactivate()
+			%LoopControls.activate()
+			
+		owner.Mode.VIBRATION:
+			owner.deactivate_move_mode()
+			%PositionControls.deactivate()
+			%LoopControls.deactivate()
+			%VibrationControls.activate()

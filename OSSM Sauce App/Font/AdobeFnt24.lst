@@ -4,7 +4,7 @@
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\OFL.txt
+OutlineFileName:C:\Users\clbhu\OSSM-Sauce\OSSM Sauce App\Font\OFL.txt
 FileModTime:1698906860
 %EndFont
 
@@ -18,7 +18,7 @@ FullName:Rubik Light
 MenuName:Rubik Light
 StyleBits:0
 WritingScript:Roman
-OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\Rubik-Light.ttf
+OutlineFileName:C:\Users\clbhu\OSSM-Sauce\OSSM Sauce App\Font\Rubik-Light.ttf
 DataFormat:sfntData
 hasSVG:no
 hasCOLR:no
@@ -36,7 +36,7 @@ NameArray:0,Win,16,Rubik
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:C:\Users\clbhu\Documents\BX Path Player\Font\Rubik-Light.ttf.import
-FileModTime:1703435678
+OutlineFileName:C:\Users\clbhu\OSSM-Sauce\OSSM Sauce App\Font\Rubik-Light.ttf.import
+FileModTime:1731441332
 %EndFont
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://d3cq3b5o0feo0"]
+[gd_scene load_steps=56 format=3 uid="uid://d3cq3b5o0feo0"]
 
 [ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
 [ext_resource type="Script" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
@@ -10,9 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://cnyl16jr7jd8g" path="res://Textures/Dot.svg" id="8_gc26k"]
 [ext_resource type="Script" path="res://Scripts/Loop Controls.gd" id="9_ggpkr"]
 [ext_resource type="Texture2D" uid="uid://bssf5wkfubmdu" path="res://Textures/PauseLarge.svg" id="10_txgs1"]
+[ext_resource type="Script" path="res://Scripts/Vibration Controls.gd" id="11_nekr0"]
 [ext_resource type="Script" path="res://Scripts/Action Panel.gd" id="11_ovb0l"]
 [ext_resource type="Texture2D" uid="uid://dkpllak4evknm" path="res://Textures/Play.svg" id="12_5566s"]
+[ext_resource type="Texture2D" uid="uid://bsgwwhgpuqxap" path="res://Textures/Wave Triangle.svg" id="12_uvqyu"]
 [ext_resource type="Texture2D" uid="uid://dcx71x8114vuv" path="res://Textures/Selection.svg" id="13_5y1j6"]
+[ext_resource type="Texture2D" uid="uid://it37h4mnryeh" path="res://Textures/Wave Square.svg" id="13_ejghc"]
 [ext_resource type="Texture2D" uid="uid://fxyub7xy8ha5" path="res://Textures/Pause.svg" id="14_nxmo0"]
 [ext_resource type="Texture2D" uid="uid://dd4yrbph2jgxm" path="res://Textures/Speed.svg" id="15_h1yph"]
 [ext_resource type="Texture2D" uid="uid://df1fg8fsnax6k" path="res://Textures/Range.svg" id="16_6gn0p"]
@@ -578,6 +581,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.5, 1.5)
 pivot_offset = Vector2(210, 60)
+focus_mode = 0
 min_value = 0.5
 max_value = 20.0
 step = 0.5
@@ -979,6 +983,396 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VibrationControls" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_nekr0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Waveform" type="Control" parent="VibrationControls"]
+custom_minimum_size = Vector2(860, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -430.0
+offset_top = 63.0
+offset_right = 430.0
+offset_bottom = 223.0
+grow_horizontal = 2
+
+[node name="HSlider" type="HSlider" parent="VibrationControls/Waveform"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -60.0
+offset_right = 210.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(210, 60)
+focus_mode = 0
+min_value = 100.0
+max_value = 200.0
+value = 112.0
+
+[node name="TriangleWave" type="TextureRect" parent="VibrationControls/Waveform"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -21.5
+offset_right = 93.0
+offset_bottom = 21.5
+grow_vertical = 2
+texture = ExtResource("12_uvqyu")
+
+[node name="SquareWave" type="TextureRect" parent="VibrationControls/Waveform"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -21.5
+offset_right = 75.0
+offset_bottom = 21.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("13_ejghc")
+
+[node name="RangeSlider" type="NinePatchRect" parent="VibrationControls"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -438.0
+offset_top = -476.0
+offset_right = -268.0
+offset_bottom = 460.0
+grow_horizontal = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/RangeSlider"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -83.5
+offset_top = -80.0
+offset_right = 83.5
+offset_bottom = -3.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "100%"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/RangeSlider"]
+self_modulate = Color(0.4386, 0.761673, 0.86, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/RangeSlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/RangeSlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/RangeSlider"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.5
+offset_right = 83.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Range"
+horizontal_alignment = 1
+
+[node name="FrequencySlider" type="NinePatchRect" parent="VibrationControls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -476.0
+offset_right = 85.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/FrequencySlider"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -121.5
+offset_top = -160.0
+offset_right = 122.5
+offset_bottom = -3.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "3ms
+166.66Hz"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/FrequencySlider"]
+self_modulate = Color(0.38056, 0.67, 0.3082, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/FrequencySlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/FrequencySlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/FrequencySlider"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.0
+offset_right = 84.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Frequency"
+horizontal_alignment = 1
+
+[node name="PositionSlider" type="NinePatchRect" parent="VibrationControls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 268.0
+offset_top = -476.0
+offset_right = 438.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vkr47")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/PositionSlider"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_top = -80.0
+offset_right = 110.0
+offset_bottom = -3.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "100%"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/PositionSlider"]
+self_modulate = Color(0.941176, 0.501961, 0.501961, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/PositionSlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_gc26k")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/PositionSlider"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_gc26k")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/PositionSlider"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -109.5
+offset_right = 109.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Position"
+horizontal_alignment = 1
+
+[node name="PulseControl" type="Control" parent="VibrationControls"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -174.0
+offset_bottom = -92.0001
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="VibrationControls/PulseControl"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = -86.0
+offset_right = 181.0
+offset_bottom = -9.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "Pulse Control"
+horizontal_alignment = 1
+
+[node name="OnTime" type="SpinBox" parent="VibrationControls/PulseControl"]
+custom_minimum_size = Vector2(369, 0)
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -427.0
+offset_right = -58.0
+offset_bottom = 82.0
+max_value = 99999.0
+prefix = "ON"
+suffix = "ms"
+
+[node name="OffTime" type="SpinBox" parent="VibrationControls/PulseControl"]
+custom_minimum_size = Vector2(384, 0)
+layout_mode = 2
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 42.0
+offset_right = 426.0
+offset_bottom = 82.0
+max_value = 99999.0
+prefix = "OFF"
+suffix = "ms"
+
+[node name="DebounceTimer" type="Timer" parent="VibrationControls"]
+wait_time = 0.2
+one_shot = true
 
 [node name="ActionPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -1671,13 +2065,15 @@ theme_override_colors/font_color = Color(1, 0.498039, 0.313726, 1)
 alignment = 1
 expand_icon = true
 selected = 0
-item_count = 3
+item_count = 4
 popup/item_0/text = "Path Mode"
 popup/item_0/id = 2
 popup/item_1/text = "Position Mode"
 popup/item_1/id = 3
 popup/item_2/text = "Loop Mode"
 popup/item_2/id = 4
+popup/item_3/text = "Vibration Mode"
+popup/item_3/id = 5
 
 [node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main"]
 layout_mode = 2
@@ -2129,7 +2525,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "App v1.1.1"
+text = "App v1.2.0"
 
 [node name="Settings" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -2567,12 +2963,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 64
 text = "Connecting to network..."
 
-[node name="Button" type="Button" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 650.0
-offset_bottom = 197.0
-
 [connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
 [connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
 [connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
@@ -2585,6 +2975,10 @@ offset_bottom = 197.0
 [connection signal="item_selected" from="LoopControls/Out/AccelerationControls/Easing" to="LoopControls/Out" method="_on_easing_item_selected"]
 [connection signal="toggled" from="LoopControls/LinkSpeedSliders" to="LoopControls" method="_on_link_speed_sliders_toggled"]
 [connection signal="pressed" from="LoopControls/Control/Tap" to="LoopControls" method="_on_tap_pressed"]
+[connection signal="value_changed" from="VibrationControls/Waveform/HSlider" to="VibrationControls" method="_on_waveform_value_changed"]
+[connection signal="value_changed" from="VibrationControls/PulseControl/OnTime" to="VibrationControls" method="_on_pulse_control_time_value_changed"]
+[connection signal="value_changed" from="VibrationControls/PulseControl/OffTime" to="VibrationControls" method="_on_pulse_control_time_value_changed"]
+[connection signal="timeout" from="VibrationControls/DebounceTimer" to="VibrationControls" method="_on_debounce_timer_timeout"]
 [connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Speed/Button" to="ActionPanel" method="_on_speed_button_pressed"]
@@ -2633,4 +3027,3 @@ offset_bottom = 197.0
 [connection signal="item_selected" from="AddFile/PathListOG" to="AddFile" method="_on_path_list_item_selected"]
 [connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

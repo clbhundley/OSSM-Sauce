@@ -41,6 +41,7 @@ extern enum MovementMode:byte {
   MODE_MOVE,
   MODE_POSITION,
   MODE_LOOP,
+  MODE_VIBRATE,
 } movementMode;
 
 struct StrokeCommand {

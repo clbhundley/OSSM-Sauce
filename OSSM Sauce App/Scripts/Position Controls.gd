@@ -35,6 +35,11 @@ func _input(event):
 	if input_active:
 		var offset = 265
 		touch_pos = event.position.y - offset
+	elif event is InputEventJoypadMotion:
+		#var input_position = Input.get_action_strength("analog_up") - Input.get_action_strength("analog_down")
+		var input_position = Input.get_action_strength("right_trigger")
+		#touch_pos = remap(input_position, -1, 1, min_range, max_range)
+		touch_pos = remap(input_position, 0, 1, min_range, max_range)
 
 
 func _on_slider_gui_input(event):
@@ -49,3 +54,19 @@ func _on_smoothing_slider_value_changed(value):
 	var max_value = $Smoothing/HSlider.max_value
 	smoothing = max_value - (value - min_value)
 	owner.user_settings.set_value('app_settings', 'smoothing_slider', value)
+
+
+func activate():
+	touch_pos = min_range
+	last_position = 0
+	$MovementBar/Slider.position.y = min_range
+	set_physics_process(true)
+	set_process_input(true)
+	owner.play()
+	show()
+
+
+func deactivate():
+	set_physics_process(false)
+	set_process_input(false)
+	hide()

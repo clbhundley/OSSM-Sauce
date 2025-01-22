@@ -1,11 +1,12 @@
 extends Panel
 
 
-func create_file_list(directory:String, file_extension:String):
+func create_file_list(directory:String, file_types:PackedStringArray):
 	var dir = DirAccess.open(directory)
 	for file_name in dir.get_files():
-		if file_name.ends_with(file_extension):
-			$FileList.add_item(file_name)
+		for type in file_types:
+			if file_name.ends_with(type):
+				$FileList.add_item(file_name)
 
 
 func show_paths():
@@ -15,7 +16,7 @@ func show_paths():
 	$HBox/AddPath.disabled = true
 	$HBox/AddPath.show()
 	$HBox/LoadPlaylist.hide()
-	create_file_list(owner.paths_dir, ".bx")
+	create_file_list(owner.paths_dir, [".bx", ".funscript"])
 	if OS.get_name() == 'Android':
 		$Label.text = "Internal Storage/OSSM Sauce/Paths"
 	else:
@@ -29,7 +30,7 @@ func show_playlists():
 	$HBox/LoadPlaylist.disabled = true
 	$HBox/LoadPlaylist.show()
 	$HBox/AddPath.hide()
-	create_file_list(owner.playlists_dir, ".bxpl")
+	create_file_list(owner.playlists_dir, [".bxpl"])
 	if OS.get_name() == 'Android':
 		$Label.text = "Internal Storage/OSSM Sauce/Playlists"
 	else:

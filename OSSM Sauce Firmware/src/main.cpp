@@ -26,6 +26,7 @@ enum CommandType:byte {
   MOVE,
   LOOP,
   POSITION,
+  VIBRATE,
   PLAY,
   PAUSE,
   RESET,
@@ -41,6 +42,25 @@ struct Response {
   CommandType commandType = RESPONSE;
   CommandType responseType;
 };
+
+
+enum Direction {IN, OUT};
+
+struct Vibration {
+  int32_t duration;
+  uint32_t halfPeriodMs;
+  uint16_t position;
+  uint8_t rangePercent;
+  uint8_t speedScaling;
+  int32_t origin;
+  int32_t crest;
+  Direction direction;
+  float movementSpeed;
+  bool timed;
+  uint32_t endMs;
+  uint32_t currentMs;
+  int32_t targetPosition;
+} vibration;
 
 
 void moveStart() {
@@ -135,6 +155,40 @@ void parseMessage(esp_websocket_event_data_t *data) {
       break;
     }
 
+    case VIBRATE: {
+      if (messageLength != 13)
+        break;
+      
+      memcpy(&vibration, message + 1, 15);
+
+      int constrainedPosition = constrain(vibration.position, 0, 10000);
+      vibration.origin = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
+      uint32_t totalRange = abs(rangeLimitUserMax - rangeLimitUserMin);
+      uint32_t vibrationRange = vibration.rangePercent * 0.01 * totalRange;
+      long vibrationEndpoint = vibration.origin + vibrationRange;
+      vibration.crest = constrain(vibrationEndpoint, rangeLimitUserMin, rangeLimitUserMax);
+
+      float halfPeriodReciprocal = 1 / float(vibration.halfPeriodMs);
+      uint32_t duration = 1000 * halfPeriodReciprocal;
+      float waveformSpeedScaling = vibration.speedScaling * 0.01;
+      uint32_t newSpeed = vibrationRange * duration * waveformSpeedScaling;
+      stepper->setSpeedInHz(min(newSpeed, globalSpeedLimitHz));
+
+      if (vibration.duration > 0) {
+        vibration.timed = true;
+        vibration.endMs = millis() + vibration.duration;
+      } else if (vibration.duration < 0) {
+        vibration.timed = false;
+      } else {
+        movementMode = MODE_IDLE;
+        break;
+      }
+
+      processSafeAccel();
+      movementMode = MODE_VIBRATE;
+      break;
+    }
+
     case PLAY: {
       memcpy(&movementMode, message + 1, 1);
       if (messageLength == 6)
@@ -196,11 +250,14 @@ void parseMessage(esp_websocket_event_data_t *data) {
       switch (selectedRange) {
         case MIN_RANGE:
           rangeLimitUserMin = rangeLimitInput;
+          //vibration.origin = rangeLimitInput;
           break;
         case MAX_RANGE:
           rangeLimitUserMax = rangeLimitInput;
+          //vibration.crest = rangeLimitInput;
           break;
       }
+      //vibration.totalRange = abs(vibration.crest - vibration.origin);
       if (movementMode == MODE_LOOP) {
         if (loopPush.endTimeMs != 0) {
           loopPush.targetPosition = rangeLimitUserMax;
@@ -329,9 +386,6 @@ void setup() {
 
 
 void loop() {
-  //if (client.available())
-    //client.poll();
-  
   switch (movementMode) {
     case MODE_MOVE:
       playTimeMs = millis() - playStartTime;
@@ -349,6 +403,19 @@ void loop() {
       else {
         activeLoopPhase = (activeLoopPhase == PUSH) ? PULL : PUSH;
         playStartTime = millis();
+      }
+      break;
+    }
+
+    case MODE_VIBRATE: {
+      unsigned long currentMs = millis();
+      if (currentMs - vibration.currentMs >= vibration.halfPeriodMs) {
+        vibration.currentMs = currentMs;
+        vibration.direction = (vibration.direction == IN) ? OUT : IN;
+        stepper->moveTo((vibration.direction == IN) ? vibration.origin : vibration.crest);
+      }
+      if (vibration.timed && currentMs >= vibration.endMs) {
+        movementMode = MODE_IDLE;
       }
       break;
     }

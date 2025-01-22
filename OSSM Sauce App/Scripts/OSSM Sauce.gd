@@ -35,6 +35,7 @@ enum CommandType {
 	MOVE,
 	LOOP,
 	POSITION,
+	VIBRATE,
 	PLAY,
 	PAUSE,
 	RESET,
@@ -53,6 +54,7 @@ enum Mode {
 	MOVE,
 	POSITION,
 	LOOP,
+	VIBRATION,
 }
 
 var max_speed:int
@@ -68,16 +70,50 @@ signal homing_complete
 
 @onready var ossm_connection_timeout:Timer = $Settings/Network/ConnectionTimeout
 
+#func fix_path():
+	#var f = "C:/Users/clbhu/Documents/OSSM Sauce/Paths/Go Head Shoot - Copy.bx"
+	#var f2 = "C:/Users/clbhu/Documents/OSSM Sauce/Paths/Go Head Shoot - Copy 2.bx"
+	#var file = FileAccess.open(f, FileAccess.READ)
+	#var newdic:Dictionary
+	#var file_data = JSON.parse_string(file.get_line())
+	#var marker_data:Dictionary = file_data
+	#for marker_frame in marker_data.keys():
+		#newdic[int(marker_frame) - 213] = marker_data[marker_frame]
+		#
+	#var file2 := FileAccess.open(f2, FileAccess.WRITE)
+	#file2.store_line(JSON.stringify(newdic))
+	#file2.close()
+	#file.close()
 
 func _init():
 	max_speed = 25000
 	max_acceleration = 500000
 
+#func vid_play():
+	#print("playing")
+	#var command = r'echo { "command": ["set_property", "pause", false] } > \\.\pipe\mpv-pipe'
+	#OS.execute("cmd", ["/c", command])
+
+#func vid_pause():
+	#print("pausing")
+	#var command = r'echo { "command": ["set_property", "pause", true] } > \\.\pipe\mpv-pipe'
+	#OS.execute("cmd", ["/c", command])
+
 
 func _ready():
+	#fix_path()
+	#get_tree().get_root().set_transparent_background(true)
+	#var p1 = "D:/v2/BloodMoon.mov"
+	#var path =  "C:/Users/clbhu/Desktop/Splendid/bxe.mp4"
+	#var path1 = "D:/v2/BounceX Vol 2 (Ultra Quality - Uncompressed Audio).mov"
+	#var p2 = "C:/Users/clbhu/BounceX/mpv/bxe.mp4"
+	#var command = r'mpv --input-ipc-server=\\.\pipe\mpv-pipe ' + p1
+	#var command2 = 'mpv --input-ipc-server=\\\\.\\pipe\\mpv-pipe bxe.mp4'
+	#OS.create_process("cmd", ["/c", command])
+	#OS.create_process()
 	
 	OS.request_permissions()
-	
+
 	var physics_ticks = "physics/common/physics_ticks_per_second"
 	ticks_per_second = ProjectSettings.get_setting(physics_ticks)
 	set_process(false)
@@ -438,16 +474,59 @@ func create_move_command(ms_timing:int, depth:float, trans:int, ease:int, auxili
 	return network_packet
 
 
+func round_to(value: float, decimals: int) -> float:
+	var factor = pow(10, decimals)
+	return round(value * factor) / factor
+
+
 func load_path(file_name:String) -> bool:
 	var file = FileAccess.open(paths_dir + file_name, FileAccess.READ)
 	if not file:
 		printerr("Error: Failed to read file.")
 		return false
 	
-	var file_data = JSON.parse_string(file.get_line())
-	if not file_data:
-		printerr("Error: No JSON data found in file.")
-		return false
+	var file_data:Dictionary
+	
+	if file_name.ends_with(".funscript"):
+		var file_text = file.get_as_text()
+		
+		file_text = file_text.replace("\n", "")
+		
+		var actions_pattern = RegEx.new()
+		actions_pattern.compile('"[Aa]ctions":\\s*\\[.*?\\]')
+		var actions_regex = actions_pattern.search(file_text)
+		if not actions_regex:
+			actions_pattern.compile('"[Rr]aw[Aa]ctions":\\s*\\[.*?\\]')
+			actions_regex = actions_pattern.search(file_text)
+		if actions_regex:
+			var actions_text = actions_regex.get_string(0)
+			actions_text = actions_text.replace("'", '"')
+			actions_text = actions_text.insert(0, "{")
+			actions_text = actions_text.insert(actions_text.length(), "}")
+			var actions_data = JSON.parse_string(actions_text)
+			if actions_data:
+				var actions_list = actions_data[actions_data.keys()[0]]
+				#var path_data:Dictionary
+				#path_data[0] = [0, $TransitionType.get_selected_id(), 2, 0]
+				#path_data[0] = [0, 1, 2, 0]
+				file_data[0] = [0, 1, 2, 0]
+				for action in actions_list:
+					var frame:int = action.at / 16.66666
+					var depth = round_to(clamp(action.pos / 100, 0, 1), 4)
+					#var trans = $TransitionType.get_selected_id()
+					var trans = 1
+					var ease = 2
+					var aux = 0
+					file_data[frame] = [depth, trans, ease, aux]
+			else:
+				print("Failed to parse funscript JSON")
+		else:
+			print("No actions data found in the funscript")
+	else:
+		file_data = JSON.parse_string(file.get_line())
+		if not file_data:
+			printerr("Error: No JSON data found in file.")
+			return false
 	
 	var marker_data:Dictionary = file_data
 	if marker_data.size() < 6:
@@ -594,10 +673,29 @@ func _notification(what):
 			home_to(0)
 
 
-func _on_button_pressed() -> void:
-	var command:PackedByteArray
-	command.resize(4)
-	command.encode_u8(0, CommandType.SET_RANGE_LIMIT)
-	command.encode_u8(1, 4)
-	command.encode_u16(2, 8)
-	websocket.send(command)
+func activate_move_mode():
+	set_physics_process(true)
+	%ActionPanel/Play.show()
+	%ActionPanel/Pause.hide()
+	%PathDisplay/Paths.show()
+	%PathDisplay/Ball.show()
+	%Menu/Main/PlaylistButtons.show()
+	%Menu/Main/PathButtons.show()
+	%Menu/Main/LoopPlaylistButton.show()
+	%Menu/PathControls.show()
+	%Menu/Playlist.show()
+	if active_path_index != null:
+		display_active_path_index()
+	%Menu.refresh_selection()
+
+
+func deactivate_move_mode():
+	%ActionPanel/Play.hide()
+	%ActionPanel/Pause.show()
+	%PathDisplay/Paths.hide()
+	%PathDisplay/Ball.hide()
+	%Menu/Main/PlaylistButtons.hide()
+	%Menu/Main/PathButtons.hide()
+	%Menu/Main/LoopPlaylistButton.hide()
+	%Menu/PathControls.hide()
+	%Menu/Playlist.hide()

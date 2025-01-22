@@ -27,6 +27,11 @@ func min_slider_gui_input(event):
 			min_slider.position.y = clamp(drag_pos, max_range, min_range_pos)
 			if %Menu/Main/Mode.selected != 1:
 				update_min_range()
+				if owner.app_mode == 5:
+					if %VibrationControls.pulse_active:
+						%VibrationControls.pulse_controller()
+					else:
+						%VibrationControls.send_vibrate_command()
 
 
 func max_slider_gui_input(event):
@@ -37,6 +42,11 @@ func max_slider_gui_input(event):
 			max_slider.position.y = clamp(drag_pos, max_range_pos, min_range)
 			if %Menu/Main/Mode.selected != 1:
 				update_max_range()
+				if owner.app_mode == 5:
+					if %VibrationControls.pulse_active:
+						%VibrationControls.pulse_controller()
+					else:
+						%VibrationControls.send_vibrate_command()
 
 
 func update_min_range():
@@ -52,7 +62,7 @@ func update_min_range():
 		command.encode_u8(1, MIN_RANGE)
 		command.encode_u16(2, range_map)
 		owner.websocket.send(command)
-	var text_value = str(snapped(range_map, 0.01))
+	var text_value = str(snapped(percent * 100, 0.01))
 	$LabelBot.text = "Min Position:\n" + text_value + "%"
 
 
@@ -69,7 +79,7 @@ func update_max_range():
 		command.encode_u8(1, MAX_RANGE)
 		command.encode_u16(2, range_map)
 		owner.websocket.send(command)
-	var text_value = str(snapped(range_map, 0.01))
+	var text_value = str(snapped(percent * 100, 0.01))
 	$LabelTop.text = "Max Position:\n" + text_value + "%"
 
 

@@ -154,3 +154,27 @@ func _on_link_speed_sliders_toggled(toggled_on):
 		$LinkSpeedSliders/Label.set_modulate('00b97d')
 	else:
 		$LinkSpeedSliders/Label.set_modulate(Color.WHITE)
+
+
+func activate():
+	$In.touch_pos = $In.slider_max_pos
+	$Out.touch_pos = $Out.slider_max_pos
+	$In/StrokeDurationSlider/Slider.position.y = $In.slider_max_pos
+	$Out/StrokeDurationSlider/Slider.position.y = $Out.slider_max_pos
+	$In.stroke_duration = 0
+	$Out.stroke_duration = 0
+	update_stroke_duration_text()
+	$In.set_physics_process(true)
+	$Out.set_physics_process(true)
+	$In.input_active = false
+	$Out.input_active = false
+	active = false
+	%Menu/LoopSettings.show()
+	show()
+
+
+func deactivate():
+	$In.set_physics_process(false)
+	$Out.set_physics_process(false)
+	%Menu/LoopSettings.hide()
+	hide()
