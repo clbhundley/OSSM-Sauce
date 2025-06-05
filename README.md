@@ -1,7 +1,6 @@
 # OSSM-Sauce
 App and firmware for controlling OSSM devices using WebSockets
 
-
 # OSSM WebSocket Communication Protocol
 
 ## Overview
@@ -327,64 +326,6 @@ The ESP32 sends responses using the RESPONSE (0x00) command:
 └────┴────────┘
 
 TYPE - The command type being acknowledged
-```
-
-## Example Implementations
-
-### Godot (GDScript) - Sending MOVE Command
-```gdscript
-func send_move_command(timestamp_ms: int, position: float, trans: int, ease: int):
-    var command: PackedByteArray
-    command.resize(10)
-    command.encode_u8(0, CommandType.MOVE)
-    command.encode_u32(1, timestamp_ms)
-    command.encode_u16(5, round(remap(position, 0.0, 1.0, 0, 10000)))
-    command.encode_u8(7, trans)
-    command.encode_u8(8, ease)
-    command.encode_u8(9, 0)  # auxiliary
-    websocket.send(command)
-```
-
-### ESP32 (C++) - Receiving Commands
-```cpp
-void parseMessage(esp_websocket_event_data_t *data) {
-    byte* message = (byte*)data->data_ptr;
-    CommandType commandType = static_cast<CommandType>(message[0]);
-    
-    switch (commandType) {
-        case MOVE: {
-            if (data->data_len != 10) break;
-            // Message bytes 1-9 contain the stroke data
-            xQueueSend(moveQueue, &(message[1]), portMAX_DELAY);
-            break;
-        }
-        // ... other commands
-    }
-}
-```
-
-## Motion Path Files
-
-### .bx Format
-JSON format containing timestamped positions with motion parameters:
-```json
-{
-  "0": [0.0, 1, 2, 0],      // Frame 0: [depth, trans, ease, aux]
-  "60": [1.0, 1, 2, 0],     // Frame 60
-  "120": [0.5, 2, 1, 0]     // Frame 120
-}
-```
-
-### .funscript Format
-JSON format with millisecond timestamps:
-```json
-{
-  "actions": [
-    {"at": 0, "pos": 0},
-    {"at": 1000, "pos": 100},
-    {"at": 2000, "pos": 50}
-  ]
-}
 ```
 
 ## Notes
