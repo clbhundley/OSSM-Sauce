@@ -1,11 +1,13 @@
-# OSSM-Sauce
-App and firmware for controlling OSSM devices using WebSockets
 
-# OSSM WebSocket Communication Protocol
+# OSSM Sauce
 
 ## Overview
 
-The OSSM (Open Source Sex Machine) uses a binary WebSocket protocol for real-time communication between the control application (Godot) and the ESP32 firmware. All multi-byte values are transmitted in **little-endian** byte order.
+ESP32 firmware and Godot 4 app - Uses WebSockets to control integrated servo motors.
+
+[Custom WebSocketServer class](https://github.com/clbhundley/websocket-server-gdextension) implemented in this project created using GDExtension.
+
+All multi-byte command values are transmitted in **little-endian** byte order.
 
 ## Architecture
 
@@ -23,7 +25,7 @@ The OSSM (Open Source Sex Machine) uses a binary WebSocket protocol for real-tim
 
 All commands follow this pattern:
 1. First byte: Command Type (enum)
-2. Remaining bytes: Command-specific data
+2. Subsequent bytes: Command-specific data
 
 ## Command Reference
 
@@ -101,7 +103,7 @@ Each stroke contains:
 │   0-3       │  4-5   │   6    │   7    │   8    │
 ├─────────────┼────────┼────────┼────────┼────────┤
 │ DURATION_MS │  POS   │ TRANS  │  EASE  │  AUX   │
-│   (u32)     │ (u16)  │  (u8)  │  (u8)  │  (u8)  │
+│    (u32)    │ (u16)  │  (u8)  │  (u8)  │  (u8)  │
 └─────────────┴────────┴────────┴────────┴────────┘
 ```
 
@@ -131,7 +133,7 @@ Configures vibration pattern with adjustable waveform.
 │ 0  │    1-4      │    5-8      │  9-10  │   11   │   12   │
 ├────┼─────────────┼─────────────┼────────┼────────┼────────┤
 │CMD │ DURATION_MS │ HALF_PERIOD │  POS   │ RANGE  │ SMOOTH │
-│0x04│   (s32)     │   (u32)     │ (u16)  │  (u8)  │  (u8)  │
+│0x04│    (s32)    │    (u32)    │ (u16)  │  (u8)  │  (u8)  │
 └────┴─────────────┴─────────────┴────────┴────────┴────────┘
 
 DURATION_MS  - Duration (-1=infinite, 0=stop) (s32)
@@ -234,7 +236,7 @@ Handshake/connection verification.
 ```
 
 ### SET_SPEED_LIMIT Command (0x0A)
-Sets maximum motor speed.
+Sets motor speed limit across all app modes.
 
 **Packet Size:** 5 bytes
 
@@ -246,11 +248,11 @@ Sets maximum motor speed.
 │0x0A│   (u32)    │
 └────┴────────────┘
 
-SPEED_HZ - Maximum speed in Hz (u32)
+SPEED_HZ - Maximum speed in steps/sec (u32)
 ```
 
 ### SET_GLOBAL_ACCELERATION Command (0x0B)
-Sets motor acceleration.
+Sets motor acceleration limit across all app modes.
 
 **Packet Size:** 5 bytes
 
@@ -262,11 +264,11 @@ Sets motor acceleration.
 │0x0B│   (u32)    │
 └────┴────────────┘
 
-ACCEL - Acceleration in steps/sec² (u32)
+ACCEL - Maximum acceleration in steps/sec² (u32)
 ```
 
 ### SET_RANGE_LIMIT Command (0x0C)
-Sets motion range limits.
+Sets motion range limits for either end of the rail.
 
 **Packet Size:** 4 bytes
 
@@ -283,7 +285,7 @@ LIMIT - Position limit 0-10000 (u16)
 ```
 
 ### SET_HOMING_SPEED Command (0x0D)
-Sets homing movement speed.
+Sets homing/syncing movement speed.
 
 **Packet Size:** 5 bytes
 
@@ -295,11 +297,11 @@ Sets homing movement speed.
 │0x0D│   (u32)    │
 └────┴────────────┘
 
-SPEED_HZ - Homing speed in Hz (u32)
+SPEED_HZ - Homing speed in steps/sec (u32)
 ```
 
 ### SET_HOMING_TRIGGER Command (0x0E)
-Sets power spike threshold for sensorless homing.
+Sets power spike threshold for sensorless homing. (Lower = more sensitive)
 
 **Packet Size:** 5 bytes
 
@@ -315,8 +317,9 @@ THRESHOLD - Voltage threshold for edge detection (u32)
 ```
 
 ## Response Protocol
+Signals sent to the app using the RESPONSE (0x00) command followed by another command type.
 
-The ESP32 sends responses using the RESPONSE (0x00) command:
+**Packet Size:** 2 bytes
 
 ```
 ┌────┬────────┐
@@ -332,5 +335,5 @@ TYPE - The command type being acknowledged
 
 - All positions are normalized to 0-10000 range
 - The ESP32 uses sensorless homing to detect motion limits via power consumption monitoring
-- The WebSocket connection supports both binary and text protocols, but all motion commands use binary
+- The WebSocket connection supports both binary and text protocols, but all motion commands currently use binary
 - Motion smoothing and acceleration limits are applied in the ESP32 firmware for safety
