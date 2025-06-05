@@ -11,13 +11,13 @@ The OSSM (Open Source Sex Machine) uses a binary WebSocket protocol for real-tim
 ## Architecture
 
 ```
-┌─────────────────┐                  ┌─────────────────┐
-│   Godot App     │                  │   ESP32 OSSM    │
-│                 │                  │                 │
-│ WebSocket       │◄────────────────►│ WebSocket       │
-│ Server          │   Binary Data    │ Client          │
-│ (GDExtension)   │                  │                 │
-└─────────────────┘                  └─────────────────┘
+┌─────────────────┐                 ┌─────────────────┐
+│    Godot App    │                 │   ESP32 OSSM    │
+│                 │                 │                 │
+│ WebSocket       │◄───────────────►│ WebSocket       │
+│ Server          │   Binary Data   │ Client          │
+│ (GDExtension)   │                 │                 │
+└─────────────────┘                 └─────────────────┘
 ```
 
 ## Command Structure
