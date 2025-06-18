@@ -62,7 +62,7 @@ Controls point-to-point motion with easing curves.
 └────┴───────────┴────────┴────────┴────────┴────────┘
 
 CMD     - Command type (MOVE = 0x01)
-TIME_MS - Timestamp in milliseconds (u32)
+TIME_MS - Move completion time in milliseconds (u32)
 POS     - Target position 0-10000 (u16)
 TRANS   - Transition type (u8)
 EASE    - Easing type (u8)
@@ -141,8 +141,8 @@ HALF_PERIOD  - Half period in ms (frequency) (u32)
 POS          - Origin position 0-10000 (u16)
 RANGE        - Stroke range 0-100% (u8)
 SMOOTH       - Waveform smoothing 100-200 (u8)
-              100 = Square wave
-              200 = Triangle wave
+              100 = Triangle wave
+              200 = Square wave
               101-199 = Interpolated
 ```
 
@@ -280,12 +280,12 @@ Sets motion range limits for either end of the rail.
 │0x0C│  (u8)  │ (u16)  │
 └────┴────────┴────────┘
 
-RANGE - 0=MIN_RANGE, 1=MAX_RANGE (u8)
+RANGE - 0 = MIN_RANGE, 1 = MAX_RANGE (u8)
 LIMIT - Position limit 0-10000 (u16)
 ```
 
 ### SET_HOMING_SPEED Command (0x0D)
-Sets homing/syncing movement speed.
+Sets position syncing movement speed.
 
 **Packet Size:** 5 bytes
 
@@ -297,7 +297,7 @@ Sets homing/syncing movement speed.
 │0x0D│   (u32)    │
 └────┴────────────┘
 
-SPEED_HZ - Homing speed in steps/sec (u32)
+SPEED_HZ - Position syncing speed in steps/sec (u32)
 ```
 
 ### SET_HOMING_TRIGGER Command (0x0E)
@@ -336,4 +336,4 @@ TYPE - The command type being acknowledged
 - All positions are normalized to 0-10000 range
 - The ESP32 uses sensorless homing to detect motion limits via power consumption monitoring
 - The WebSocket connection supports both binary and text protocols, but all motion commands currently use binary
-- Motion smoothing and acceleration limits are applied in the ESP32 firmware for safety
+- Motion smoothing and speed/acceleration limits are applied in the ESP32 firmware for safety
