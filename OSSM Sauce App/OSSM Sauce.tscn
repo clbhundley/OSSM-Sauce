@@ -1,17 +1,17 @@
-[gd_scene load_steps=56 format=3 uid="uid://d3cq3b5o0feo0"]
+[gd_scene load_steps=58 format=3 uid="uid://d3cq3b5o0feo0"]
 
 [ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
-[ext_resource type="Script" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
+[ext_resource type="Script" uid="uid://bcl1axbtw05ci" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
 [ext_resource type="Texture2D" uid="uid://da3nxjs8pqcoy" path="res://Textures/Dot Small.svg" id="3_4fxdc"]
-[ext_resource type="Script" path="res://Scripts/Position Controls.gd" id="4_juubk"]
+[ext_resource type="Script" uid="uid://brrct0qmqq407" path="res://Scripts/Position Controls.gd" id="4_juubk"]
 [ext_resource type="Texture2D" uid="uid://du8j273r744tn" path="res://Textures/Straight.svg" id="5_assl3"]
 [ext_resource type="Texture2D" uid="uid://bm14gbhhm3uqb" path="res://Textures/Smooth.svg" id="6_w7w2d"]
 [ext_resource type="Texture2D" uid="uid://cb703kraugp85" path="res://Textures/S32.svg" id="7_vkr47"]
 [ext_resource type="Texture2D" uid="uid://cnyl16jr7jd8g" path="res://Textures/Dot.svg" id="8_gc26k"]
-[ext_resource type="Script" path="res://Scripts/Loop Controls.gd" id="9_ggpkr"]
+[ext_resource type="Script" uid="uid://cu75s80u86jl" path="res://Scripts/Loop Controls.gd" id="9_ggpkr"]
 [ext_resource type="Texture2D" uid="uid://bssf5wkfubmdu" path="res://Textures/PauseLarge.svg" id="10_txgs1"]
-[ext_resource type="Script" path="res://Scripts/Vibration Controls.gd" id="11_nekr0"]
-[ext_resource type="Script" path="res://Scripts/Action Panel.gd" id="11_ovb0l"]
+[ext_resource type="Script" uid="uid://vf6er30rg7gg" path="res://Scripts/Vibration Controls.gd" id="11_nekr0"]
+[ext_resource type="Script" uid="uid://chirlya65yehq" path="res://Scripts/Action Panel.gd" id="11_ovb0l"]
 [ext_resource type="Texture2D" uid="uid://dkpllak4evknm" path="res://Textures/Play.svg" id="12_5566s"]
 [ext_resource type="Texture2D" uid="uid://bsgwwhgpuqxap" path="res://Textures/Wave Triangle.svg" id="12_uvqyu"]
 [ext_resource type="Texture2D" uid="uid://dcx71x8114vuv" path="res://Textures/Selection.svg" id="13_5y1j6"]
@@ -20,10 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://dd4yrbph2jgxm" path="res://Textures/Speed.svg" id="15_h1yph"]
 [ext_resource type="Texture2D" uid="uid://df1fg8fsnax6k" path="res://Textures/Range.svg" id="16_6gn0p"]
 [ext_resource type="Texture2D" uid="uid://biyi8wy11rxn2" path="res://Textures/Menu.svg" id="17_qgwvh"]
-[ext_resource type="Script" path="res://Scripts/Speed Panel.gd" id="18_xiv3r"]
+[ext_resource type="Script" uid="uid://bpsi0jcewjfkb" path="res://Scripts/Speed Panel.gd" id="18_xiv3r"]
 [ext_resource type="Texture2D" uid="uid://btmbmu74nqhry" path="res://Textures/Back.svg" id="19_cpmuu"]
-[ext_resource type="Script" path="res://Scripts/Range Panel.gd" id="20_ogp2k"]
-[ext_resource type="Script" path="res://Scripts/Menu.gd" id="21_khfk6"]
+[ext_resource type="Script" uid="uid://r4wmcbentqpr" path="res://Scripts/Range Panel.gd" id="20_ogp2k"]
+[ext_resource type="Script" uid="uid://geh3ju1otcwn" path="res://Scripts/Menu.gd" id="21_khfk6"]
 [ext_resource type="Texture2D" uid="uid://1yuj650f5xs" path="res://Textures/Gear.svg" id="22_2ruby"]
 [ext_resource type="Texture2D" uid="uid://o6gdsdww0cu4" path="res://Textures/Exit.svg" id="23_nlut4"]
 [ext_resource type="Texture2D" uid="uid://bvlmowqblmdgt" path="res://Textures/Down.svg" id="24_n8lpp"]
@@ -31,16 +31,17 @@
 [ext_resource type="Texture2D" uid="uid://rcaxkukbqghe" path="res://Textures/Restart.svg" id="26_aqrhn"]
 [ext_resource type="Texture2D" uid="uid://bd8t1o4bylcx0" path="res://Textures/Trash.svg" id="27_jm1bm"]
 [ext_resource type="Texture2D" uid="uid://6v1hvd7m2vhs" path="res://Textures/t3.svg" id="28_wynws"]
-[ext_resource type="Script" path="res://Scripts/Playlist.gd" id="28_ycvea"]
-[ext_resource type="Script" path="res://Scripts/Settings.gd" id="29_ui4fx"]
-[ext_resource type="Script" path="res://Scripts/Add File.gd" id="30_0ohdi"]
-[ext_resource type="Script" path="res://Scripts/File List.gd" id="31_476hc"]
-[ext_resource type="Script" path="res://Scripts/Circle Selection.gd" id="32_6g672"]
+[ext_resource type="Script" uid="uid://ctf5xg6wcbhqx" path="res://Scripts/Playlist.gd" id="28_ycvea"]
+[ext_resource type="Script" uid="uid://ccimjgty86f8v" path="res://Scripts/Settings.gd" id="29_ui4fx"]
+[ext_resource type="Script" uid="uid://qc06washnpwx" path="res://Scripts/Add File.gd" id="30_0ohdi"]
+[ext_resource type="Script" uid="uid://borvji2u3vb68" path="res://Scripts/File List.gd" id="31_476hc"]
+[ext_resource type="Script" uid="uid://c7byjwheu5qbc" path="res://Scripts/Circle Selection.gd" id="32_6g672"]
 [ext_resource type="Texture2D" uid="uid://8r6wnojlpyb2" path="res://Textures/Circle Selection.svg" id="33_onotn"]
 [ext_resource type="Texture2D" uid="uid://ceigu0byvwpor" path="res://Textures/Play Large.svg" id="34_0psch"]
 [ext_resource type="Texture2D" uid="uid://dtor82hfkxpes" path="res://Textures/Restart Large.svg" id="35_yhpak"]
 [ext_resource type="Texture2D" uid="uid://ceniqb8fv6rr" path="res://Textures/hourglass.svg" id="36_fybvn"]
 [ext_resource type="Texture2D" uid="uid://c0bgeto1j6das" path="res://Textures/wifi.svg" id="37_kag8w"]
+[ext_resource type="Script" uid="uid://c6ao0rhurexoq" path="res://Scripts/WebSocket.gd" id="42_kvii6"]
 
 [sub_resource type="GDScript" id="GDScript_o3urw"]
 script/source = "extends Control
@@ -334,8 +335,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u5ydg"]
 _data = {
-"RESET": SubResource("Animation_il416"),
-"Spin": SubResource("Animation_7gpwe")
+&"RESET": SubResource("Animation_il416"),
+&"Spin": SubResource("Animation_7gpwe")
 }
 
 [sub_resource type="GDScript" id="GDScript_pigvm"]
@@ -352,7 +353,7 @@ func select():
 func deselect():
 	self_modulate.a = 0.7
 	self_modulate = Color.WHITE
-	if get_index() == get_tree().get_root().get_child(0).active_path_index:
+	if get_index() == get_tree().get_root().get_node(\"OSSMSauce\").active_path_index:
 		$Label.self_modulate = Color.BURLYWOOD
 	else:
 		$Label.self_modulate = Color.WHITE
@@ -395,8 +396,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_avydh"]
 _data = {
-"RESET": SubResource("Animation_4ant3"),
-"Spin": SubResource("Animation_cbmbt")
+&"RESET": SubResource("Animation_4ant3"),
+&"Spin": SubResource("Animation_cbmbt")
 }
 
 [sub_resource type="GDScript" id="GDScript_3psro"]
@@ -471,6 +472,31 @@ func show_menu_buttons():
 
 func _on_back_pressed():
 	show_menu_buttons()
+"
+
+[sub_resource type="GDScript" id="GDScript_5mhm4"]
+script/source = "extends Panel
+
+
+func _ready() -> void:
+	self_modulate.a = 3
+
+
+func _on_yes_button_pressed() -> void:
+	var new_value = %Settings/HomingTrigger/SpinBox.value
+	owner.user_settings.set_value('device_settings', 'homing_trigger', new_value)
+	%Settings.send_homing_trigger()
+	hide()
+
+
+func _on_no_button_pressed() -> void:
+	if owner.user_settings.has_section_key('device_settings', 'homing_trigger'):
+		var previous_value = owner.user_settings.get_value('device_settings', 'homing_trigger')
+		%Settings/HomingTrigger/SpinBox.set_value_no_signal(previous_value)
+		%Settings.send_homing_trigger()
+	else:
+		%Settings/HomingTrigger/SpinBox.set_value_no_signal(1.5)
+	hide()
 "
 
 [sub_resource type="GDScript" id="GDScript_rckrg"]
@@ -761,6 +787,7 @@ size_flags_horizontal = 0
 selected = 1
 item_count = 8
 popup/item_0/text = "Linear"
+popup/item_0/id = 0
 popup/item_1/text = "Sine"
 popup/item_1/id = 1
 popup/item_2/text = "Circ"
@@ -782,6 +809,7 @@ size_flags_horizontal = 8
 selected = 2
 item_count = 4
 popup/item_0/text = "Ease In"
+popup/item_0/id = 0
 popup/item_1/text = "Ease Out"
 popup/item_1/id = 1
 popup/item_2/text = "Ease In/Out"
@@ -878,6 +906,7 @@ size_flags_horizontal = 0
 selected = 1
 item_count = 8
 popup/item_0/text = "Linear"
+popup/item_0/id = 0
 popup/item_1/text = "Sine"
 popup/item_1/id = 1
 popup/item_2/text = "Circ"
@@ -899,6 +928,7 @@ size_flags_horizontal = 8
 selected = 2
 item_count = 4
 popup/item_0/text = "Ease In"
+popup/item_0/id = 0
 popup/item_1/text = "Ease Out"
 popup/item_1/id = 1
 popup/item_2/text = "Ease In/Out"
@@ -1724,7 +1754,7 @@ grow_vertical = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CircleSelection"]
 libraries = {
-"": SubResource("AnimationLibrary_u5ydg")
+&"": SubResource("AnimationLibrary_u5ydg")
 }
 
 [node name="SpeedPanel" type="Panel" parent="."]
@@ -2058,6 +2088,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Mode" type="OptionButton" parent="Menu/Main"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_right = 1080.0
 offset_bottom = 82.0
@@ -2159,6 +2190,7 @@ theme_override_font_sizes/font_size = 54
 selected = 0
 item_count = 2
 popup/item_0/text = "Seconds"
+popup/item_0/id = 0
 popup/item_1/text = "Percentage"
 popup/item_1/id = 1
 
@@ -2335,7 +2367,7 @@ one_shot = true
 
 [node name="Animation" type="AnimationPlayer" parent="Menu/Playlist/Scroll/VBox/Item"]
 libraries = {
-"": SubResource("AnimationLibrary_avydh")
+&"": SubResource("AnimationLibrary_avydh")
 }
 
 [node name="AddDelay" type="Control" parent="Menu"]
@@ -2561,7 +2593,7 @@ offset_top = -723.0
 offset_bottom = -431.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 20
 
 [node name="Address" type="VBoxContainer" parent="Settings/Network"]
 layout_mode = 2
@@ -2569,31 +2601,40 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Settings/Network/Address"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "WebSocket Server Address:"
+text = "Local Server Address - This device:"
 
 [node name="TextEdit" type="TextEdit" parent="Settings/Network/Address"]
 custom_minimum_size = Vector2(0, 90)
 layout_mode = 2
+theme_override_colors/font_readonly_color = Color(0.988787, 0.906948, 0.799518, 1)
 theme_override_font_sizes/font_size = 54
-placeholder_text = "192.168.254..."
+editable = false
 
-[node name="Port" type="VBoxContainer" parent="Settings/Network"]
-visible = false
+[node name="Port" type="HBoxContainer" parent="Settings/Network"]
 layout_mode = 2
+theme_override_constants/separation = 60
 
 [node name="Label" type="Label" parent="Settings/Network/Port"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "Port:"
+text = "Server Port:"
 
 [node name="TextEdit" type="TextEdit" parent="Settings/Network/Port"]
-custom_minimum_size = Vector2(0, 90)
+custom_minimum_size = Vector2(200, 90)
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "120"
-placeholder_text = "120"
+text = "8008"
+placeholder_text = "8008"
+
+[node name="ChangePort" type="Button" parent="Settings/Network/Port"]
+custom_minimum_size = Vector2(384.88, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.824375, 0.977674, 0.808093, 1)
+theme_override_font_sizes/font_size = 54
+text = "Change Port"
 
 [node name="Connect" type="Button" parent="Settings/Network"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "Connect To Server"
@@ -2614,8 +2655,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -321.0
-offset_bottom = 43.0
+offset_top = -359.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -2650,23 +2691,45 @@ theme_override_font_sizes/font_size = 54
 text = "500000"
 placeholder_text = "500000"
 
-[node name="HomingSpeed" type="VBoxContainer" parent="Settings"]
+[node name="SyncingSpeed" type="VBoxContainer" parent="Settings"]
 layout_mode = 2
-offset_top = 1120.0
+offset_top = 1050.0
 offset_right = 1080.0
-offset_bottom = 1288.0
+offset_bottom = 1218.0
 
-[node name="Label" type="Label" parent="Settings/HomingSpeed"]
+[node name="Label" type="Label" parent="Settings/SyncingSpeed"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "Homing Speed:"
+text = "Syncing Speed:"
 
-[node name="SpinBox" type="SpinBox" parent="Settings/HomingSpeed"]
+[node name="SpinBox" type="SpinBox" parent="Settings/SyncingSpeed"]
 layout_mode = 2
 min_value = 1.0
 max_value = 99999.0
 value = 1000.0
 suffix = "steps/sec"
+
+[node name="HomingTrigger" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+offset_top = 1319.0
+offset_right = 1080.0
+offset_bottom = 1479.0
+
+[node name="Label" type="Label" parent="Settings/HomingTrigger"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Sensorless Homing Trigger:"
+
+[node name="SpinBox" type="SpinBox" parent="Settings/HomingTrigger"]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.001
+value = 1.5
+
+[node name="DebounceTimer" type="Timer" parent="Settings/HomingTrigger"]
+wait_time = 0.3
+one_shot = true
 
 [node name="Window" type="Control" parent="Settings"]
 layout_mode = 1
@@ -2674,8 +2737,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 447.0
-offset_bottom = 652.0
+offset_top = 610.0
+offset_bottom = 815.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -2707,9 +2770,10 @@ offset_top = -1.0
 offset_right = 439.0
 offset_bottom = 73.0
 theme_override_font_sizes/font_size = 54
-text = "Always on top"
+text = "Window always on top"
 
 [node name="TransparentBg" type="Control" parent="Settings/Window"]
+visible = false
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -2738,6 +2802,85 @@ offset_right = 721.0
 offset_bottom = 73.0
 theme_override_font_sizes/font_size = 54
 text = "Transparent Background"
+
+[node name="HomingTriggerPopup" type="Panel" parent="Settings"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_5mhm4")
+
+[node name="Label" type="Label" parent="Settings/HomingTriggerPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -839.0
+offset_right = 441.0
+offset_bottom = 422.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "You have changed the sensorless homing voltage trigger multiplier.
+
+This value determines the sensitivity of sensorless homing during machine startup.
+
+Setting this higher than necessary can damage your machine!
+
+
+
+
+Would you like to apply this change?"
+autowrap_mode = 3
+
+[node name="ValueLabel" type="Label" parent="Settings/HomingTriggerPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = 70.0
+offset_right = 441.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 55
+text = "Default value: 1.5
+Your value is: "
+autowrap_mode = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Settings/HomingTriggerPopup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.5
+offset_top = 568.45
+offset_right = 241.5
+offset_bottom = 686.45
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 205
+
+[node name="YesButton" type="Button" parent="Settings/HomingTriggerPopup/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "YES"
+
+[node name="NoButton" type="Button" parent="Settings/HomingTriggerPopup/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "NO"
 
 [node name="AddFile" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -2861,7 +3004,8 @@ grow_vertical = 2
 wait_time = 0.5
 one_shot = true
 
-[node name="Wifi" type="Sprite2D" parent="."]
+[node name="WiFi" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 visible = false
 position = Vector2(1031, 45)
 texture = ExtResource("37_kag8w")
@@ -2892,7 +3036,7 @@ grow_vertical = 2
 theme_override_constants/line_separation = 0
 theme_override_font_sizes/normal_font_size = 54
 bbcode_enabled = true
-text = "OSSM Sauce is an experimental WebSocket based controller designed to give users maximum control over their OSSM devices.
+text = "OSSM Sauce is an experimental WebSocket motor controller designed to give users maximum control over their OSSM devices.
 
 Extensive testing has been done to ensure reliable performance and safety, however, this app can damage your OSSM and yourself if used carelessly.
 
@@ -2963,6 +3107,20 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 64
 text = "Connecting to network..."
 
+[node name="ExportButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 105.0
+offset_bottom = 57.0
+
+[node name="WebSocket" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("42_kvii6")
+
+[node name="MCPCommandServer" type="Node" parent="."]
+
+[node name="MCPBridge" type="Node" parent="."]
+
 [connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
 [connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
 [connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
@@ -3015,15 +3173,21 @@ text = "Connecting to network..."
 [connection signal="text_changed" from="Menu/SavePlaylist/TextEdit" to="Menu/SavePlaylist" method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="Settings/Back" to="Settings" method="_on_Back_pressed"]
 [connection signal="text_changed" from="Settings/Network/Address/TextEdit" to="Settings" method="_on_network_address_text_changed"]
+[connection signal="pressed" from="Settings/Network/Port/ChangePort" to="Settings" method="_on_change_port_pressed"]
 [connection signal="pressed" from="Settings/Network/Connect" to="Settings" method="_on_connect_pressed"]
 [connection signal="text_changed" from="Settings/Sliders/MaxSpeed/TextEdit" to="Settings" method="_on_speed_input_changed"]
 [connection signal="text_changed" from="Settings/Sliders/MaxAcceleration/TextEdit" to="Settings" method="_on_acceleration_input_changed"]
-[connection signal="value_changed" from="Settings/HomingSpeed/SpinBox" to="Settings" method="_on_homing_speed_changed"]
+[connection signal="value_changed" from="Settings/SyncingSpeed/SpinBox" to="Settings" method="_on_syncing_speed_changed"]
+[connection signal="value_changed" from="Settings/HomingTrigger/SpinBox" to="Settings" method="_on_homing_trigger_changed"]
+[connection signal="timeout" from="Settings/HomingTrigger/DebounceTimer" to="Settings" method="_on_homing_trigger_debounce_timer_timeout"]
 [connection signal="toggled" from="Settings/Window/AlwaysOnTop/CheckBox" to="Settings" method="_on_always_on_top_toggled"]
 [connection signal="toggled" from="Settings/Window/TransparentBg/CheckBox" to="Settings" method="_on_transparent_background_toggled"]
+[connection signal="pressed" from="Settings/HomingTriggerPopup/Buttons/YesButton" to="Settings/HomingTriggerPopup" method="_on_yes_button_pressed"]
+[connection signal="pressed" from="Settings/HomingTriggerPopup/Buttons/NoButton" to="Settings/HomingTriggerPopup" method="_on_no_button_pressed"]
 [connection signal="pressed" from="AddFile/HBox/AddPath" to="AddFile" method="_on_add_path_pressed"]
 [connection signal="pressed" from="AddFile/HBox/LoadPlaylist" to="AddFile" method="_on_load_playlist_pressed"]
 [connection signal="pressed" from="AddFile/HBox/Back" to="AddFile" method="_on_back_pressed"]
 [connection signal="item_selected" from="AddFile/PathListOG" to="AddFile" method="_on_path_list_item_selected"]
 [connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]
+[connection signal="pressed" from="ExportButton" to="PositionControls" method="_on_export_button_pressed"]

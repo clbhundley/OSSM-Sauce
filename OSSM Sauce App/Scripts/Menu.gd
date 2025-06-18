@@ -11,7 +11,7 @@ func _on_Settings_pressed():
 
 
 func _on_Exit_pressed():
-	owner.user_settings.save(owner.cfg_path)
+	owner.exit()
 	get_tree().quit()
 
 
@@ -39,7 +39,7 @@ func _on_play_pressed():
 		owner.active_path_index = index
 		owner.display_active_path_index()
 		$Playlist/Scroll/VBox.get_child(index).set_active()
-		if owner.connected_to_ossm:
+		if %WebSocket.ossm_connected:
 			%CircleSelection.show_hourglass()
 			%PositionControls.modulate.a = 0.05
 			owner.home_to(0)
@@ -62,7 +62,7 @@ func _on_restart_pressed():
 	flash_button($PathControls/HBox/Restart)
 	owner.display_active_path_index()
 	refresh_selection()
-	if owner.connected_to_ossm:
+	if %WebSocket.ossm_connected:
 		%CircleSelection.show_hourglass()
 		%PathDisplay.modulate.a = 0.05
 		owner.home_to(0)
@@ -235,34 +235,39 @@ func select_mode(index):
 
 func _on_mode_selected(index:int):
 	var mode_id:int = $Main/Mode.get_item_id(index)
-	owner.app_mode = mode_id
+	AppMode.active = mode_id
 	owner.user_settings.set_value('app_settings', 'mode', index)
-	owner.send_command(owner.CommandType.RESET)
+	
+	owner.send_command(OSSM.Command.RESET)
+	
 	owner.home_to(0)
-	if owner.connected_to_ossm:
+	if %WebSocket.ossm_connected:
 		await owner.homing_complete
+	
 	owner.paused = true
+	
 	%ActionPanel.clear_selections()
+	
 	match mode_id:
-		owner.Mode.MOVE:
+		AppMode.MOVE:
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
 			owner.activate_move_mode()
 		
-		owner.Mode.POSITION:
+		AppMode.POSITION:
 			owner.deactivate_move_mode()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
 			%PositionControls.activate()
 		
-		owner.Mode.LOOP:
+		AppMode.LOOP:
 			owner.deactivate_move_mode()
 			%VibrationControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.activate()
-			
-		owner.Mode.VIBRATION:
+		
+		AppMode.VIBRATE:
 			owner.deactivate_move_mode()
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()

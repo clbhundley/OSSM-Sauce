@@ -2,7 +2,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "MotorMovement.h"
-#include "Network.h"
+#include "Configuration.h"
 
 unsigned long playStartTime;
 unsigned long playTimeMs;
@@ -21,6 +21,10 @@ const char positionQueueSize = 50;
 bool positionQueueIsEmpty = true;
 int previousTargetPosition;
 
+StrokeCommand smoothMoveCommand;
+unsigned long smoothMoveStartTime;
+bool smoothMoveActive = false;
+
 enum CommandType:byte {
   RESPONSE,
   MOVE,
@@ -36,31 +40,14 @@ enum CommandType:byte {
   SET_GLOBAL_ACCELERATION,
   SET_RANGE_LIMIT,
   SET_HOMING_SPEED,
+  SET_HOMING_TRIGGER,
+  SMOOTH_MOVE,
 };
 
 struct Response {
   CommandType commandType = RESPONSE;
   CommandType responseType;
 };
-
-
-enum Direction {IN, OUT};
-
-struct Vibration {
-  int32_t duration;
-  uint32_t halfPeriodMs;
-  uint16_t position;
-  uint8_t rangePercent;
-  uint8_t speedScaling;
-  int32_t origin;
-  int32_t crest;
-  Direction direction;
-  float movementSpeed;
-  bool timed;
-  uint32_t endMs;
-  uint32_t currentMs;
-  int32_t targetPosition;
-} vibration;
 
 
 void moveStart() {
@@ -135,8 +122,8 @@ void parseMessage(esp_websocket_event_data_t *data) {
     }
 
     case POSITION: {
-      if (movementMode != MODE_POSITION)
-        break;
+      // if (movementMode != MODE_POSITION)
+        // break;
       u32_t inputPosition;
       memcpy(&inputPosition, message + 1, 4);
       int constrainedPosition = constrain(inputPosition, 0, 10000);
@@ -158,7 +145,6 @@ void parseMessage(esp_websocket_event_data_t *data) {
     case VIBRATE: {
       if (messageLength != 13)
         break;
-      
       memcpy(&vibration, message + 1, 12);
 
       int constrainedPosition = constrain(vibration.position, 0, 10000);
@@ -194,7 +180,6 @@ void parseMessage(esp_websocket_event_data_t *data) {
       if (messageLength == 6)
         memcpy(&playTimeMs, message + 2, 4);
       playStartTime = millis() - playTimeMs;
-      Serial.print("");
       break;
     }
 
@@ -250,14 +235,11 @@ void parseMessage(esp_websocket_event_data_t *data) {
       switch (selectedRange) {
         case MIN_RANGE:
           rangeLimitUserMin = rangeLimitInput;
-          //vibration.origin = rangeLimitInput;
           break;
         case MAX_RANGE:
           rangeLimitUserMax = rangeLimitInput;
-          //vibration.crest = rangeLimitInput;
           break;
       }
-      //vibration.totalRange = abs(vibration.crest - vibration.origin);
       if (movementMode == MODE_LOOP) {
         if (loopPush.endTimeMs != 0) {
           loopPush.targetPosition = rangeLimitUserMax;
@@ -277,6 +259,43 @@ void parseMessage(esp_websocket_event_data_t *data) {
       homingSpeedHz = min(globalSpeedLimitHz, homingSpeedInputHz);
       break;
     }
+
+    case SET_HOMING_TRIGGER: {
+      float homingTriggerInput;
+      memcpy(&homingTriggerInput, message + 1, 4);
+      powerAvgRangeMultiplier = constrain(homingTriggerInput, 0.1, 10) ;
+      preferences.putFloat("homing_trigger", powerAvgRangeMultiplier);
+      break;
+    }
+
+    case SMOOTH_MOVE: {
+      if (messageLength != 10)
+        break;
+      Serial.println("SMOOTH_MOVE COMMAND");
+      
+      // Parse the command data (same structure as MOVE)
+      memcpy(&smoothMoveCommand, message + 1, 9);
+      
+      // Convert position to motor range
+      short constrainedPosition = constrain(smoothMoveCommand.depth, 0, 10000);
+      smoothMoveCommand.targetPosition = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
+      
+      // Calculate timing parameters
+      smoothMoveCommand.durationReciprocal = 1.0 / smoothMoveCommand.endTimeMs;
+      smoothMoveCommand.baseSpeedHz = getMoveBaseSpeedHz(smoothMoveCommand, smoothMoveCommand.endTimeMs);
+      
+      // Start the movement immediately
+      smoothMoveStartTime = millis();
+      smoothMoveActive = true;
+      movementMode = MODE_SMOOTH_MOVE;
+      
+      Serial.print("Smooth move to position: ");
+      Serial.print(smoothMoveCommand.targetPosition);
+      Serial.print(" over ");
+      Serial.print(smoothMoveCommand.endTimeMs);
+      Serial.println(" ms");
+      break;
+    }
   }
 }
 
@@ -285,10 +304,13 @@ static void websocket_event_handler(void *arg, esp_event_base_t event_base, int3
   esp_websocket_event_data_t *data = (esp_websocket_event_data_t *)event_data;
   switch (event_id) {
     case WEBSOCKET_EVENT_CONNECTED:
-      Serial.println("WebSocket Connected");
+      Serial.println("Connected to WebSocket Server");
+      setLEDStatus(LED_CONNECTED);  // Update LED status
+      sendResponse(CONNECTION);
       break;
     case WEBSOCKET_EVENT_DISCONNECTED:
-      Serial.println("WebSocket Disconnected");
+      Serial.println("Disconnected from WebSocket Server");
+      setLEDStatus(LED_ERROR);  // Update LED status
       break;
     case WEBSOCKET_EVENT_DATA:
       parseMessage(data);
@@ -297,65 +319,18 @@ static void websocket_event_handler(void *arg, esp_event_base_t event_base, int3
 }
 
 
-String getWebSocketAddress() {
-   Serial.println("");
-   Serial.println("Enter WebSocket server address:");
-   while (!Serial.available()) {
-      delay(100); // Wait for user input
-   }
-   String wsServerAddress = Serial.readString();
-   wsServerAddress.trim();
-   preferences.putString("ws_server", wsServerAddress);
-   return wsServerAddress;
-}
-
-
-String constructAddress() {
-  String serverAddress;
-  serverAddress += "ws://";
-  if (preferences.isKey("ws_server"))
-    serverAddress += preferences.getString("ws_server");
-  else
-    serverAddress += getWebSocketAddress();
-  serverAddress += ":120";
-  return serverAddress;
-}
-
-
-void connectToServer() {
-  String serverAddress = constructAddress();
-  wsConfig = {.uri = serverAddress.c_str()};
-  wsClient = esp_websocket_client_init(&wsConfig);
-
-  if (wsClient) {
-    Serial.println("Client initialized");
-  } else {
-    Serial.println("Failed to initialize client");
-  }
-
-  esp_websocket_register_events(wsClient, WEBSOCKET_EVENT_ANY, websocket_event_handler, (void *)wsClient);
-  esp_websocket_client_start(wsClient);
-
-  delay(1000);
-
-  if (esp_websocket_client_is_connected(wsClient)) {
-      Serial.println("WebSocket client started and connected");
-      esp_websocket_client_send_text(wsClient, "Hello WebSocket", strlen("Hello WebSocket"), portMAX_DELAY);
-  } else {
-      Serial.println("Failed to start WebSocket client or connect");
-  }
-}
-
-
 void setup() {
   Serial.begin(115200);
   Serial.flush();
 
-  connectToWiFi();
+  initializeConfiguration();
+  checkForConfigMode();
   
+  connectToWiFi();
   delay(1000);
-
-  connectToServer();
+  connectToWebSocketServer();
+  
+  esp_websocket_register_events(wsClient, WEBSOCKET_EVENT_ANY, websocket_event_handler, (void *)wsClient);
 
   initializeMotor();
 
@@ -368,7 +343,7 @@ void setup() {
   Serial.println("/ __)  /__\\  (  )(  )/ __)( ___) ");
   Serial.println("\\__ \\ /(__)\\  )(__)(( (__  )__)");
   Serial.println("(___/(__)(__)(______)\\___)(____) ");
-  Serial.println(" Firmware v1.3");
+  Serial.println(" Firmware v1.4");
   Serial.println("");
 
   moveQueue = xQueueCreate(moveQueueSize, 9);
@@ -386,14 +361,19 @@ void setup() {
 
 
 void loop() {
+
+  updateLED();
+
   switch (movementMode) {
-    case MODE_MOVE:
+
+    case MODE_MOVE: {
       playTimeMs = millis() - playStartTime;
       if (playTimeMs >= activeMove.endTimeMs)
         moveStart();
       else if (activeMove.active)
         processStroke(&activeMove, playTimeMs - activeMove.playTimeStartedMs);
       break;
+    }
 
     case MODE_LOOP: {
       playTimeMs = millis() - playStartTime;
@@ -420,7 +400,7 @@ void loop() {
       break;
     }
 
-    case MODE_HOMING:
+    case MODE_HOMING: {
       if (stepper->getCurrentPosition() == homingTargetPosition) {
         movementMode = MODE_IDLE;
         sendResponse(HOMING);
@@ -429,6 +409,27 @@ void loop() {
         stepper->moveTo(homingTargetPosition);
       }
       break;
+    }
+
+    case MODE_SMOOTH_MOVE: {  // Experimental
+      if (smoothMoveActive) {
+        unsigned long elapsed = millis() - smoothMoveStartTime;
+        
+        if (elapsed >= smoothMoveCommand.endTimeMs) {
+          // Movement complete - ensure we reach exact target
+          stepper->moveTo(smoothMoveCommand.targetPosition);
+          smoothMoveActive = false;
+          movementMode = MODE_IDLE;
+          Serial.println("Smooth move completed");
+          sendResponse(SMOOTH_MOVE);  // Send completion response
+        } else {
+          // Process the smooth movement
+          processStroke(&smoothMoveCommand, elapsed);
+        }
+      }
+      break;
+    }
+
   }
   
   delay(1);

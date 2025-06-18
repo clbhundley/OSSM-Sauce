@@ -124,13 +124,13 @@ func pulse_controller():
 func send_vibrate_command(duration:int = -1) -> void:
 	var command:PackedByteArray
 	command.resize(13)
-	command.encode_u8(0, owner.CommandType.VIBRATE)
+	command.encode_u8(0, OSSM.Command.VIBRATE)
 	command.encode_s32(1, duration)
 	command.encode_u32(5, half_period_ms)
 	command.encode_u16(9, origin_position)
 	command.encode_u8(11, range_percent)
 	command.encode_u8(12, waveform)
-	owner.websocket.send(command)
+	%WebSocket.server.broadcast_binary(command)
 
 
 func activate():

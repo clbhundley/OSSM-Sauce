@@ -1,0 +1,22 @@
+[configuration]
+
+entry_symbol = "websocket_server_library_init"
+compatibility_minimum = 4.1
+
+[libraries]
+
+windows.debug.x86_64 = "res://addons/websocket_server/bin/websocket_server.windows.template_release.x86_64.dll"
+windows.release.x86_64 = "res://addons/websocket_server/bin/websocket_server.windows.template_release.x86_64.dll"
+
+android.debug.arm64 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.arm64.so"
+android.release.arm64 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.arm64.so"
+android.debug.x86_64 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.x86_64.so"
+android.release.x86_64 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.x86_64.so"
+android.debug.arm32 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.arm32.so"
+android.release.arm32 = "res://addons/websocket_server/bin/libwebsocket_server.android.template_release.arm32.so"
+
+linux.debug.x86_64 = "res://addons/websocket_server/bin/libwebsocket_server.linux.template_release.x86_64.so"
+linux.release.x86_64 = "res://addons/websocket_server/bin/libwebsocket_server.linux.template_release.x86_64.so"
+
+macos.debug = "res://addons/websocket_server/bin/libwebsocket_server.macos.template_release.universal.dylib"
+macos.release = "res://addons/websocket_server/bin/libwebsocket_server.macos.template_release.universal.dylib"

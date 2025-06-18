@@ -90,7 +90,7 @@ func send_command():
 	var loop_command:PackedByteArray
 	loop_command.resize(19)
 	
-	loop_command.encode_u8(0, owner.CommandType.LOOP)
+	loop_command.encode_u8(0, OSSM.Command.LOOP)
 	loop_command.encode_u32(1, in_duration * 1000)
 	loop_command.encode_u16(5, 10000)
 	loop_command.encode_u8(7, in_trans)
@@ -101,42 +101,14 @@ func send_command():
 	loop_command.encode_u8(16, out_trans)
 	loop_command.encode_u8(17, out_ease)
 	loop_command.encode_u8(18, out_auxiliary)
-	if owner.connected_to_server:
-		owner.websocket.send(loop_command)
+	if %WebSocket.ossm_connected:
+		%WebSocket.server.broadcast_binary(loop_command)
 		if in_duration + out_duration == 0:
 			owner.pause()
 			active = false
 		elif not active:
 			owner.play()
 			active = true
-
-
-func _on_ttc_toggled(toggled_on):
-	if toggled_on:
-		$Controls/ttc.self_modulate = Color.SEA_GREEN
-		$Controls/ttc.text = "Tap to Cycle: ON"
-	else:
-		$Controls/ttc.self_modulate = Color.WHITE
-		$Controls/ttc.text = "Tap to Cycle: OFF"
-
-
-var prev_ms:int
-func _on_tap_pressed():
-	if not $Controls/ttc.button_pressed:
-		return
-	var duration = $SpinBox.value * 1000
-	var tap_time = Time.get_ticks_msec() - prev_ms
-	if prev_ms and tap_time < duration:
-		duration = tap_time
-	prev_ms = Time.get_ticks_msec()
-	if owner.connected_to_server and $ActiveSwitch.button_pressed:
-		owner.websocket.send_text(
-			'L' + str((duration) * 0.5) + 
-			"T" + str($Controls/Transitions/In.selected) + 
-			"E" + str($Controls/Easings/In.selected) + 
-			"T" + str($Controls/Transitions/Out.selected) + 
-			"E" + str($Controls/Easings/Out.selected) +
-			"C")
 
 
 func reset_stroke_duration_sliders():

@@ -25,9 +25,9 @@ func min_slider_gui_input(event):
 			var drag_pos = min_slider.position.y + event.relative.y
 			var max_range = max_slider.position.y + max_slider.size.y
 			min_slider.position.y = clamp(drag_pos, max_range, min_range_pos)
-			if %Menu/Main/Mode.selected != 1:
+			if %Mode.selected != 1:
 				update_min_range()
-				if owner.app_mode == 5:
+				if AppMode.active == AppMode.VIBRATE:
 					if %VibrationControls.pulse_active:
 						%VibrationControls.pulse_controller()
 					else:
@@ -40,9 +40,9 @@ func max_slider_gui_input(event):
 			var drag_pos = max_slider.position.y + event.relative.y
 			var min_range = min_slider.position.y - min_slider.size.y
 			max_slider.position.y = clamp(drag_pos, max_range_pos, min_range)
-			if %Menu/Main/Mode.selected != 1:
+			if %Mode.selected != 1:
 				update_max_range()
-				if owner.app_mode == 5:
+				if AppMode.active == AppMode.VIBRATE:
 					if %VibrationControls.pulse_active:
 						%VibrationControls.pulse_controller()
 					else:
@@ -54,14 +54,14 @@ func update_min_range():
 	var range_map = remap(slider_pos, min_range_pos, max_range_pos, 0, 10000)
 	var percent = remap(slider_pos, min_range_pos, max_range_pos, 0, 1)
 	owner.user_settings.set_value('range_slider_min', 'position_percent', percent)
-	if owner.connected_to_server:
+	if %WebSocket.ossm_connected:
 		const MIN_RANGE = 0
 		var command:PackedByteArray
 		command.resize(4)
-		command.encode_u8(0, owner.CommandType.SET_RANGE_LIMIT)
+		command.encode_u8(0, OSSM.Command.SET_RANGE_LIMIT)
 		command.encode_u8(1, MIN_RANGE)
 		command.encode_u16(2, range_map)
-		owner.websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 	var text_value = str(snapped(percent * 100, 0.01))
 	$LabelBot.text = "Min Position:\n" + text_value + "%"
 
@@ -71,14 +71,14 @@ func update_max_range():
 	var range_map = remap(slider_pos, min_range_pos, max_range_pos, 0, 10000)
 	var percent = remap(slider_pos, min_range_pos, max_range_pos, 0, 1)
 	owner.user_settings.set_value('range_slider_max', 'position_percent', percent)
-	if owner.connected_to_server:
+	if %WebSocket.ossm_connected:
 		const MAX_RANGE = 1
 		var command:PackedByteArray
 		command.resize(4)
-		command.encode_u8(0, owner.CommandType.SET_RANGE_LIMIT)
+		command.encode_u8(0, OSSM.Command.SET_RANGE_LIMIT)
 		command.encode_u8(1, MAX_RANGE)
 		command.encode_u16(2, range_map)
-		owner.websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 	var text_value = str(snapped(percent * 100, 0.01))
 	$LabelTop.text = "Max Position:\n" + text_value + "%"
 
@@ -146,7 +146,7 @@ func anim_finished():
 
 
 func _on_back_button_pressed():
-	if owner.connected_to_ossm and %Menu/Main/Mode.selected == 1:
+	if %WebSocket.ossm_connected and %Mode.selected == 1:
 		update_min_range()
 		update_max_range()
 		%CircleSelection.show_hourglass()

@@ -1,6 +1,6 @@
 extends Control
 
-var app_version_number:String = "1.1.1"
+var app_version_number:String = "1.3.0"
 
 var storage_dir:String
 var paths_dir:String
@@ -10,11 +10,6 @@ var cfg_path:String
 const ANIM_TIME = 0.65
 
 var user_settings := ConfigFile.new()
-
-var websocket = WebSocketPeer.new()
-
-var connected_to_server:bool
-var connected_to_ossm:bool
 
 var ticks_per_second:int
 
@@ -30,32 +25,7 @@ var network_paths:Array
 
 var frame:int
 
-enum CommandType {
-	RESPONSE,
-	MOVE,
-	LOOP,
-	POSITION,
-	VIBRATE,
-	PLAY,
-	PAUSE,
-	RESET,
-	HOMING,
-	CONNECTION,
-	SET_SPEED_LIMIT,
-	SET_GLOBAL_ACCELERATION,
-	SET_RANGE_LIMIT,
-	SET_HOMING_SPEED,
-}
-
-var app_mode:int
-enum Mode {
-	IDLE,
-	HOMING,
-	MOVE,
-	POSITION,
-	LOOP,
-	VIBRATION,
-}
+#var app_active_mode:int
 
 var max_speed:int
 var max_acceleration:int
@@ -69,21 +39,6 @@ signal homing_complete
 @onready var PATH_BOTTOM = PATH_TOP + $PathDisplay/PathArea.size.y
 
 @onready var ossm_connection_timeout:Timer = $Settings/Network/ConnectionTimeout
-
-#func fix_path():
-	#var f = "C:/Users/clbhu/Documents/OSSM Sauce/Paths/Go Head Shoot - Copy.bx"
-	#var f2 = "C:/Users/clbhu/Documents/OSSM Sauce/Paths/Go Head Shoot - Copy 2.bx"
-	#var file = FileAccess.open(f, FileAccess.READ)
-	#var newdic:Dictionary
-	#var file_data = JSON.parse_string(file.get_line())
-	#var marker_data:Dictionary = file_data
-	#for marker_frame in marker_data.keys():
-		#newdic[int(marker_frame) - 213] = marker_data[marker_frame]
-		#
-	#var file2 := FileAccess.open(f2, FileAccess.WRITE)
-	#file2.store_line(JSON.stringify(newdic))
-	#file2.close()
-	#file.close()
 
 func _init():
 	max_speed = 25000
@@ -101,7 +56,6 @@ func _init():
 
 
 func _ready():
-	#fix_path()
 	#get_tree().get_root().set_transparent_background(true)
 	#var p1 = "D:/v2/BloodMoon.mov"
 	#var path =  "C:/Users/clbhu/Desktop/Splendid/bxe.mp4"
@@ -139,7 +93,11 @@ func _ready():
 	$PathDisplay/Ball.position.x = $PathDisplay/PathArea.size.x / 2
 	
 	check_root_directory()
+	
+	user_settings.load(cfg_path)
 	apply_user_settings()
+	
+	%WebSocket.start_server()
 	
 	if OS.get_name() != 'Android':
 		var window_size = get_viewport().size
@@ -160,7 +118,7 @@ func _physics_process(delta):
 		if active_path_index < network_paths.size() - 1:
 			var overreach_index = marker_index - network_paths[active_path_index].size() + 1
 			var next_path = network_paths[active_path_index + 1]
-			websocket.send(next_path[overreach_index])
+			%WebSocket.server.broadcast_binary(next_path[overreach_index])
 			var path_list = $Menu/Playlist/Scroll/VBox
 			var next_index = active_path_index + 1
 			var next_path_item = path_list.get_child(next_index) 
@@ -172,7 +130,7 @@ func _physics_process(delta):
 			if $Menu.loop_playlist:
 				var overreach_index = marker_index - network_paths[active_path_index].size() + 1
 				var next_path = network_paths[0]
-				websocket.send(next_path[overreach_index])
+				%WebSocket.server.broadcast_binary(next_path[overreach_index])
 				var path_list = $Menu/Playlist/Scroll/VBox
 				var next_path_item = path_list.get_child(0) 
 				active_path_index = 0
@@ -192,17 +150,17 @@ func _physics_process(delta):
 	var current_marker = marker_index - 6
 	var current_marker_frame = int(marker_list.keys()[current_marker])
 	if frame == current_marker_frame:
-		if connected_to_server:
+		if %WebSocket.server_started:
 			if marker_index < active_path.size():
-				websocket.send(active_path[marker_index])
+				%WebSocket.server.broadcast_binary(active_path[marker_index])
 			elif active_path_index < network_paths.size() - 1:
 				var overreach_index = marker_index - active_path.size()
 				var next_path = network_paths[active_path_index + 1]
-				websocket.send(next_path[overreach_index])
+				%WebSocket.server.broadcast_binary(next_path[overreach_index])
 			elif $Menu.loop_playlist:
 				var overreach_index = marker_index - active_path.size()
 				var next_path = network_paths[0]
-				websocket.send(next_path[overreach_index])
+				%WebSocket.server.broadcast_binary(next_path[overreach_index])
 		if current_marker < marker_list.size() - 1:
 			marker_index += 1
 	
@@ -213,75 +171,75 @@ func _physics_process(delta):
 	$PathDisplay/Ball.position.y = render_depth(depth)
 
 
-func _process(delta):
-	websocket.poll()
-	var state = websocket.get_ready_state()
-	if state == WebSocketPeer.STATE_OPEN:
-		if not connected_to_server:
-			user_settings.set_value(
-				'app_settings',
-				'last_server_connection',
-				$Settings/Network/Address/TextEdit.text)
-			connected_to_server = true
-			send_command(CommandType.CONNECTION)
-			$Wifi.self_modulate = Color.WHITE
-			$Wifi.show()
-		while websocket.get_available_packet_count():
-			var packet:PackedByteArray = websocket.get_packet()
-			if packet[0] == CommandType.RESPONSE:
-				match packet[1]:
-					CommandType.CONNECTION:
-						connected_to_ossm = true
-						ossm_connection_timeout.emit_signal('timeout')
-						ossm_connection_timeout.stop()
-						$Wifi.self_modulate = Color.SEA_GREEN
-						$SpeedPanel.update_speed()
-						$SpeedPanel.update_acceleration()
-						$RangePanel.update_min_range()
-						$RangePanel.update_max_range()
-						$Settings.send_homing_speed()
-						$Menu.select_mode($Menu/Main/Mode.selected)
-					
-					CommandType.HOMING:
-						$CircleSelection.hide()
-						$CircleSelection.homing_lock = false
-						var display = [
-							$PositionControls,
-							$LoopControls,
-							$PathDisplay,
-							$ActionPanel,
-							$Menu]
-						for node in display:
-							node.modulate.a = 1
-						emit_signal("homing_complete")
-						if $Menu/Main/Mode.selected == 0:
-							if active_path_index != null:
-								$CircleSelection.show_play()
-						elif $Menu/Main/Mode.selected == 1:
-							play()
-	
-	elif state == WebSocketPeer.STATE_CLOSING:
-		pass # Keep polling to achieve proper close.
-	elif state == WebSocketPeer.STATE_CLOSED:
-		var code = websocket.get_close_code()
-		var reason = websocket.get_close_reason()
-		var text = "Webwebsocket closed with code: %d, reason %s. Clean: %s"
-		print(text % [code, reason, code != -1])
-		connected_to_server = false
-		set_process(false)
-		$Wifi.hide()
+#func _process22(delta):
+	#%WebSocket.poll()
+	#var state = %WebSocket.get_ready_state()
+	#if state == WebSocketPeer.STATE_OPEN:
+		#if not %WebSocket.ossm_connected:
+			#user_settings.set_value(
+				#'app_settings',
+				#'last_server_connection',
+				#$Settings/Network/Address/TextEdit.text)
+			#%WebSocket.ossm_connected = true
+			#send_command(OSSM.Command.CONNECTION)
+			#$Wifi.self_modulate = Color.WHITE
+			#$Wifi.show()
+		#while %WebSocket.get_available_packet_count():
+			#var packet:PackedByteArray = %WebSocket.get_packet()
+			#if packet.is_empty():
+				#return
+			#if packet[0] == OSSM.Command.RESPONSE:
+				#match packet[1]:
+					#OSSM.Command.CONNECTION:
+						#ossm_connected = true
+						#ossm_connection_timeout.emit_signal('timeout')
+						#ossm_connection_timeout.stop()
+						#$Wifi.self_modulate = Color.SEA_GREEN
+						#$SpeedPanel.update_speed()
+						#$SpeedPanel.update_acceleration()
+						#$RangePanel.update_min_range()
+						#$RangePanel.update_max_range()
+						#$Settings.send_syncing_speed()
+						#$Menu.select_mode(%Mode.selected)
+					#OSSM.Command.HOMING:
+						#$CircleSelection.hide()
+						#$CircleSelection.homing_lock = false
+						#var display = [
+							#$PositionControls,
+							#$LoopControls,
+							#$PathDisplay,
+							#$ActionPanel,
+							#$Menu]
+						#for node in display:
+							#node.modulate.a = 1
+						#emit_signal("homing_complete")
+						#if %Mode.selected == 0:
+							#if active_path_index != null:
+								#$CircleSelection.show_play()
+						#elif %Mode.selected == 1:
+							#play()
+	#elif state == WebSocketPeer.STATE_CLOSING:
+		#pass # Keep polling to achieve proper close.
+	#elif state == WebSocketPeer.STATE_CLOSED:
+		#var code = %WebSocket.get_close_code()
+		#var reason = %WebSocket.get_close_reason()
+		#var text = "Webwebsocket closed with code: %d, reason %s. Clean: %s"
+		#print(text % [code, reason, code != -1])
+		#%WebSocket.ossm_connected = false
+		#set_process(false)
+		#$Wifi.hide()
 
 
 func send_command(value:int):
-	if connected_to_server:
+	if %WebSocket.ossm_connected:
 		var command:PackedByteArray
 		command.resize(1)
 		command[0] = value
-		websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 
 
 func home_to(target_position:int):
-	if connected_to_ossm:
+	if %WebSocket.ossm_connected:
 		$CircleSelection.show_hourglass()
 		var displays = [
 			$PositionControls,
@@ -293,36 +251,36 @@ func home_to(target_position:int):
 			display.modulate.a = 0.05
 		var command:PackedByteArray
 		command.resize(5)
-		command.encode_u8(0, CommandType.HOMING)
+		command.encode_u8(0, OSSM.Command.HOMING)
 		command.encode_s32(1, target_position)
-		websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 
 
 func play(play_time_ms = null):
 	var command:PackedByteArray
-	if app_mode == Mode.MOVE and active_path_index != null:
+	if AppMode.active == AppMode.MOVE and active_path_index != null:
 		paused = false
 		#if play_time_ms != null:
 			#command.resize(6)
-			#command.encode_u8(0, CommandType.PLAY)
-			#command.encode_u8(1, app_mode)
+			#command.encode_u8(0, OSSM.Command.PLAY)
+			#command.encode_u8(1, AppMode.active)
 			#command.encode_u32(2, play_time_ms)
-			#if connected_to_server:
-				#websocket.send(command)
+			#if %WebSocket.ossm_connected:
+				#%WebSocket.send(command)
 			#return
 	command.resize(2)
-	command.encode_u8(0, CommandType.PLAY)
-	command.encode_u8(1, app_mode)
-	if connected_to_server:
-		websocket.send(command)
+	command.encode_u8(0, OSSM.Command.PLAY)
+	command.encode_u8(1, AppMode.active)
+	if %WebSocket.ossm_connected:
+		%WebSocket.server.broadcast_binary(command)
 
 
 func pause():
-	if connected_to_server:
+	if %WebSocket.ossm_connected:
 		var command:PackedByteArray
 		command.resize(1)
-		command[0] = CommandType.PAUSE
-		websocket.send(command)
+		command[0] = OSSM.Command.PAUSE
+		%WebSocket.server.broadcast_binary(command)
 	paused = true
 
 
@@ -337,12 +295,11 @@ func check_root_directory():
 
 
 func apply_user_settings():
-	user_settings.load(cfg_path)
-	
 	var cfg_version_number = user_settings.get_value(
 			'app_settings',
 			'version_number',
 			"")
+	
 	if cfg_version_number != app_version_number:
 		user_settings.clear()
 		user_settings.set_value(
@@ -373,54 +330,12 @@ func apply_user_settings():
 	if user_settings.get_value('app_settings', 'show_splash', true):
 		$Splash.show()
 	
-	if user_settings.has_section_key('app_settings', 'last_server_connection'):
-		$Settings/Network/Address/TextEdit.text = user_settings.get_value(
-				'app_settings',
-				'last_server_connection')
-		$ActionPanel.hide()
-		$ConnectingLabel.show()
-		$Settings._on_connect_pressed()
-		ossm_connection_timeout.start()
-		await ossm_connection_timeout.timeout
-		$ActionPanel.show()
-		$ConnectingLabel.hide()
+	if user_settings.has_section_key('network', 'port'):
+		var port_number = user_settings.get_value('network', 'port')
+		$Settings/Network/Port/TextEdit.text = str(port_number)
+		%WebSocket.port = port_number
 	
-	if user_settings.has_section_key('speed_slider', 'max_speed'):
-		$Settings.set_max_speed(
-				user_settings.get_value('speed_slider', 'max_speed'))
-	
-	if user_settings.has_section_key('accel_slider', 'max_acceleration'):
-		$Settings.set_max_acceleration(
-				user_settings.get_value('accel_slider', 'max_acceleration'))
-	
-	if user_settings.has_section_key('speed_slider', 'position_percent'):
-		$SpeedPanel.set_speed_slider_pos(
-				user_settings.get_value('speed_slider', 'position_percent'))
-	else:
-		$SpeedPanel.set_speed_slider_pos(0.6)
-	
-	if user_settings.has_section_key('accel_slider', 'position_percent'):
-		$SpeedPanel.set_acceleration_slider_pos(
-				user_settings.get_value('accel_slider', 'position_percent'))
-	else:
-		$SpeedPanel.set_acceleration_slider_pos(0.4)
-	
-	if user_settings.has_section_key('range_slider_min', 'position_percent'):
-		$RangePanel.set_min_slider_pos(
-				user_settings.get_value('range_slider_min', 'position_percent'))
-	else:
-		$RangePanel.set_min_slider_pos(0)
-	
-	if user_settings.has_section_key('range_slider_max', 'position_percent'):
-		$RangePanel.set_max_slider_pos(
-				user_settings.get_value('range_slider_max', 'position_percent'))
-	else:
-		$RangePanel.set_max_slider_pos(1)
-	
-	if user_settings.has_section_key('device_settings', 'homing_speed'):
-		$Settings/HomingSpeed/SpinBox.set_value(
-				user_settings.get_value('device_settings', 'homing_speed'))
-		$Settings.send_homing_speed()
+	apply_device_settings()
 	
 	if user_settings.has_section_key('app_settings', 'smoothing_slider'):
 		$PositionControls/Smoothing/HSlider.set_value(
@@ -459,13 +374,58 @@ func apply_user_settings():
 	if user_settings.has_section_key('app_settings', 'mode'):
 		$Menu.select_mode(user_settings.get_value('app_settings', 'mode'))
 	else:
-		$Menu.select_mode(0)
+		print("SETTING TO APP MODE POSITION")
+		$Menu.select_mode(1)
+
+
+func apply_device_settings():
+	if user_settings.has_section_key('speed_slider', 'max_speed'):
+		$Settings.set_max_speed(
+				user_settings.get_value('speed_slider', 'max_speed'))
+	
+	if user_settings.has_section_key('accel_slider', 'max_acceleration'):
+		$Settings.set_max_acceleration(
+				user_settings.get_value('accel_slider', 'max_acceleration'))
+	
+	if user_settings.has_section_key('speed_slider', 'position_percent'):
+		$SpeedPanel.set_speed_slider_pos(
+				user_settings.get_value('speed_slider', 'position_percent'))
+	else:
+		$SpeedPanel.set_speed_slider_pos(0.6)
+	
+	if user_settings.has_section_key('accel_slider', 'position_percent'):
+		$SpeedPanel.set_acceleration_slider_pos(
+				user_settings.get_value('accel_slider', 'position_percent'))
+	else:
+		$SpeedPanel.set_acceleration_slider_pos(0.4)
+	
+	if user_settings.has_section_key('range_slider_min', 'position_percent'):
+		$RangePanel.set_min_slider_pos(
+				user_settings.get_value('range_slider_min', 'position_percent'))
+	else:
+		$RangePanel.set_min_slider_pos(0)
+	
+	if user_settings.has_section_key('range_slider_max', 'position_percent'):
+		$RangePanel.set_max_slider_pos(
+				user_settings.get_value('range_slider_max', 'position_percent'))
+	else:
+		$RangePanel.set_max_slider_pos(1)
+	
+	if user_settings.has_section_key('device_settings', 'syncing_speed'):
+		$Settings/SyncingSpeed/SpinBox.set_value(
+				user_settings.get_value('device_settings', 'syncing_speed'))
+		$Settings.send_syncing_speed()
+	
+	if user_settings.has_section_key('device_settings', 'homing_trigger'):
+		$Settings/HomingTrigger/SpinBox.set_value_no_signal(
+				user_settings.get_value('device_settings', 'homing_trigger'))
+		$Settings.send_homing_trigger()
 
 
 func create_move_command(ms_timing:int, depth:float, trans:int, ease:int, auxiliary:int):
 	var network_packet:PackedByteArray
 	network_packet.resize(10)
-	network_packet.encode_u8(0, CommandType.MOVE)
+	network_packet.encode_u8(0, OSSM.Command.MOVE)
 	network_packet.encode_u32(1, ms_timing)
 	network_packet.encode_u16(5, round(remap(depth, 0, 1, 0, 10000)))
 	network_packet.encode_u8(7, trans)
@@ -539,11 +499,20 @@ func load_path(file_name:String) -> bool:
 		var depth = marker_data[marker_frame][0]
 		var trans = marker_data[marker_frame][1]
 		var ease = marker_data[marker_frame][2]
-		var auxiliary = marker_data[marker_frame][3]
+		var auxiliary:int = marker_data[marker_frame][3]
 		
 		var network_packet:PackedByteArray
+		#if auxiliary & 1 << 1:
+			#network_packet.resize(13)
+			#network_packet.encode_u8(0, OSSM.Command.VIBRATE)
+			#network_packet.encode_s32(1, -1)
+			#network_packet.encode_u32(5, 10)
+			#network_packet.encode_u16(9, round(remap(depth, 0, 1, 0, 10000)))
+			#network_packet.encode_u8(11, 5)
+			#network_packet.encode_u8(12, 100)
+		#else:
 		network_packet.resize(10)
-		network_packet.encode_u8(0, CommandType.MOVE)
+		network_packet.encode_u8(0, OSSM.Command.MOVE)
 		network_packet.encode_u32(1, ms_timing)
 		network_packet.encode_u16(5, round(remap(depth, 0, 1, 0, 10000)))
 		network_packet.encode_u8(7, trans)
@@ -627,10 +596,10 @@ func display_active_path_index(pause := true, send_buffer := true):
 	frame = 0
 	marker_index = 0
 	if send_buffer:
-		if connected_to_server:
-			send_command(CommandType.RESET)
+		if %WebSocket.ossm_connected:
+			send_command(OSSM.Command.RESET)
 			while marker_index < 6:
-				websocket.send(network_paths[active_path_index][marker_index])
+				%WebSocket.server.broadcast_binary(network_paths[active_path_index][marker_index])
 				marker_index += 1
 	else:
 		marker_index = 6
@@ -651,26 +620,6 @@ func display_active_path_index(pause := true, send_buffer := true):
 
 func render_depth(depth) -> float:
 	return PATH_BOTTOM + depth * (PATH_TOP - PATH_BOTTOM)
-
-
-func _on_window_size_changed():
-	if OS.get_name() != "Android":
-		var window_size = DisplayServer.window_get_size()
-		user_settings.set_value('window', 'size', window_size)
-
-
-func _notification(what):
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		user_settings.save(cfg_path)
-		if connected_to_server:
-			const MIN_RANGE = 0
-			var command:PackedByteArray
-			command.resize(4)
-			command.encode_u8(0, CommandType.SET_RANGE_LIMIT)
-			command.encode_u8(1, MIN_RANGE)
-			command.encode_u16(2, 0)
-			websocket.send(command)
-			home_to(0)
 
 
 func activate_move_mode():
@@ -699,3 +648,31 @@ func deactivate_move_mode():
 	%Menu/Main/LoopPlaylistButton.hide()
 	%Menu/PathControls.hide()
 	%Menu/Playlist.hide()
+
+
+func _on_window_size_changed():
+	if OS.get_name() != "Android":
+		var window_size = DisplayServer.window_get_size()
+		user_settings.set_value('window', 'size', window_size)
+
+
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		exit()
+	# NOTIFICATION_WM_GO_BACK_REQUEST:  # Android back button
+	# NOTIFICATION_APPLICATION_PAUSED:  # App going to background
+	# NOTIFICATION_APPLICATION_FOCUS_OUT:
+
+
+func exit():
+	user_settings.save(cfg_path)
+	if %WebSocket.ossm_connected:
+		pause()
+		const MIN_RANGE = 0
+		var command:PackedByteArray
+		command.resize(4)
+		command.encode_u8(0, OSSM.Command.SET_RANGE_LIMIT)
+		command.encode_u8(1, MIN_RANGE)
+		command.encode_u16(2, 0)
+		%WebSocket.server.broadcast_binary(command)
+		home_to(0)

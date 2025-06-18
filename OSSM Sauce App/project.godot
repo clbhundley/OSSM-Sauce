@@ -12,11 +12,20 @@ config_version=5
 
 config/name="OSSM Sauce"
 config/description="WebSocket controller for OSSM hardware"
-config/version="1.2.0"
+config/version="1.3.0"
 run/main_scene="res://OSSM Sauce.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://S-curve.svg"
 config/windows_native_icon="res://S-curve.ico"
+
+[autoload]
+
+OSSM="*res://Scripts/Globals/ossm.gd"
+AppMode="*res://Scripts/Globals/app_mode.gd"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
 
 [display]
 

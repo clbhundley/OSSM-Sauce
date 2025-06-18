@@ -3,7 +3,16 @@
 
 #include "FastAccelStepper.h"
 
+#define motorDirectionPin 27
+#define motorEnablePin 26
+#define motorStepPin 14
+#define motorStopPin 19
+#define limitSwitchPin 12
+#define powerSensorPin 36
+
 extern FastAccelStepper *stepper;
+
+extern float powerAvgRangeMultiplier;
 
 extern int rangeLimitHardMin;
 extern int rangeLimitHardMax;
@@ -16,6 +25,10 @@ extern uint32_t globalAcceleration;
 
 extern int homingTargetPosition;
 extern uint32_t homingSpeedHz;
+
+extern enum LoopPhase {PUSH, PULL} activeLoopPhase;
+
+enum Direction {IN, OUT};
 
 enum TransType:byte {
   TRANS_LINEAR,
@@ -42,6 +55,7 @@ extern enum MovementMode:byte {
   MODE_POSITION,
   MODE_LOOP,
   MODE_VIBRATE,
+  MODE_SMOOTH_MOVE,
 } movementMode;
 
 struct StrokeCommand {
@@ -57,7 +71,21 @@ struct StrokeCommand {
   bool active;
 };
 
-extern enum LoopPhase {PUSH, PULL} activeLoopPhase;
+extern struct Vibration {
+  int32_t duration;
+  uint32_t halfPeriodMs;
+  uint16_t position;
+  uint8_t rangePercent;
+  uint8_t speedScaling;
+  int32_t origin;
+  int32_t crest;
+  Direction direction;
+  float movementSpeed;
+  bool timed;
+  uint32_t endMs;
+  uint32_t currentMs;
+  int32_t targetPosition;
+} vibration;
 
 void initializeMotor();
 

@@ -57,12 +57,12 @@ func update_speed():
 			speed_slider_max_pos,
 			0,
 			owner.max_speed))
-	if owner.connected_to_server:
+	if %WebSocket.ossm_connected:
 		var command:PackedByteArray
 		command.resize(5)
-		command.encode_u8(0, owner.CommandType.SET_SPEED_LIMIT)
+		command.encode_u8(0, OSSM.Command.SET_SPEED_LIMIT)
 		command.encode_u32(1, speed_map)
-		owner.websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 	$LabelTop.text = "Max Speed:\n" + str(speed_map) + " steps/sec"
 
 
@@ -73,12 +73,12 @@ func update_acceleration():
 			accel_slider_max_pos,
 			1000,
 			owner.max_acceleration))
-	if owner.connected_to_server:
+	if %WebSocket.ossm_connected:
 		var command:PackedByteArray
 		command.resize(5)
-		command.encode_u8(0, owner.CommandType.SET_GLOBAL_ACCELERATION)
+		command.encode_u8(0, OSSM.Command.SET_GLOBAL_ACCELERATION)
 		command.encode_u32(1, acceleration_map)
-		owner.websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 	$LabelBot.text = "Acceleration:\n" + str(acceleration_map) + " steps/sec²"
 
 

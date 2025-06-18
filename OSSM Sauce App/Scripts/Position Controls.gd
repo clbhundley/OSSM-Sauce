@@ -22,12 +22,12 @@ func _physics_process(delta):
 	var pos = lerp(slider.position.y, touch_pos, delta * smoothing)
 	slider.position.y = clamp(pos, max_range, min_range)
 	var mapped_pos:int = remap(slider.position.y, min_range, max_range, 0, 10000)
-	if owner.connected_to_server and last_position != mapped_pos:
+	if %WebSocket.ossm_connected and last_position != mapped_pos:
 		var command:PackedByteArray
 		command.resize(5)
-		command.encode_u8(0, owner.CommandType.POSITION)
+		command.encode_u8(0, OSSM.Command.POSITION)
 		command.encode_u32(1, mapped_pos)
-		owner.websocket.send(command)
+		%WebSocket.server.broadcast_binary(command)
 		last_position = mapped_pos
 
 
@@ -38,7 +38,8 @@ func _input(event):
 	elif event is InputEventJoypadMotion:
 		#var input_position = Input.get_action_strength("analog_up") - Input.get_action_strength("analog_down")
 		var input_position = Input.get_action_strength("right_trigger")
-		#touch_pos = remap(input_position, -1, 1, min_range, max_range)
+		
+		#touch_pos = remap(pos_avg, -1, 1, min_range, max_range)
 		touch_pos = remap(input_position, 0, 1, min_range, max_range)
 
 
