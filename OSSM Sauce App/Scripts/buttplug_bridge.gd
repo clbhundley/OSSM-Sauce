@@ -146,6 +146,7 @@ func stop_device():
 
 func _process(_delta):
 	# --- WSDM (device emulation) ---
+	_log("Hello Opti")
 	if ws_device_client:
 		ws_device_client.poll()
 		var state = ws_device_client.get_ready_state()
