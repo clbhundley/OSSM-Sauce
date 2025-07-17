@@ -40,6 +40,8 @@ signal homing_complete
 
 @onready var ossm_connection_timeout:Timer = $Settings/Network/ConnectionTimeout
 
+#var buttplug_bridge: Node = null
+
 func _init():
 	max_speed = 25000
 	max_acceleration = 500000
@@ -107,6 +109,17 @@ func _ready():
 			(screen_size.y - window_size.y) / 2)
 		DisplayServer.window_set_position(centered_position)
 		get_viewport().size_changed.connect(_on_window_size_changed)
+
+		#buttplug_bridge = load("res://Scripts/buttplug_bridge.gd").new()
+		#buttplug_bridge.name = "ButtplugBridge"
+		#add_child(buttplug_bridge)
+	# Load buttplug settings from user_settings
+	if user_settings.has_section_key('buttplug', 'address'):
+		$BPIOBridge.server_address = user_settings.get_value('buttplug', 'address')
+	if user_settings.has_section_key('buttplug', 'main_port'):
+		$BPIOBridge.server_port = int(user_settings.get_value('buttplug', 'main_port'))
+	if user_settings.has_section_key('buttplug', 'wsdm_port'):
+		$BPIOBridge.wsdm_port = int(user_settings.get_value('buttplug', 'wsdm_port'))
 
 
 var marker_index:int
@@ -258,7 +271,7 @@ func home_to(target_position:int):
 
 func play(play_time_ms = null):
 	var command:PackedByteArray
-	if AppMode.active == AppMode.MOVE and active_path_index != null:
+	if AppMode.active == AppMode.AppMode.MOVE and active_path_index != null:
 		paused = false
 		#if play_time_ms != null:
 			#command.resize(6)

@@ -27,7 +27,7 @@ func min_slider_gui_input(event):
 			min_slider.position.y = clamp(drag_pos, max_range, min_range_pos)
 			if %Mode.selected != 1:
 				update_min_range()
-				if AppMode.active == AppMode.VIBRATE:
+				if AppMode.active == AppMode.AppMode.VIBRATE:
 					if %VibrationControls.pulse_active:
 						%VibrationControls.pulse_controller()
 					else:
@@ -42,7 +42,7 @@ func max_slider_gui_input(event):
 			max_slider.position.y = clamp(drag_pos, max_range_pos, min_range)
 			if %Mode.selected != 1:
 				update_max_range()
-				if AppMode.active == AppMode.VIBRATE:
+				if AppMode.active == AppMode.AppMode.VIBRATE:
 					if %VibrationControls.pulse_active:
 						%VibrationControls.pulse_controller()
 					else:

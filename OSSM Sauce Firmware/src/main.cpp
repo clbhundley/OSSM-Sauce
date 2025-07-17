@@ -41,7 +41,7 @@ enum CommandType:byte {
   SET_RANGE_LIMIT,
   SET_HOMING_SPEED,
   SET_HOMING_TRIGGER,
-  SMOOTH_MOVE,
+  SMOOTH_MOVE,  // 0x0F
 };
 
 struct Response {
@@ -106,18 +106,32 @@ void parseMessage(esp_websocket_event_data_t *data) {
     case LOOP: {
       if (messageLength != 19)
         break;
+      Serial.println("LOOP command received");
       memcpy(&loopPush, message + 1, 9);
       memcpy(&loopPull, message + 10, 9);
+
       if (loopPush.endTimeMs != 0) {
-        loopPush.targetPosition = rangeLimitUserMax;
+        short constrainedPosition = constrain(loopPush.depth, 0, 10000);
+        loopPush.targetPosition = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
+        //loopPush.targetPosition = rangeLimitUserMax;
+        Serial.println("Push:");
+        Serial.println(constrainedPosition);
         loopPush.durationReciprocal = 1.0 / loopPush.endTimeMs;
-        loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.endTimeMs, true);
+        loopPush.baseSpeedHz = getMoveBaseSpeedHz(loopPush, loopPush.endTimeMs);
+        Serial.println("LOOP push received");
       }
       if (loopPull.endTimeMs != 0) {
-        loopPull.targetPosition = rangeLimitUserMin;
+        short constrainedPosition = constrain(loopPull.depth, 0, 10000);
+        loopPull.targetPosition = map(constrainedPosition, 0, 10000, rangeLimitUserMin, rangeLimitUserMax);
+        //loopPull.targetPosition = rangeLimitUserMin;
+        Serial.println("Pull:");
+        Serial.println(constrainedPosition);
         loopPull.durationReciprocal = 1.0 / loopPull.endTimeMs;
-        loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.endTimeMs, true);
+        loopPull.baseSpeedHz = getMoveBaseSpeedHz(loopPull, loopPull.endTimeMs);
+        Serial.println("LOOP pull received");
       }
+      Serial.println("");
+      movementMode = MODE_LOOP;
       break;
     }
 
@@ -145,6 +159,7 @@ void parseMessage(esp_websocket_event_data_t *data) {
     case VIBRATE: {
       if (messageLength != 13)
         break;
+      Serial.println("VIBRATE command received");
       memcpy(&vibration, message + 1, 12);
 
       int constrainedPosition = constrain(vibration.position, 0, 10000);
@@ -176,14 +191,18 @@ void parseMessage(esp_websocket_event_data_t *data) {
     }
 
     case PLAY: {
+      Serial.println("PLAY command received");
       memcpy(&movementMode, message + 1, 1);
-      if (messageLength == 6)
+      if (messageLength == 6) {
+        Serial.println("PLAY command setting play time");
         memcpy(&playTimeMs, message + 2, 4);
+      }
       playStartTime = millis() - playTimeMs;
       break;
     }
 
     case PAUSE: {
+      Serial.println("PAUSE command received");
       movementMode = MODE_IDLE;
       break;
     }
@@ -271,7 +290,6 @@ void parseMessage(esp_websocket_event_data_t *data) {
     case SMOOTH_MOVE: {
       if (messageLength != 10)
         break;
-      Serial.println("SMOOTH_MOVE COMMAND");
       
       // Parse the command data (same structure as MOVE)
       memcpy(&smoothMoveCommand, message + 1, 9);
@@ -343,7 +361,7 @@ void setup() {
   Serial.println("/ __)  /__\\  (  )(  )/ __)( ___) ");
   Serial.println("\\__ \\ /(__)\\  )(__)(( (__  )__)");
   Serial.println("(___/(__)(__)(______)\\___)(____) ");
-  Serial.println(" Firmware v1.4");
+  Serial.println(" Firmware v1.5 + Bridge Control");
   Serial.println("");
 
   moveQueue = xQueueCreate(moveQueueSize, 9);
@@ -367,6 +385,7 @@ void loop() {
   switch (movementMode) {
 
     case MODE_MOVE: {
+      Serial.println("Move active");
       playTimeMs = millis() - playStartTime;
       if (playTimeMs >= activeMove.endTimeMs)
         moveStart();
@@ -376,10 +395,13 @@ void loop() {
     }
 
     case MODE_LOOP: {
+      //Serial.println("Loop active");
       playTimeMs = millis() - playStartTime;
       StrokeCommand* loopPhase = (activeLoopPhase == PUSH) ? &loopPush : &loopPull;
-      if (playTimeMs <= loopPhase->endTimeMs)
+      if (playTimeMs <= loopPhase->endTimeMs) {
         processStroke(loopPhase, playTimeMs);
+        //Serial.println("Processing loop");
+      }
       else {
         activeLoopPhase = (activeLoopPhase == PUSH) ? PULL : PUSH;
         playStartTime = millis();
@@ -388,6 +410,7 @@ void loop() {
     }
 
     case MODE_VIBRATE: {
+      Serial.println("Vibration active");
       unsigned long currentMs = millis();
       if (currentMs - vibration.currentMs >= vibration.halfPeriodMs) {
         vibration.currentMs = currentMs;
@@ -411,13 +434,10 @@ void loop() {
       break;
     }
 
-    case MODE_SMOOTH_MOVE: {  // Experimental
+    case MODE_SMOOTH_MOVE: {  // MCP tool control mode
       if (smoothMoveActive) {
         unsigned long elapsed = millis() - smoothMoveStartTime;
-        
         if (elapsed >= smoothMoveCommand.endTimeMs) {
-          // Movement complete - ensure we reach exact target
-          stepper->moveTo(smoothMoveCommand.targetPosition);
           smoothMoveActive = false;
           movementMode = MODE_IDLE;
           Serial.println("Smooth move completed");
