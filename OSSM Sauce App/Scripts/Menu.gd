@@ -262,13 +262,10 @@ func _on_mode_selected(index:int):
 			pass
 			#mode_config_panel.add_child(create_xtoys_config_ui())
 		elif mode_id == AppMode.AppMode.INTERACTIVE_VIDEO:
-			# Show the Interactive Video mode UI
-			if not has_node("../InteractiveVideoMode"):
-				var scene = load("res://InteractiveVideoMode.tscn").instantiate()
-				get_tree().current_scene.add_child(scene)
-				# Optionally, set up references if needed
-			else:
-				get_node("../InteractiveVideoMode").show()
+			# Hide the menu first, then show InteractiveVideoMode after menu is hidden
+			self.hide()
+			call_deferred("_show_interactive_video_mode")
+			%ActionPanel.show()
 			# Hide other controls
 			%BridgeControls.deactivate()
 			%PositionControls.deactivate()
@@ -324,127 +321,6 @@ func _on_mode_selected(index:int):
 			# All UI handled by InteractiveVideoMode scene
 			pass
 
-
-#func create_xtoys_config_ui():
-	#print("[DEBUG] create_xtoys_config_ui called, xtoys_bridge:", xtoys_bridge)
-	#var vbox = VBoxContainer.new()
-	#var theme = preload("res://Theme.tres")
-	## For custom size, create a Font resource (.tres) in the editor and load that instead
-	#var font = load("res://Font/Rubik-Light.ttf") # This is a FontFile
-	#if xtoys_bridge:
-		#var enable = CheckBox.new()
-		#enable.text = "Enable xtoys bridge"
-		#enable.button_pressed = xtoys_bridge.enabled
-		#enable.toggled.connect(xtoys_bridge.set_enabled)
-		#enable.theme = theme
-		#enable.add_theme_font_override("font", font)
-		#vbox.add_child(enable)
-		#var hbox = HBoxContainer.new()
-		#var port_label = Label.new()
-		#port_label.text = "Port:"
-		#port_label.theme = theme
-		#port_label.add_theme_font_override("font", font)
-		#hbox.add_child(port_label)
-		#var port_edit = LineEdit.new()
-		#port_edit.text = str(xtoys_bridge.get_port())
-		#port_edit.theme = theme
-		#port_edit.add_theme_font_override("font", font)
-		#hbox.add_child(port_edit)
-		#var port_btn = Button.new()
-		#port_btn.text = "Apply"
-		#port_btn.theme = theme
-		#port_btn.add_theme_font_override("font", font)
-		#port_btn.pressed.connect(func():
-			#var port = int(port_edit.text)
-			#if port >= 1024 and port <= 49151:
-				#xtoys_bridge.set_port(port)
-			#else:
-				#port_edit.text = str(xtoys_bridge.get_port())
-		#)
-		#hbox.add_child(port_btn)
-		#vbox.add_child(hbox)
-		#var debug = CheckBox.new()
-		#debug.text = "Debug logging"
-		#debug.button_pressed = xtoys_bridge.debug_log
-		#debug.toggled.connect(xtoys_bridge.set_debug_log)
-		#debug.theme = theme
-		#debug.add_theme_font_override("font", font)
-		#vbox.add_child(debug)
-		#var auto = CheckBox.new()
-		#auto.text = "Auto-reconnect"
-		#auto.button_pressed = xtoys_bridge.auto_reconnect
-		#auto.toggled.connect(func(val): xtoys_bridge.auto_reconnect = val)
-		#auto.theme = theme
-		#auto.add_theme_font_override("font", font)
-		#vbox.add_child(auto)
-	#else:
-		#print("[DEBUG] xtoys_bridge is null in create_xtoys_config_ui")
-	#return vbox
-
-#func create_buttplug_config_ui():
-	#var vbox = VBoxContainer.new()
-	#var theme = preload("res://Theme.tres")
-	## For custom size, create a Font resource (.tres) in the editor and load that instead
-	#var font = load("res://Font/Rubik-Light.ttf") # This is a FontFile
-	#if %BPIOBridge:
-		#var ip_hbox = HBoxContainer.new()
-		#var ip_label = Label.new()
-		#ip_label.text = "Buttplug Address:"
-		#ip_label.theme = theme
-		#ip_label.add_theme_font_override("font", font)
-		#ip_hbox.add_child(ip_label)
-		#var ip_edit = LineEdit.new()
-		#ip_edit.text = %BPIOBridge.server_address
-		#ip_edit.theme = theme
-		#ip_edit.add_theme_font_override("font", font)
-		#ip_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		#ip_hbox.add_child(ip_edit)
-		#vbox.add_child(ip_hbox)
-		#var main_hbox = HBoxContainer.new()
-		#var main_label = Label.new()
-		#main_label.text = "Main Port:"
-		#main_label.theme = theme
-		#main_label.add_theme_font_override("font", font)
-		#main_hbox.add_child(main_label)
-		#var main_edit = LineEdit.new()
-		#main_edit.text = str(%BPIOBridge.server_port)
-		#main_edit.theme = theme
-		#main_edit.add_theme_font_override("font", font)
-		#main_hbox.add_child(main_edit)
-		#vbox.add_child(main_hbox)
-		#var wsdm_hbox = HBoxContainer.new()
-		#var wsdm_label = Label.new()
-		#wsdm_label.text = "WSDM Port:"
-		#wsdm_label.theme = theme
-		#wsdm_label.add_theme_font_override("font", font)
-		#wsdm_hbox.add_child(wsdm_label)
-		#var wsdm_edit = LineEdit.new()
-		#wsdm_edit.text = str(%BPIOBridge.wsdm_port)
-		#wsdm_edit.theme = theme
-		#wsdm_edit.add_theme_font_override("font", font)
-		#wsdm_hbox.add_child(wsdm_edit)
-		#vbox.add_child(wsdm_hbox)
-		#var apply_btn = Button.new()
-		#apply_btn.text = "Apply"
-		#apply_btn.theme = theme
-		#apply_btn.add_theme_font_override("font", font)
-		#apply_btn.pressed.connect(func():
-			#%BPIOBridge.server_address = ip_edit.text
-			#%BPIOBridge.server_port = int(main_edit.text)
-			#%BPIOBridge.wsdm_port = int(wsdm_edit.text)
-			#%BPIOBridge.stop_client()
-			#%BPIOBridge.stop_device()
-			#%BPIOBridge.start_client()
-			#%BPIOBridge.start_device()
-		#)
-		#vbox.add_child(apply_btn)
-	#return vbox
-
-# Add a label for Buttplug device connection status
-#@onready var bridge_status_label = $BridgeStatusLabel if has_node("BridgeStatusLabel") else null
-
-#func _ready():
-	## Populate mode OptionButton with all AppMode values
 	#mode_option_button.clear()
 	#mode_option_button.add_item("Idle", AppMode.AppMode.IDLE)
 	#mode_option_button.add_item("Homing", AppMode.AppMode.HOMING)
@@ -480,7 +356,6 @@ func _on_mode_selected(index:int):
 		#if bridge_status_label:
 			#bridge_status_label.visible = false
 
-
 func _on_bridge_mode_item_selected(index: int) -> void:
 	# Bridge Controls.gd now handles the UI updates
 	pass
@@ -509,21 +384,14 @@ func _ready():
 		label.modulate = Color(1,0,0) # Red
 		label.visible = false
 		add_child(label)
-	# Add VideoFileDialog if not present
-	if not has_node("VideoFileDialog"):
-		video_file_dialog.name = "VideoFileDialog"
-		video_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-		video_file_dialog.filters = PackedStringArray(["*.mp4 ; MP4 Video", "*.webm ; WebM Video", "*.mkv ; MKV Video"])
-		video_file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILES
-		video_file_dialog.connect("files_selected", Callable(self, "_on_video_files_selected"))
-		add_child(video_file_dialog)
 
-func show_video_file_dialog():
-	video_file_dialog.popup_centered()
-
-func _on_video_files_selected(paths:Array):
-	if has_node("../InteractiveVideoMode"):
-		var ivm = get_node("../InteractiveVideoMode")
-		for path in paths:
-			ivm.add_to_playlist(path)
-		ivm.play_index(0)
+func _show_interactive_video_mode():
+	if not has_node("../InteractiveVideoMode"):
+		var scene = load("res://InteractiveVideoMode.tscn").instantiate()
+		print("New Scene added is %s" % scene.name)
+		get_tree().current_scene.add_child(scene)
+		# Optionally, set up references if needed
+	else:
+		get_node("../InteractiveVideoMode").show()
+	# Ensure ActionPanel is visible
+	%ActionPanel.show()

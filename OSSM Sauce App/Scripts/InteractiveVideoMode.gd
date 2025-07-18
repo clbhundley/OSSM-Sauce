@@ -8,7 +8,6 @@ const VIDEO_EXTENSIONS: PackedStringArray = [
 
 
 @onready var video_playback: VideoPlayback = %VideoPlayback
-
 @onready var timeline: HSlider = %Timeline
 @onready var play_pause_button: TextureButton = %PlayPauseButton
 
@@ -19,6 +18,8 @@ const VIDEO_EXTENSIONS: PackedStringArray = [
 @onready var speed_spin_box: SpinBox = %SpeedSpinBox
 
 @onready var loading_screen: Panel = $LoadingPanel
+@onready var video_player = $VBox/FramePanel/VideoPlayback
+@onready var funscript_message = $VBox/FunscriptContainer/FunscriptNotFound
 
 var icons: Array[Texture2D] = [
 	preload("res://icons/play_arrow_48dp_FILL1_wght400_GRAD0_opsz48.png"), # PLAY
@@ -28,6 +29,7 @@ var icons: Array[Texture2D] = [
 var is_dragging: bool = false
 var was_playing: bool = false
 
+var funscript_path: String = ""
 
 
 func _ready() -> void:
@@ -69,6 +71,7 @@ func open_video(file_path: String) -> void:
 	timeline.value = 0
 	loading_screen.visible = true
 	video_playback.set_video_path(file_path)
+	_try_load_funscript_for_video(file_path)
 
 
 func after_video_open() -> void:
@@ -130,3 +133,26 @@ func _on_load_video_button_pressed() -> void:
 func _connect(from_signal: Signal, target_func: Callable) -> void:
 	if from_signal.connect(target_func):
 		printerr("Couldn't connect function '", target_func.get_method(), "' to '", from_signal.get_name(), "'!")
+
+func load_video(video_path: String):
+	video_player.set_video_path(video_path)
+	_try_load_funscript_for_video(video_path)
+
+func _try_load_funscript_for_video(video_path: String):
+	#var dir = video_path.get_base_dir()
+	var base = video_path.get_basename()
+	funscript_path = base + ".funscript"
+	if FileAccess.file_exists(funscript_path):
+		funscript_message.hide()
+		if Global.main_scene.has_method("load_path"):
+			Global.main_scene.load_path(funscript_path)
+	else:
+		funscript_message.text = "No funscript found for this video."
+		funscript_message.show()
+
+func _on_video_time_changed(time_sec: float):
+	if Global.main_scene.has_method("sync_funscript_time"):
+		Global.main_scene.sync_funscript_time(time_sec)
+
+# Example: connect this to your video player's time/frame update signal
+# video_player.connect("position_changed", Callable(self, "_on_video_time_changed"))

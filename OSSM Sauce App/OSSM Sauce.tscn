@@ -584,6 +584,7 @@ script = ExtResource("2_7liag")
 
 [node name="PathDisplay" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1448,6 +1449,7 @@ one_shot = true
 
 [node name="BridgeControls" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 0.897
@@ -1589,6 +1591,7 @@ offset_top = -194.0
 offset_right = 541.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_default_cursor_shape = 1
 script = ExtResource("11_ovb0l")
 
 [node name="Play" type="TextureRect" parent="ActionPanel"]

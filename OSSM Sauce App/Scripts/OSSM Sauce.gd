@@ -46,27 +46,10 @@ func _init():
 	max_speed = 25000
 	max_acceleration = 500000
 
-#func vid_play():
-	#print("playing")
-	#var command = r'echo { "command": ["set_property", "pause", false] } > \\.\pipe\mpv-pipe'
-	#OS.execute("cmd", ["/c", command])
-
-#func vid_pause():
-	#print("pausing")
-	#var command = r'echo { "command": ["set_property", "pause", true] } > \\.\pipe\mpv-pipe'
-	#OS.execute("cmd", ["/c", command])
 
 
 func _ready():
-	#get_tree().get_root().set_transparent_background(true)
-	#var p1 = "D:/v2/BloodMoon.mov"
-	#var path =  "C:/Users/clbhu/Desktop/Splendid/bxe.mp4"
-	#var path1 = "D:/v2/BounceX Vol 2 (Ultra Quality - Uncompressed Audio).mov"
-	#var p2 = "C:/Users/clbhu/BounceX/mpv/bxe.mp4"
-	#var command = r'mpv --input-ipc-server=\\.\pipe\mpv-pipe ' + p1
-	#var command2 = 'mpv --input-ipc-server=\\\\.\\pipe\\mpv-pipe bxe.mp4'
-	#OS.create_process("cmd", ["/c", command])
-	#OS.create_process()
+	Global.main_scene = self
 	
 	OS.request_permissions()
 
@@ -112,9 +95,7 @@ func _ready():
 		DisplayServer.window_set_position(centered_position)
 		get_viewport().size_changed.connect(_on_window_size_changed)
 
-		#buttplug_bridge = load("res://Scripts/buttplug_bridge.gd").new()
-		#buttplug_bridge.name = "ButtplugBridge"
-		#add_child(buttplug_bridge)
+
 	# Load buttplug settings from user_settings
 	if user_settings.has_section_key('buttplug', 'address'):
 		$BPIOBridge.server_address = user_settings.get_value('buttplug', 'address')
@@ -186,64 +167,6 @@ func _physics_process(delta):
 	$PathDisplay/Ball.position.y = render_depth(depth)
 
 
-#func _process22(delta):
-	#%WebSocket.poll()
-	#var state = %WebSocket.get_ready_state()
-	#if state == WebSocketPeer.STATE_OPEN:
-		#if not %WebSocket.ossm_connected:
-			#user_settings.set_value(
-				#'app_settings',
-				#'last_server_connection',
-				#$Settings/Network/Address/TextEdit.text)
-			#%WebSocket.ossm_connected = true
-			#send_command(OSSM.Command.CONNECTION)
-			#$Wifi.self_modulate = Color.WHITE
-			#$Wifi.show()
-		#while %WebSocket.get_available_packet_count():
-			#var packet:PackedByteArray = %WebSocket.get_packet()
-			#if packet.is_empty():
-				#return
-			#if packet[0] == OSSM.Command.RESPONSE:
-				#match packet[1]:
-					#OSSM.Command.CONNECTION:
-						#ossm_connected = true
-						#ossm_connection_timeout.emit_signal('timeout')
-						#ossm_connection_timeout.stop()
-						#$Wifi.self_modulate = Color.SEA_GREEN
-						#$SpeedPanel.update_speed()
-						#$SpeedPanel.update_acceleration()
-						#$RangePanel.update_min_range()
-						#$RangePanel.update_max_range()
-						#$Settings.send_syncing_speed()
-						#$Menu.select_mode(%Mode.selected)
-					#OSSM.Command.HOMING:
-						#$CircleSelection.hide()
-						#$CircleSelection.homing_lock = false
-						#var display = [
-							#$PositionControls,
-							#$LoopControls,
-							#$PathDisplay,
-							#$ActionPanel,
-							#$Menu]
-						#for node in display:
-							#node.modulate.a = 1
-						#emit_signal("homing_complete")
-						#if %Mode.selected == 0:
-							#if active_path_index != null:
-								#$CircleSelection.show_play()
-						#elif %Mode.selected == 1:
-							#play()
-	#elif state == WebSocketPeer.STATE_CLOSING:
-		#pass # Keep polling to achieve proper close.
-	#elif state == WebSocketPeer.STATE_CLOSED:
-		#var code = %WebSocket.get_close_code()
-		#var reason = %WebSocket.get_close_reason()
-		#var text = "Webwebsocket closed with code: %d, reason %s. Clean: %s"
-		#print(text % [code, reason, code != -1])
-		#%WebSocket.ossm_connected = false
-		#set_process(false)
-		#$Wifi.hide()
-
 
 func send_command(value:int):
 	if %WebSocket.ossm_connected:
@@ -275,14 +198,6 @@ func play(play_time_ms = null):
 	var command:PackedByteArray
 	if AppMode.active == AppMode.AppMode.MOVE and active_path_index != null:
 		paused = false
-		#if play_time_ms != null:
-			#command.resize(6)
-			#command.encode_u8(0, OSSM.Command.PLAY)
-			#command.encode_u8(1, AppMode.active)
-			#command.encode_u32(2, play_time_ms)
-			#if %WebSocket.ossm_connected:
-				#%WebSocket.send(command)
-			#return
 	command.resize(2)
 	command.encode_u8(0, OSSM.Command.PLAY)
 	command.encode_u8(1, AppMode.active)

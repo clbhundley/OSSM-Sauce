@@ -42,11 +42,12 @@ content_margin_bottom = 7.0
 bg_color = Color(0.230469, 0.230469, 0.230469, 0.556863)
 corner_radius_bottom_right = 14
 
-[node name="Main" type="Control"]
+[node name="InteractiveVideoMode" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -170.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0pafh")
@@ -56,12 +57,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -170.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="FramePanel" type="PanelContainer" parent="VBox"]
-custom_minimum_size = Vector2(10, 800)
+custom_minimum_size = Vector2(10, 1000)
 layout_mode = 2
 size_flags_vertical = 0
 
@@ -103,14 +105,17 @@ texture_normal = ExtResource("3_ueaio")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="VBox"]
+[node name="FunscriptContainer" type="PanelContainer" parent="VBox"]
+custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
 
-[node name="PathDisplay2" type="Control" parent="VBox/PanelContainer"]
+[node name="FunscriptPathDisplay" type="Control" parent="VBox/FunscriptContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="PathArea" type="Control" parent="VBox/PanelContainer/PathDisplay2"]
+[node name="FunscriptPathArea" type="Control" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 layout_mode = 1
 anchor_top = 0.0625
 anchor_right = 1.0
@@ -118,19 +123,28 @@ anchor_bottom = 0.84375
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, inf)
+mouse_filter = 2
 script = SubResource("GDScript_k1oor")
 metadata/_edit_use_anchors_ = true
 
-[node name="Timer" type="Timer" parent="VBox/PanelContainer/PathDisplay2/PathArea"]
+[node name="Timer" type="Timer" parent="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea"]
 wait_time = 0.3
 
-[node name="Paths" type="Control" parent="VBox/PanelContainer/PathDisplay2"]
+[node name="Paths" type="Control" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 anchors_preset = 0
 
-[node name="Ball" type="Sprite2D" parent="VBox/PanelContainer/PathDisplay2"]
+[node name="Ball" type="Sprite2D" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 self_modulate = Color(1, 0.384314, 0.47451, 1)
-position = Vector2(540, 960)
+position = Vector2(488, 280)
 texture = ExtResource("4_ueaio")
+
+[node name="FunscriptNotFound" type="RichTextLabel" parent="VBox/FunscriptContainer"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/bold_font_size = 30
+text = "No funscript was found in the filepath"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LoadingPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -267,8 +281,8 @@ update_on_text_changed = true
 [connection signal="drag_started" from="VBox/BottomPanel/VBox/Timeline" to="." method="_on_timeline_drag_started"]
 [connection signal="value_changed" from="VBox/BottomPanel/VBox/Timeline" to="." method="_on_timeline_value_changed"]
 [connection signal="pressed" from="VBox/BottomPanel/VBox/ButtonsHBox/PlayPauseButton" to="." method="_on_play_pause_button_pressed"]
-[connection signal="gui_input" from="VBox/PanelContainer/PathDisplay2/PathArea" to="VBox/PanelContainer/PathDisplay2/PathArea" method="_on_gui_input"]
-[connection signal="timeout" from="VBox/PanelContainer/PathDisplay2/PathArea/Timer" to="VBox/PanelContainer/PathDisplay2/PathArea" method="_on_timer_timeout"]
+[connection signal="gui_input" from="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" to="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" method="_on_gui_input"]
+[connection signal="timeout" from="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea/Timer" to="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" method="_on_timer_timeout"]
 [connection signal="pressed" from="Debug/DebugPanel/DebugVBox/LoadVideoButton" to="." method="_on_load_video_button_pressed"]
 [connection signal="text_submitted" from="Debug/DebugPanel/DebugVBox/URLLineEdit" to="." method="_on_url_line_edit_text_submitted"]
 [connection signal="value_changed" from="Debug/DebugPanel/DebugVBox/DebugGrid/SpeedSpinBox" to="." method="_on_speed_spin_box_value_changed"]

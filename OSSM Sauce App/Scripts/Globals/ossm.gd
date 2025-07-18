@@ -18,3 +18,5 @@ enum Command {
   SET_HOMING_TRIGGER,
   SMOOTH_MOVE,
 }
+
+var main_scene: Node = null

@@ -89,6 +89,13 @@ func _on_range_button_pressed():
 
 
 func _on_menu_button_pressed():
+	# Hide InteractiveVideoMode scene if it exists and we're in Interactive Video mode
+	if AppMode.active == AppMode.AppMode.INTERACTIVE_VIDEO:
+		# Access through parent since InteractiveVideoMode is a sibling
+		var parent = get_parent()
+		print("Main scene name: %s" % parent.name)
+		if parent.has_node("InteractiveVideoMode"):
+			parent.get_node("InteractiveVideoMode").hide()
 	clear_selections()
 	self_modulate.a = 1.2
 	%CircleSelection.hide_and_reset()
@@ -97,6 +104,8 @@ func _on_menu_button_pressed():
 	$Timer.stop()
 	hide()
 	%Menu.show()
+	
+	
 
 
 func _on_timer_timeout():
