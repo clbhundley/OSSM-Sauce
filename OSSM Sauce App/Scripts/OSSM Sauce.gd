@@ -98,7 +98,9 @@ func _ready():
 	
 	user_settings.load(cfg_path)
 	apply_user_settings()
-	
+
+	$Menu.select_mode(1)
+
 	%WebSocket.start_server()
 	
 	if OS.get_name() != 'Android':
@@ -383,12 +385,12 @@ func apply_user_settings():
 				user_settings.get_value('stroke_settings', 'out_ease'))
 	
 	$LoopControls.draw_easing()
-	
-	if user_settings.has_section_key('app_settings', 'mode'):
-		$Menu.select_mode(user_settings.get_value('app_settings', 'mode'))
-	else:
-		print("SETTING TO APP MODE POSITION")
-		$Menu.select_mode(1)
+	# Do NOT set mode from user_settings; always use the default set in _ready()
+	# if user_settings.has_section_key('app_settings', 'mode'):
+	#     $Menu.select_mode(user_settings.get_value('app_settings', 'mode'))
+	# else:
+	#     print("SETTING TO APP MODE POSITION")
+	#     $Menu.select_mode(1)
 
 
 func apply_device_settings():

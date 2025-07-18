@@ -233,9 +233,7 @@ func _on_mode_selected(index:int):
 		var bridge = get_node("../BPIOBridge")
 		print("[Menu] BPIOBridge found, managing for mode: %d (BRIDGE=%d)" % [mode_id, AppMode.AppMode.BRIDGE])
 		if mode_id == AppMode.AppMode.BRIDGE:
-			print("[Menu] Starting buttplug bridge")
-			bridge.start_client()
-			bridge.start_device()
+			print("[Menu] Bridge mode selected - Bridge Controls will handle connection when enabled")
 		else:
 			print("[Menu] Stopping buttplug bridge")
 			bridge.stop_client()
@@ -248,7 +246,6 @@ func _on_mode_selected(index:int):
 		print("[Menu] Mode switching to: %d (XTOYS=%d)" % [mode_id, AppMode.AppMode.XTOYS])
 		if mode_id == AppMode.AppMode.XTOYS:
 			print("[Menu] Starting xtoys bridge")
-			xtoys_bridge.start_xtoys()
 		else:
 			print("[Menu] Stopping xtoys bridge")
 			xtoys_bridge.stop_xtoys()
@@ -304,7 +301,7 @@ func _on_mode_selected(index:int):
 			%VibrationControls.activate()
 		AppMode.AppMode.BRIDGE:
 			owner.deactivate_move_mode()
-			%BridgeControls.activate()
+			%BridgeControls.activate()  # Show Bridge Controls UI
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
@@ -467,17 +464,5 @@ func _on_mode_selected(index:int):
 
 
 func _on_bridge_mode_item_selected(index: int) -> void:
-	%BridgeControls.deactivate()
-	var selected = $BridgeSettings/BridgeMode/OptionButton.get_selected_id()
-	match selected:
-		0:  # Buttplug.io
-			$BridgeSettings/BPIO.show()
-			$BridgeSettings/XToys.hide()
-		1:  # XToys
-			$BridgeSettings/BPIO.hide()
-			$BridgeSettings/XToys.show()
-		2:  # MCP
-			$BridgeSettings/BPIO.hide()
-			$BridgeSettings/XToys.hide()
-	
-	%BridgeControls.activate()
+	# Bridge Controls.gd now handles the UI updates
+	pass

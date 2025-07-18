@@ -357,12 +357,7 @@ func _ready() -> void:
 	pressed.connect(func():
 		var server_port_text = %Menu/BridgeSettings/BPIO/ServerPort/LineEdit.text
 		var wdsm_port_text = %Menu/BridgeSettings/BPIO/WSDMPort/LineEdit.text
-		%BPIOBridge.server_port = int(server_port_text)
-		%BPIOBridge.wsdm_port = int(wdsm_port_text)
-		%BPIOBridge.stop_client()
-		%BPIOBridge.stop_device()
-		%BPIOBridge.start_client()
-		%BPIOBridge.start_device()
+		
 	)
 "
 
@@ -1006,7 +1001,7 @@ offset_top = 14.0
 offset_right = 98.0
 offset_bottom = 100.0
 theme_override_font_sizes/font_size = 62
-text = "🔗"
+text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -1454,7 +1449,6 @@ one_shot = true
 
 [node name="BridgeControls" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 0.897
@@ -1553,12 +1547,34 @@ text = "Client Status"
 
 [node name="ClearLog" type="Button" parent="BridgeControls"]
 layout_mode = 0
-offset_left = 686.0
+offset_left = 730.0
 offset_top = 265.0
-offset_right = 979.0
+offset_right = 1023.0
 offset_bottom = 351.0
 theme_override_font_sizes/font_size = 50
 text = "Clear Log"
+
+[node name="AutoScroll" type="Button" parent="BridgeControls"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 260.0
+offset_right = 752.0
+offset_bottom = 346.0
+theme_override_font_sizes/font_size = 50
+text = "Autoscroll"
+
+[node name="EnableBridge" type="Button" parent="BridgeControls"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 119.0
+offset_right = 369.0
+offset_bottom = 264.0
+theme_type_variation = &"FlatButton"
+theme_override_colors/font_hover_color = Color(1, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "Enable"
 
 [node name="ActionPanel" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -1915,6 +1931,7 @@ libraries = {
 
 [node name="SpeedPanel" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.5
@@ -2082,6 +2099,7 @@ vertical_alignment = 1
 
 [node name="RangePanel" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -3197,6 +3215,15 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 80
 text = "NO"
 
+[node name="DebugLogCheckBox" type="CheckBox" parent="Settings"]
+layout_mode = 2
+offset_top = 850.0
+offset_right = 400.0
+offset_bottom = 900.0
+scale = Vector2(2, 2)
+theme_override_font_sizes/font_size = 54
+text = "Show Debug Logs"
+
 [node name="AddFile" type="Panel" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -3436,6 +3463,10 @@ script = ExtResource("42_kvii6")
 unique_name_in_owner = true
 script = ExtResource("43_dyutb")
 
+[node name="ReconnectTimer" type="Timer" parent="BPIOBridge"]
+wait_time = 5.0
+one_shot = true
+
 [node name="XToysBridge" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("44_r8osj")
@@ -3461,6 +3492,8 @@ script = ExtResource("44_r8osj")
 [connection signal="value_changed" from="VibrationControls/PulseControl/OffTime" to="VibrationControls" method="_on_pulse_control_time_value_changed"]
 [connection signal="timeout" from="VibrationControls/DebounceTimer" to="VibrationControls" method="_on_debounce_timer_timeout"]
 [connection signal="pressed" from="BridgeControls/ClearLog" to="BridgeControls" method="_on_clear_log_pressed"]
+[connection signal="pressed" from="BridgeControls/AutoScroll" to="BridgeControls" method="_on_autoscroll_pressed"]
+[connection signal="pressed" from="BridgeControls/EnableBridge" to="BridgeControls" method="_on_enable_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Speed/Button" to="ActionPanel" method="_on_speed_button_pressed"]
@@ -3515,3 +3548,4 @@ script = ExtResource("44_r8osj")
 [connection signal="toggled" from="Splash/DontShow/CheckBox" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/Accept" to="Splash" method="_on_accept_pressed"]
 [connection signal="pressed" from="ExportButton" to="PositionControls" method="_on_export_button_pressed"]
+[connection signal="timeout" from="BPIOBridge/ReconnectTimer" to="BPIOBridge" method="_on_reconnect_timer_timeout"]
