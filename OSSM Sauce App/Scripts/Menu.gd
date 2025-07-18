@@ -261,6 +261,21 @@ func _on_mode_selected(index:int):
 		elif mode_id == AppMode.AppMode.XTOYS:
 			pass
 			#mode_config_panel.add_child(create_xtoys_config_ui())
+		elif mode_id == AppMode.AppMode.INTERACTIVE_VIDEO:
+			# Show the Interactive Video mode UI
+			if not has_node("../InteractiveVideoMode"):
+				var scene = load("res://InteractiveVideoMode.tscn").instantiate()
+				get_tree().current_scene.add_child(scene)
+				# Optionally, set up references if needed
+			else:
+				get_node("../InteractiveVideoMode").show()
+			# Hide other controls
+			%BridgeControls.deactivate()
+			%PositionControls.deactivate()
+			%LoopControls.deactivate()
+			%VibrationControls.deactivate()
+			# Show funscript UI at the bottom (handled by InteractiveVideoMode scene)
+			return
 
 	match mode_id:
 		AppMode.AppMode.IDLE:
@@ -305,6 +320,9 @@ func _on_mode_selected(index:int):
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
+		AppMode.AppMode.INTERACTIVE_VIDEO:
+			# All UI handled by InteractiveVideoMode scene
+			pass
 
 
 #func create_xtoys_config_ui():
@@ -466,3 +484,46 @@ func _on_mode_selected(index:int):
 func _on_bridge_mode_item_selected(index: int) -> void:
 	# Bridge Controls.gd now handles the UI updates
 	pass
+
+# Add a file dialog for video selection
+@onready var video_file_dialog = FileDialog.new()
+
+func _ready():
+	# Populate mode OptionButton with all AppMode values
+	mode_option_button.clear()
+	mode_option_button.add_item("Idle", AppMode.AppMode.IDLE)
+	mode_option_button.add_item("Homing", AppMode.AppMode.HOMING)
+	mode_option_button.add_item("Move", AppMode.AppMode.MOVE)
+	mode_option_button.add_item("Path", AppMode.AppMode.PATH)
+	mode_option_button.add_item("Position", AppMode.AppMode.POSITION)
+	mode_option_button.add_item("Loop", AppMode.AppMode.LOOP)
+	mode_option_button.add_item("Vibrate", AppMode.AppMode.VIBRATE)
+	mode_option_button.add_item("Bridge", AppMode.AppMode.BRIDGE)
+	mode_option_button.add_item("xtoys", AppMode.AppMode.XTOYS)
+	mode_option_button.add_item("Interactive Video", AppMode.AppMode.INTERACTIVE_VIDEO)
+	# Add BridgeStatusLabel if not present
+	if not has_node("BridgeStatusLabel"):
+		var label = Label.new()
+		label.name = "BridgeStatusLabel"
+		label.text = "Bridge: Not Connected"
+		label.modulate = Color(1,0,0) # Red
+		label.visible = false
+		add_child(label)
+	# Add VideoFileDialog if not present
+	if not has_node("VideoFileDialog"):
+		video_file_dialog.name = "VideoFileDialog"
+		video_file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+		video_file_dialog.filters = PackedStringArray(["*.mp4 ; MP4 Video", "*.webm ; WebM Video", "*.mkv ; MKV Video"])
+		video_file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILES
+		video_file_dialog.connect("files_selected", Callable(self, "_on_video_files_selected"))
+		add_child(video_file_dialog)
+
+func show_video_file_dialog():
+	video_file_dialog.popup_centered()
+
+func _on_video_files_selected(paths:Array):
+	if has_node("../InteractiveVideoMode"):
+		var ivm = get_node("../InteractiveVideoMode")
+		for path in paths:
+			ivm.add_to_playlist(path)
+		ivm.play_index(0)

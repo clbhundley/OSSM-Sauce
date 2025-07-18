@@ -584,7 +584,6 @@ script = ExtResource("2_7liag")
 
 [node name="PathDisplay" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1931,7 +1930,6 @@ libraries = {
 
 [node name="SpeedPanel" type="Panel" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.5
@@ -2099,7 +2097,6 @@ vertical_alignment = 1
 
 [node name="RangePanel" type="Panel" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0

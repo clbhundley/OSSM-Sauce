@@ -11,5 +11,6 @@ enum AppMode {
 	VIBRATE,
 	BRIDGE,
 	PATH,
-	XTOYS
+	XTOYS,
+	INTERACTIVE_VIDEO
 }
