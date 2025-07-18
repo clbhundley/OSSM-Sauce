@@ -43,6 +43,7 @@ bg_color = Color(0.230469, 0.230469, 0.230469, 0.556863)
 corner_radius_bottom_right = 14
 
 [node name="InteractiveVideoMode" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
