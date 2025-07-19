@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b1e501df8faw"]
+[gd_scene load_steps=10 format=3 uid="uid://b1e501df8faw"]
 
 [ext_resource type="Script" uid="uid://bew656lm826vq" path="res://Scripts/InteractiveVideoMode.gd" id="1_0pafh"]
 [ext_resource type="Script" uid="uid://ivx7m2bfysip" path="res://addons/gde_gozen/video_playback.gd" id="1_c7igo"]
@@ -9,24 +9,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiepf"]
 bg_color = Color(0.408329, 0.408329, 0.408329, 1)
-
-[sub_resource type="GDScript" id="GDScript_k1oor"]
-script/source = "extends Control
-
-func _on_gui_input(event):
-	if event is InputEventMouseButton and owner.active_path_index != null:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.is_pressed():
-				$Timer.start()
-			elif event.is_released():
-				$Timer.stop()
-
-func _on_timer_timeout():
-	if owner.paused:
-		%CircleSelection.show_play()
-	else:
-		%CircleSelection.show_pause()
-"
 
 [sub_resource type="LabelSettings" id="LabelSettings_30qi2"]
 font_size = 23
@@ -107,14 +89,17 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="FunscriptContainer" type="PanelContainer" parent="VBox"]
+visible = false
 custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="FunscriptPathDisplay" type="Control" parent="VBox/FunscriptContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 1
 
 [node name="FunscriptPathArea" type="Control" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 layout_mode = 1
@@ -124,8 +109,7 @@ anchor_bottom = 0.84375
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, inf)
-mouse_filter = 2
-script = SubResource("GDScript_k1oor")
+mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Timer" type="Timer" parent="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea"]
@@ -133,6 +117,7 @@ wait_time = 0.3
 
 [node name="Paths" type="Control" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 anchors_preset = 0
+mouse_filter = 1
 
 [node name="Ball" type="Sprite2D" parent="VBox/FunscriptContainer/FunscriptPathDisplay"]
 self_modulate = Color(1, 0.384314, 0.47451, 1)
@@ -282,7 +267,6 @@ update_on_text_changed = true
 [connection signal="drag_started" from="VBox/BottomPanel/VBox/Timeline" to="." method="_on_timeline_drag_started"]
 [connection signal="value_changed" from="VBox/BottomPanel/VBox/Timeline" to="." method="_on_timeline_value_changed"]
 [connection signal="pressed" from="VBox/BottomPanel/VBox/ButtonsHBox/PlayPauseButton" to="." method="_on_play_pause_button_pressed"]
-[connection signal="gui_input" from="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" to="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" method="_on_gui_input"]
 [connection signal="timeout" from="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea/Timer" to="VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea" method="_on_timer_timeout"]
 [connection signal="pressed" from="Debug/DebugPanel/DebugVBox/LoadVideoButton" to="." method="_on_load_video_button_pressed"]
 [connection signal="text_submitted" from="Debug/DebugPanel/DebugVBox/URLLineEdit" to="." method="_on_url_line_edit_text_submitted"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://d3cq3b5o0feo0"]
+[gd_scene load_steps=71 format=3 uid="uid://d3cq3b5o0feo0"]
 
 [ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
 [ext_resource type="Script" uid="uid://bcl1axbtw05ci" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
@@ -46,6 +46,9 @@
 [ext_resource type="Script" uid="uid://c6ao0rhurexoq" path="res://Scripts/WebSocket.gd" id="42_kvii6"]
 [ext_resource type="Script" uid="uid://ftipt8s4uoxg" path="res://Scripts/buttplug_bridge.gd" id="43_dyutb"]
 [ext_resource type="Script" uid="uid://dtl7hvmljb1gb" path="res://Scripts/websocket_xtoys_bridge.gd" id="44_r8osj"]
+[ext_resource type="Texture2D" uid="uid://cnmcxoy57tr0" path="res://icons/play_arrow_48dp_FILL1_wght400_GRAD0_opsz48.png" id="46_play_icon"]
+[ext_resource type="Script" uid="uid://dvcd3kv1yd5nv" path="res://Scripts/InteractiveVideoModeNode.gd" id="47_2hygl"]
+[ext_resource type="Script" uid="uid://ivx7m2bfysip" path="res://addons/gde_gozen/video_playback.gd" id="48_2hygl"]
 
 [sub_resource type="GDScript" id="GDScript_o3urw"]
 script/source = "extends Control
@@ -304,6 +307,20 @@ func _on_easing_item_selected(index):
 		_in.get_node('AccelerationControls/Easing').select(index)
 	get_parent().send_command()
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_2hygl"]
+font_size = 23
+
+[sub_resource type="LabelSettings" id="LabelSettings_ov553"]
+font_size = 17
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7y5l"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.230469, 0.230469, 0.230469, 0.556863)
+corner_radius_bottom_right = 14
 
 [sub_resource type="Animation" id="Animation_il416"]
 length = 0.001
@@ -1577,6 +1594,249 @@ theme_override_colors/font_focus_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "Enable"
 
+[node name="InteractiveVideoMode" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -170.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("47_2hygl")
+
+[node name="VBox" type="VBoxContainer" parent="InteractiveVideoMode"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="FramePanel" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
+custom_minimum_size = Vector2(10, 1000)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="FrameImage" type="TextureRect" parent="InteractiveVideoMode/VBox/FramePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VideoPlayback" type="Control" parent="InteractiveVideoMode/VBox/FramePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("48_2hygl")
+metadata/_custom_type_script = "uid://ivx7m2bfysip"
+
+[node name="BottomPanel" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="InteractiveVideoMode/VBox/BottomPanel"]
+layout_mode = 2
+
+[node name="Timeline" type="HSlider" parent="InteractiveVideoMode/VBox/BottomPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+ticks_on_borders = true
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="InteractiveVideoMode/VBox/BottomPanel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+alignment = 1
+
+[node name="PlayPauseButton" type="TextureButton" parent="InteractiveVideoMode/VBox/BottomPanel/VBox/ButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture_normal = ExtResource("46_play_icon")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Spacer" type="Panel" parent="InteractiveVideoMode/VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="FunscriptContainer" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="FunscriptPathDisplay" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="FunscriptPathArea" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1, inf)
+mouse_filter = 1
+
+[node name="Timer" type="Timer" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea"]
+wait_time = 0.3
+
+[node name="Paths" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+anchors_preset = 0
+mouse_filter = 1
+
+[node name="Ball" type="Sprite2D" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+self_modulate = Color(1, 0.384314, 0.47451, 1)
+position = Vector2(488, 280)
+texture = ExtResource("3_4fxdc")
+
+[node name="FunscriptNotFound" type="RichTextLabel" parent="InteractiveVideoMode/VBox/FunscriptContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+theme_override_font_sizes/bold_font_size = 30
+text = "No funscript was found in the filepath"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingPanel" type="Panel" parent="InteractiveVideoMode"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="InteractiveVideoMode/LoadingPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.5
+offset_top = -11.5
+offset_right = 140.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Video is loading, a moment please ..."
+label_settings = SubResource("LabelSettings_2hygl")
+
+[node name="InfoLabel" type="Label" parent="InteractiveVideoMode/LoadingPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -85.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "If this takes too long, the video might have failed to load (check the log/console/terminal)..."
+label_settings = SubResource("LabelSettings_ov553")
+horizontal_alignment = 1
+
+[node name="Debug" type="Control" parent="InteractiveVideoMode"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -706.0
+offset_bottom = -1424.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DebugPanel" type="PanelContainer" parent="InteractiveVideoMode/Debug"]
+layout_mode = 0
+offset_right = 181.0
+offset_bottom = 118.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_q7y5l")
+
+[node name="DebugVBox" type="VBoxContainer" parent="InteractiveVideoMode/Debug/DebugPanel"]
+layout_mode = 2
+
+[node name="LoadVideoButton" type="Button" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox"]
+layout_mode = 2
+text = "Load video ..."
+
+[node name="URLLineEdit" type="LineEdit" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox"]
+layout_mode = 2
+placeholder_text = "Enter URL/path"
+
+[node name="DebugGrid" type="GridContainer" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox"]
+layout_mode = 2
+columns = 2
+
+[node name="EditorFPSLabel" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Editor FPS:"
+
+[node name="EditorFPSValue" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0.0"
+horizontal_alignment = 2
+
+[node name="CurrentFrameLabel" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Current frame:"
+
+[node name="CurrentFrameValue" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="MaxFrameLabel" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Total frames:"
+
+[node name="MaxFrameValue" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="FPSLabel" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FPS:"
+
+[node name="FPSValue" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0.0"
+horizontal_alignment = 2
+
+[node name="SpeedLabel" type="Label" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Playback speed:"
+
+[node name="SpeedSpinBox" type="SpinBox" parent="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "This value can be set from 0.25 to 4"
+min_value = 0.25
+max_value = 4.0
+step = 0.05
+value = 1.0
+alignment = 2
+update_on_text_changed = true
+
 [node name="ActionPanel" type="Panel" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.67451)
@@ -2270,7 +2530,7 @@ theme_override_colors/font_color = Color(1, 0.498039, 0.313726, 1)
 alignment = 1
 expand_icon = true
 selected = 0
-item_count = 5
+item_count = 6
 popup/item_0/text = "Path Mode"
 popup/item_0/id = 2
 popup/item_1/text = "Position Mode"
@@ -2281,6 +2541,8 @@ popup/item_3/text = "Vibration Mode"
 popup/item_3/id = 5
 popup/item_4/text = "Protocol Bridge Mode"
 popup/item_4/id = 6
+popup/item_5/text = "Interactive Video"
+popup/item_5/id = 9
 
 [node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main"]
 layout_mode = 2
@@ -2337,6 +2599,7 @@ toggle_mode = true
 text = "Loop Playlist: OFF"
 
 [node name="ModeConfigPanel" type="VBoxContainer" parent="Menu/Main"]
+visible = false
 layout_mode = 0
 offset_left = 150.0
 offset_top = 150.0
@@ -3494,6 +3757,12 @@ script = ExtResource("44_r8osj")
 [connection signal="pressed" from="BridgeControls/ClearLog" to="BridgeControls" method="_on_clear_log_pressed"]
 [connection signal="pressed" from="BridgeControls/AutoScroll" to="BridgeControls" method="_on_autoscroll_pressed"]
 [connection signal="pressed" from="BridgeControls/EnableBridge" to="BridgeControls" method="_on_enable_button_pressed"]
+[connection signal="drag_ended" from="InteractiveVideoMode/VBox/BottomPanel/VBox/Timeline" to="InteractiveVideoMode" method="_on_timeline_drag_ended"]
+[connection signal="drag_started" from="InteractiveVideoMode/VBox/BottomPanel/VBox/Timeline" to="InteractiveVideoMode" method="_on_timeline_drag_started"]
+[connection signal="value_changed" from="InteractiveVideoMode/VBox/BottomPanel/VBox/Timeline" to="InteractiveVideoMode" method="_on_timeline_value_changed"]
+[connection signal="pressed" from="InteractiveVideoMode/VBox/BottomPanel/VBox/ButtonsHBox/PlayPauseButton" to="InteractiveVideoMode" method="_on_play_pause_button_pressed"]
+[connection signal="pressed" from="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/LoadVideoButton" to="InteractiveVideoMode" method="_on_load_video_button_pressed"]
+[connection signal="value_changed" from="InteractiveVideoMode/Debug/DebugPanel/DebugVBox/DebugGrid/SpeedSpinBox" to="InteractiveVideoMode" method="_on_speed_spin_box_value_changed"]
 [connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
 [connection signal="pressed" from="ActionPanel/Speed/Button" to="ActionPanel" method="_on_speed_button_pressed"]

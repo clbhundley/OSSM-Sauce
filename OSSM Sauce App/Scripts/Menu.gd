@@ -262,16 +262,10 @@ func _on_mode_selected(index:int):
 			pass
 			#mode_config_panel.add_child(create_xtoys_config_ui())
 		elif mode_id == AppMode.AppMode.INTERACTIVE_VIDEO:
-			# Hide the menu first, then show InteractiveVideoMode after menu is hidden
+			# Hide the menu and show InteractiveVideoMode
 			self.hide()
-			call_deferred("_show_interactive_video_mode")
+			%InteractiveVideoMode.activate()
 			%ActionPanel.show()
-			# Hide other controls
-			%BridgeControls.deactivate()
-			%PositionControls.deactivate()
-			%LoopControls.deactivate()
-			%VibrationControls.deactivate()
-			# Show funscript UI at the bottom (handled by InteractiveVideoMode scene)
 			return
 
 	match mode_id:
@@ -363,35 +357,20 @@ func _on_bridge_mode_item_selected(index: int) -> void:
 # Add a file dialog for video selection
 @onready var video_file_dialog = FileDialog.new()
 
-func _ready():
-	# Populate mode OptionButton with all AppMode values
-	mode_option_button.clear()
-	mode_option_button.add_item("Idle", AppMode.AppMode.IDLE)
-	mode_option_button.add_item("Homing", AppMode.AppMode.HOMING)
-	mode_option_button.add_item("Move", AppMode.AppMode.MOVE)
-	mode_option_button.add_item("Path", AppMode.AppMode.PATH)
-	mode_option_button.add_item("Position", AppMode.AppMode.POSITION)
-	mode_option_button.add_item("Loop", AppMode.AppMode.LOOP)
-	mode_option_button.add_item("Vibrate", AppMode.AppMode.VIBRATE)
-	mode_option_button.add_item("Bridge", AppMode.AppMode.BRIDGE)
-	mode_option_button.add_item("xtoys", AppMode.AppMode.XTOYS)
-	mode_option_button.add_item("Interactive Video", AppMode.AppMode.INTERACTIVE_VIDEO)
-	# Add BridgeStatusLabel if not present
-	if not has_node("BridgeStatusLabel"):
-		var label = Label.new()
-		label.name = "BridgeStatusLabel"
-		label.text = "Bridge: Not Connected"
-		label.modulate = Color(1,0,0) # Red
-		label.visible = false
-		add_child(label)
 
 func _show_interactive_video_mode():
 	if not has_node("../InteractiveVideoMode"):
 		var scene = load("res://InteractiveVideoMode.tscn").instantiate()
 		print("New Scene added is %s" % scene.name)
 		get_tree().current_scene.add_child(scene)
+		get_node("../InteractiveVideoMode").show()
 		# Optionally, set up references if needed
 	else:
 		get_node("../InteractiveVideoMode").show()
 	# Ensure ActionPanel is visible
 	%ActionPanel.show()
+
+# When the menu is shown, hide InteractiveVideoMode
+func show_menu():
+	super.show()
+	%InteractiveVideoMode.deactivate()

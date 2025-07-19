@@ -45,9 +45,7 @@ signal homing_complete
 func _init():
 	max_speed = 25000
 	max_acceleration = 500000
-
-
-
+	
 func _ready():
 	Global.main_scene = self
 	
@@ -370,9 +368,15 @@ func round_to(value: float, decimals: int) -> float:
 
 
 func load_path(file_name:String) -> bool:
-	var file = FileAccess.open(paths_dir + file_name, FileAccess.READ)
+	return load_path_from_directory(file_name, paths_dir)
+
+func load_path_from_directory(file_name:String, directory:String) -> bool:
+	print("Loading path from directory: " + directory + " file: " + file_name)
+	var full_path = directory + file_name
+	print("Full path: " + full_path)
+	var file = FileAccess.open(full_path, FileAccess.READ)
 	if not file:
-		printerr("Error: Failed to read file.")
+		printerr("Error: Failed to read file: " + full_path)
 		return false
 	
 	var file_data:Dictionary

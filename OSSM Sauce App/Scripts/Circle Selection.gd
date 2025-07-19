@@ -1,6 +1,7 @@
 extends Control
 
 func _ready():
+	Global.path_playback = self
 	$AnimationPlayer.play('Spin')
 
 
