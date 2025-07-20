@@ -234,7 +234,7 @@ func _log(log_text:String):
 	var show_debug = false
 	if get_tree().root.has_node("Settings"):
 		show_debug = get_tree().root.get_node("Settings").debug_log_enabled
-	if log_text.begins_with("[DEBUG]") and not show_debug:
+	if log_text.begins_with("[DEBUG]*") and not show_debug:
 		return
 	var log_node = %BridgeControls/Log
 	log_node.text += log_text + "\n"

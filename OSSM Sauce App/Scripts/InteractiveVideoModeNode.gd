@@ -85,16 +85,13 @@ func _on_play_pause_button_pressed() -> void:
 			if play_pause_button:
 				play_pause_button.texture_normal = icons[0]
 			# Pause funscript playback
-			if owner.has_method("pause"):
-				owner.pause()
+			%CircleSelection._on_inside_button_pressed
 		else:
 			video_playback.play()
 			if play_pause_button:
 				play_pause_button.texture_normal = icons[1]
 			# Start funscript playback
-			owner.active_path_index = 0
-			if owner.has_method("play"):
-				owner.play()
+			%CircleSelection._on_inside_button_pressed
 			play_pause_button.release_focus()
 
 func _on_timeline_value_changed(_value: float) -> void:
