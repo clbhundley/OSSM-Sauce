@@ -32,17 +32,21 @@ enum {
 	EASE_OUT_IN
 }
 
+
 func set_port(port: int):
 	xtoys_port = port
 	if xtoys_running:
 		stop_xtoys()
 		start_xtoys()
 
+
 func get_port() -> int:
 	return xtoys_port
 
+
 func set_log_log(val: bool):
 	debug_log = val
+
 
 func set_enabled(val: bool):
 	enabled = val
@@ -50,6 +54,7 @@ func set_enabled(val: bool):
 		start_xtoys()
 	elif not enabled and xtoys_running:
 		stop_xtoys()
+
 
 func start_xtoys():
 	if not enabled:
@@ -59,18 +64,21 @@ func start_xtoys():
 		_log("xtoys bridge already running")
 		return
 	
-	_log("Starting xtoys WebSocket server on port %d" % xtoys_port)
+	var port = %Menu/BridgeSettings/XToys/Port/LineEdit.text
+	_log("Starting xtoys WebSocket server on port %d" % int(port))
 	ws_server = WebSocketServer.new()
 	ws_server.client_connected.connect(_on_client_connected)
 	ws_server.client_disconnected.connect(_on_client_disconnected)
 	ws_server.message_received.connect(_on_message_received)
-	var ok = ws_server.start(xtoys_port)
+	ws_server.server_error.connect(_on_server_error)
+	var ok = ws_server.start(int(port))
 	if ok:
-		_log("WebSocket server started on port %d" % xtoys_port)
+		_log("WebSocket server started on port %d" % int(port))
 		%BridgeControls/ConnectionSymbol.self_modulate = Color.WHITE_SMOKE
 		xtoys_running = true
 	else:
-		_log("Failed to start WebSocket server on port %d" % xtoys_port)
+		_log("Failed to start WebSocket server on port %d" % int(port))
+
 
 func stop_xtoys():
 	_log("Stopping xtoys WebSocket server")
@@ -80,128 +88,133 @@ func stop_xtoys():
 		_log("WebSocket server stopped")
 	else:
 		_log("No WebSocket server to stop")
+	%BridgeControls/ConnectionSymbol.self_modulate = Color.WHITE_SMOKE
+	%BridgeControls/ConnectionSymbol.self_modulate.a = 0.2
 	xtoys_running = false
-	_stop_speed_mode()
+	#_stop_speed_mode()
+	$SpeedTimer.stop()
 	_log("xtoys bridge stopped")
+
 
 func _process(delta):
 	if ws_server and ws_server.is_listening():
 		ws_server.process()
-	# Process up to 10 messages per frame
-	var processed = 0
-	while message_queue.size() > 0 and processed < 10:
-		var result = message_queue.pop_front()
-		_log("Processing queued xtoys message: %s" % str(result))
-		if result.has("mode"):
-			_log("Processing mode: %s" % result["mode"])
-			match result["mode"]:
-				"position":
-					_log("Handling position command")
-					_stop_speed_mode()
-					_handle_position(result)
-				"speed":
-					_log("Handling speed command")
-					_handle_speed(result)
-				_:
-					_log("Unknown mode: %s" % result["mode"])
-		else:
-			_log("No 'mode' key found in message")
-		processed += 1
+
 
 func _on_client_connected(client_id):
 	%BridgeControls/ConnectionSymbol.self_modulate = Color.SEA_GREEN
 	_log("xtoys client connected: %d" % client_id)
 
+
 func _on_client_disconnected(client_id, code):
 	_log("xtoys client disconnected: %d (code: %d)" % [client_id, code])
-	_stop_speed_mode()
+	$SpeedTimer.stop()
+	#_stop_speed_mode()
+
 
 func _on_message_received(client_id, message):
-	_log("message from xtoys client %d: %s" % [client_id, message])
-	var result = JSON.parse_string(message)
-	_log("Parsed JSON result type: %s" % typeof(result))
-	if typeof(result) != TYPE_DICTIONARY:
-		_log("Invalid xtoys JSON - expected Dictionary, got %s" % typeof(result))
+	var xtoys_command:Dictionary = JSON.parse_string(message)
+	
+	if not xtoys_command:
+		_log("ERROR: Invalid XToys command!")
+	
+	_log("")
+	_log("XToys JSON command:")
+	_log(JSON.stringify(xtoys_command, "\t"))
+	_log("")
+	
+	if not xtoys_command.has('mode'):
+		_log("ERROR: XToys command does not contain a mode!")
 		return
-	# Queue the message for batch processing
-	message_queue.append(result)
+	
+	match xtoys_command.mode:
+		"position":
+			position_command(xtoys_command)
+		"speed":
+			speed_command(xtoys_command)
+		_:
+			_log("Unknown mode: %s" % xtoys_command.mode)
 
-func _handle_position(cmd):
-	_log("Position command received: %s" % cmd)
-	var duration = int(cmd.get("duration", 100))
-	var position = int(cmd.get("position", 0))
-	var depth = clamp(int(round(remap(position, 0, 100, 0, 10000))), 0, 10000)
-	var trans = %BridgeControls.auto_smoothing
-	var ease = EASE_IN_OUT
-	var auxiliary = 0
-	_log("Sending smooth move: duration=%d, depth=%d, trans=%d, ease=%d" % [duration, depth, trans, ease])
-	_send_smooth_move(duration, depth, trans, ease, auxiliary)
 
-func _handle_speed(cmd):
-	_log("Speed command received: %s" % cmd)
-	# speed is ms per stroke, upper/lower are 0-100
-	var speed = int(cmd.get("speed", 1000))
-	if speed == 0:
-		_log("Ignoring speed command with speed=0")
-		return
-	var upper = int(cmd.get("upper", 100))
-	var lower = int(cmd.get("lower", 0))
-	speed_upper = clamp(int(round(remap(upper, 0, 100, 0, 10000))), 0, 10000)
-	speed_lower = clamp(int(round(remap(lower, 0, 100, 0, 10000))), 0, 10000)
-	speed_ms = speed
-	speed_next_target = speed_upper
-	_log("Speed mode params: speed=%d, upper=%d, lower=%d" % [speed, speed_upper, speed_lower])
-	if not speed_mode_active:
-		_log("Starting speed mode")
-		_start_speed_mode()
+func position_command(xtoys_command):
+	_log("Position command received")
+	
+	$SpeedTimer.stop()
+	
+	for section in ['position', 'duration']:
+		if not xtoys_command.has(section):
+			_log("ERROR: XToys position command missing section: %s" % section)
+	
+	var stroke_min_duration:int = %Menu/BridgeSettings/XToys/SpeedLimits/MinDuration/Input.value
+	var stroke_max_duration:int = %Menu/BridgeSettings/XToys/SpeedLimits/MaxDuration/Input.value
+	var stroke_duration_ms:int
+	
+	var use_command_duration:bool = %Menu/BridgeSettings/XToys/UseCommandDuration.button_pressed
+	var max_msg_frequency:float = %Menu/BridgeSettings/XToys/MaxMsgFrequency/Input.value
+	
+	if use_command_duration:
+		stroke_duration_ms = int(xtoys_command.duration)
 	else:
-		_log("Speed mode already active")
+		stroke_duration_ms = 1 / max_msg_frequency
+	stroke_duration_ms = clamp(stroke_duration_ms, stroke_min_duration, stroke_max_duration)
+	
+	var stroke_target_position:int = clamp(xtoys_command.position, 0, 100)
+	stroke_target_position = remap(xtoys_command.position, 0, 100, 0, 10000)
+	
+	var trans:int = %BridgeControls.auto_smoothing
+	var ease:int = EASE_IN_OUT
+	var auxiliary:int = 0
+	
+	send_smooth_move(stroke_duration_ms, stroke_target_position, trans, ease, auxiliary)
 
-func _start_speed_mode():
-	speed_mode_active = true
-	if speed_timer:
-		speed_timer.stop()
-		speed_timer = null
-	speed_timer = Timer.new()
-	speed_timer.wait_time = float(speed_ms) / 1000.0
-	speed_timer.one_shot = false
-	speed_timer.timeout.connect(_on_speed_timer_timeout)
-	add_child(speed_timer)
-	speed_timer.start()
-	# Start at lower, move to upper
-	var trans_type = %BridgeControls.auto_smoothing
-	_send_smooth_move(int(speed_ms / 2), speed_lower, trans_type, EASE_IN_OUT, 0)
-	speed_next_target = speed_upper
+var speed_mode_min_depth:int
+var speed_mode_max_depth:int
+var speed_mode_stroke_duration_ms:int
+func speed_command(xtoys_command):
+	_log("Speed command received")
+	
+	for section in ['speed', 'lower', 'upper']:
+		if not xtoys_command.has(section):
+			_log("XToys speed command missing section: %s" % section)
+	
+	var stroke_min_duration:int = %Menu/BridgeSettings/XToys/SpeedLimits/MinDuration/Input.value
+	var stroke_max_duration:int = %Menu/BridgeSettings/XToys/SpeedLimits/MaxDuration/Input.value
+	
+	var _speed:int = clamp(int(xtoys_command.speed), 0, 100)
+	speed_mode_stroke_duration_ms = remap(_speed, 0, 100, stroke_max_duration, stroke_min_duration)
+	
+	if _speed == 0:
+		$SpeedTimer.stop()
+		_log("Speed = 0 -- Pausing")
+		return
+	
+	var _min_depth:int = clamp(int(xtoys_command.lower), 0, 100)
+	speed_mode_min_depth = remap(_min_depth, 0, 100, 0, 10000)
+	
+	var _max_depth:int = clamp(int(xtoys_command.upper), 0, 100)
+	speed_mode_max_depth = remap(_max_depth, 0, 100, 0, 10000)
+	
+	push_stroke = true
+	_on_speed_timer_timeout() # Start immediately
+	$SpeedTimer.wait_time = speed_mode_stroke_duration_ms / float(1000)
+	$SpeedTimer.start()
 
-func _stop_speed_mode():
-	speed_mode_active = false
-	if speed_timer:
-		speed_timer.stop()
-		remove_child(speed_timer)
-		speed_timer = null
 
+var push_stroke:bool = true
 func _on_speed_timer_timeout():
-	# Alternate between upper and lower
-	var trans_type:int = %BridgeControls.auto_smoothing
-	if speed_next_target == speed_upper:
-		_send_smooth_move(speed_ms, speed_upper, trans_type, EASE_IN_OUT, 0)
-		speed_next_target = speed_lower
+	var trans:int = %BridgeControls.auto_smoothing
+	var ease:int = EASE_IN_OUT
+	var aux:int = 0
+	
+	if push_stroke:
+		send_smooth_move(speed_mode_stroke_duration_ms, speed_mode_min_depth, trans, ease, aux)
 	else:
-		_send_smooth_move(speed_ms, speed_lower, trans_type, EASE_IN_OUT, 0)
-		speed_next_target = speed_upper
+		send_smooth_move(speed_mode_stroke_duration_ms, speed_mode_max_depth, trans, ease, aux)
+	
+	push_stroke = !push_stroke
 
-func _send_smooth_move(ms_duration:int, depth:int, trans:int, ease:int, auxiliary:int):
-	# Clamp to app's configured max_speed, max_acceleration, and range
-	var root = get_tree().root.get_child(0)
-	if "max_speed" in root:
-		ms_duration = max(ms_duration, int(1000.0 / float(root.max_speed)))
-	if "max_acceleration" in root:
-		# Optionally use this for acceleration-limited moves
-		pass # Not directly used in this function, but available
-	if "min_stroke_duration" in root and "max_stroke_duration" in root:
-		depth = clamp(depth, int(root.min_stroke_duration), int(root.max_stroke_duration))
-	else:
-		depth = clamp(depth, 0, 10000)
+
+func send_smooth_move(ms_duration:int, depth:int, trans:int, ease:int, auxiliary:int):
 	_log("Sending smooth move command: duration=%d, depth=%d, trans=%d, ease=%d, aux=%d" % [ms_duration, depth, trans, ease, auxiliary])
 	var command:PackedByteArray
 	command.resize(10)
@@ -211,16 +224,14 @@ func _send_smooth_move(ms_duration:int, depth:int, trans:int, ease:int, auxiliar
 	command.encode_u8(7, trans)
 	command.encode_u8(8, ease)
 	command.encode_u8(9, auxiliary)
-	_log("Command bytes: %s" % command.hex_encode())
-	if %WebSocket.ossm_connected:
-		_log("WebSocket connected, broadcasting command")
-		%WebSocket.server.broadcast_binary(command)
-	else:
-		_log("WebSocket not connected, cannot send command") 
+	%WebSocket.server.broadcast_binary(command)
+
+
+func _on_server_error(error):
+	printerr("Server error: %s" % error)
+
 
 func _log(log_text:String):
+	if not %Menu/BridgeSettings/LoggingEnabled.button_pressed:
+		return
 	%BridgeControls/Log.text += log_text + "\n"
-
-#func _debug(msg):
-	#if debug_log:
-		#print("[xtoys] %s" % msg) 

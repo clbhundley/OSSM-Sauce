@@ -9,6 +9,7 @@ extends Panel
 @onready var buttplug_panel = $ButtplugSettings if has_node("ButtplugSettings") else self
 @onready var xtoys_bridge = %XtoysBridge if has_node("../XtoysBridge") else null
 
+var debug_log_enabled: bool = false
 
 func _ready():
 	if OS.get_name() == "Android":
@@ -33,58 +34,6 @@ func _ready():
 			buttplug_address = bpio_bridge.buttplug_address
 			buttplug_main_port = str(bpio_bridge.buttplug_server_port)
 			buttplug_wsdm_port = str(bpio_bridge.wsdm_port)
-	if not $Network.has_node("ButtplugIP"):
-		var hbox = HBoxContainer.new()
-		hbox.name = "ButtplugIP"
-		var label = Label.new()
-		label.text = "Buttplug Address:"
-		var textedit = LineEdit.new()
-		textedit.name = "TextEdit"
-		textedit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		textedit.text = buttplug_address
-		var setbtn = Button.new()
-		setbtn.name = "SetButton"
-		setbtn.text = "Set"
-		hbox.add_child(label)
-		hbox.add_child(textedit)
-		hbox.add_child(setbtn)
-		$Network.add_child(hbox)
-		buttplug_ip_textedit = textedit
-		buttplug_ip_button = setbtn
-	if not $Network.has_node("ButtplugMainPort"):
-		var hbox = HBoxContainer.new()
-		hbox.name = "ButtplugMainPort"
-		var label = Label.new()
-		label.text = "Buttplug Main Port:"
-		var textedit = LineEdit.new()
-		textedit.name = "TextEdit"
-		textedit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		textedit.text = buttplug_main_port
-		hbox.add_child(label)
-		hbox.add_child(textedit)
-		$Network.add_child(hbox)
-		buttplug_main_port_textedit = textedit
-	if not $Network.has_node("ButtplugWSDMPort"):
-		var hbox = HBoxContainer.new()
-		hbox.name = "ButtplugWSDMPort"
-		var label = Label.new()
-		label.text = "Buttplug WSDM Port:"
-		var textedit = LineEdit.new()
-		textedit.name = "TextEdit"
-		textedit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		textedit.text = buttplug_wsdm_port
-		hbox.add_child(label)
-		hbox.add_child(textedit)
-		$Network.add_child(hbox)
-		buttplug_wsdm_port_textedit = textedit
-	if buttplug_ip_button:
-		buttplug_ip_button.pressed.connect(_on_buttplug_ip_set_pressed)
-	if buttplug_ip_textedit:
-		buttplug_ip_textedit.text = buttplug_address
-	if buttplug_main_port_textedit:
-		buttplug_main_port_textedit.text = buttplug_main_port
-	if buttplug_wsdm_port_textedit:
-		buttplug_wsdm_port_textedit.text = buttplug_wsdm_port
 
 	if xtoys_panel:
 		xtoys_panel.hide()
@@ -130,6 +79,14 @@ func _ready():
 		vbox.add_child(auto)
 		add_child(panel)
 		xtoys_panel = panel
+
+	if has_node("DebugLogCheckBox"):
+		var debug_enabled = false
+		if owner.user_settings.has_section_key('app_settings', 'debug_log_enabled'):
+			debug_enabled = owner.user_settings.get_value('app_settings', 'debug_log_enabled')
+		$DebugLogCheckBox.button_pressed = debug_enabled
+		debug_log_enabled = debug_enabled
+		$DebugLogCheckBox.toggled.connect(_on_debug_log_toggled)
 
 
 func _on_numeric_input_changed(input_node:Node):
@@ -266,8 +223,7 @@ func _on_buttplug_ip_set_pressed():
 		%BPIOBridge.wsdm_port = int(wsdm_port)
 		%BPIOBridge.stop_client()
 		%BPIOBridge.stop_device()
-		%BPIOBridge.start_client()
-		%BPIOBridge.start_device()
+		# Bridge Controls will handle reconnection when enabled
 		# Save to user settings
 		owner.user_settings.set_value('buttplug', 'address', address)
 		owner.user_settings.set_value('buttplug', 'main_port', int(main_port))
@@ -315,3 +271,9 @@ func _on_xtoys_debug_toggled(pressed):
 func _on_xtoys_auto_reconnect_toggled(pressed):
 	if xtoys_bridge:
 		xtoys_bridge.auto_reconnect = pressed
+
+
+func _on_debug_log_toggled(checked: bool):
+	debug_log_enabled = checked
+	owner.user_settings.set_value('app_settings', 'debug_log_enabled', checked)
+	owner.user_settings.save(owner.cfg_path)

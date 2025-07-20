@@ -10,6 +10,4 @@ enum AppMode {
 	LOOP,
 	VIBRATE,
 	BRIDGE,
-	PATH,
-	XTOYS
 }
