@@ -13,7 +13,7 @@ var ws_device_client = WebSocketPeer.new()    # WSDM device emulation
 
 # Device connection states
 var device_connected:bool
-
+var client_connected:bool
 # Add a flag for UI to confirm device connection
 var device_connected_ok:bool
 
@@ -78,7 +78,18 @@ func start_client():
 			]
 			ws_client.send_text(JSON.stringify(request_server_info))
 			_log("[DEBUG] Client - Sent RequestServerInfo request")
+			await get_tree().create_timer(0.1).timeout
+			var request_device_list = [
+				{
+					"RequestDeviceList": {
+						"Id": 1
+					}
+				}
+			]
+			ws_client.send_text(JSON.stringify(request_device_list))
+			_log("[DEBUG] Sent RequestDeviceList request")
 			# Send RequestDeviceList
+			client_connected = true
 		poll_ws_client()
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.
@@ -149,16 +160,7 @@ func stop_device():
 
 func poll_ws_client():
 	if %BridgeControls.enabled == true:
-		if ws_client:
-			var request_device_list = [
-				{
-					"RequestDeviceList": {
-						"Id": 1
-					}
-				}
-			]
-			ws_client.send_text(JSON.stringify(request_device_list))
-			_log("[DEBUG] Sent RequestDeviceList request")
+		if client_connected == true:
 			ws_client.poll()
 			await get_tree().create_timer(0.1).timeout
 			while ws_client.get_available_packet_count() > 0:
@@ -311,14 +313,17 @@ func set_device_connected_ok(device_connected_ok):
 		if handshake_popup_dialog.visible:
 			handshake_popup_dialog.hide()
 			device_connected = true
+			_log("[DEBUG] Device Connected !")
 		if is_instance_valid(handshake_popup_dialog):
 			handshake_popup_dialog.queue_free()
 			handshake_popup_dialog = null
 			device_connected = true
+			_log("[DEBUG] Device Connected !")
 		handshake_popup_shown = false
-		device_connected = true
 	else:
 		_log("[DEBUG] Handshake popup dialog not visible, skipping")
+		device_connected = true
+		_log("[DEBUG] Device Connected !")
 		
 func _log(log_text:String):
 	# Only show [DEBUG] logs if debug_log_enabled is true
