@@ -70,7 +70,6 @@ func _stop_bridge_connections():
 		0:  # Buttplug.io
 			bpioenabled = false
 			%BPIOBridge.stop_device()
-			await get_tree().create_timer(0.5).timeout
 			%BPIOBridge.stop_client()
 		1:  # XToys
 			xtoysenabled = false
@@ -88,8 +87,6 @@ func _start_bridge_connections():
 		0:  # Buttplug.io
 			bpioenabled = true
 			%BPIOBridge.start_device()
-			await get_tree().create_timer(2).timeout
-			%BPIOBridge.start_client()
 		1:  # XToys
 			xtoysenabled = true
 			%XToysBridge.start_xtoys()

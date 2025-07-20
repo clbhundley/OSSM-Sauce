@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://d3cq3b5o0feo0"]
+[gd_scene load_steps=64 format=3 uid="uid://d3cq3b5o0feo0"]
 
 [ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://Theme.tres" id="1_2qx77"]
 [ext_resource type="Script" uid="uid://bcl1axbtw05ci" path="res://Scripts/OSSM Sauce.gd" id="2_7liag"]
@@ -342,13 +342,6 @@ _data = {
 &"RESET": SubResource("Animation_il416"),
 &"Spin": SubResource("Animation_7gpwe")
 }
-
-[sub_resource type="GDScript" id="GDScript_j8mcp"]
-script/source = "extends OptionButton
-
-func _ready() -> void:
-	%Menu._on_bridge_mode_item_selected(selected)
-"
 
 [sub_resource type="GDScript" id="GDScript_cloqu"]
 script/source = "extends Button
@@ -2448,7 +2441,6 @@ popup/item_1/text = "XToys"
 popup/item_1/id = 1
 popup/item_2/text = "MCP"
 popup/item_2/id = 2
-script = SubResource("GDScript_j8mcp")
 
 [node name="HSeparator" type="HSeparator" parent="Menu/BridgeSettings"]
 layout_mode = 2
