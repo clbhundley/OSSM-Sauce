@@ -15,7 +15,14 @@ var ticks_per_second:int
 
 var path_speed:int = 30
 
-var paused:bool = true
+#var paused:bool = true
+
+var paused: bool:
+	get:
+		return paused
+	set(value):
+		print_stack()
+		paused = value
 
 var active_path_index
 
@@ -105,7 +112,9 @@ func _ready():
 
 var marker_index:int
 func _physics_process(delta):
-	if paused or paths[active_path_index].is_empty():
+	if paused:
+		return
+	elif paths[active_path_index].is_empty():
 		return
 	
 	if frame >= paths[active_path_index].size() - 1:

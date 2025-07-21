@@ -601,7 +601,6 @@ script = ExtResource("2_7liag")
 
 [node name="PathDisplay" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -611,7 +610,7 @@ grow_vertical = 2
 
 [node name="PathArea" type="Control" parent="PathDisplay"]
 layout_mode = 1
-anchor_top = 0.0625
+anchor_top = 0.488542
 anchor_right = 1.0
 anchor_bottom = 0.84375
 grow_horizontal = 2
@@ -627,7 +626,7 @@ anchors_preset = 0
 
 [node name="Ball" type="Sprite2D" parent="PathDisplay"]
 self_modulate = Color(1, 0.384314, 0.47451, 1)
-position = Vector2(540, 960)
+position = Vector2(540, 1300)
 texture = ExtResource("3_4fxdc")
 
 [node name="PositionControls" type="Control" parent="."]
@@ -1596,6 +1595,7 @@ text = "Enable"
 
 [node name="InteractiveVideoMode" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1656,10 +1656,6 @@ texture_normal = ExtResource("46_play_icon")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Spacer" type="Panel" parent="InteractiveVideoMode/VBox"]
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
 [node name="FunscriptContainer" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
 custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
@@ -1667,12 +1663,14 @@ mouse_filter = 1
 
 [node name="FunscriptPathDisplay" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer"]
 unique_name_in_owner = true
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 mouse_filter = 1
 
 [node name="FunscriptPathArea" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -1687,10 +1685,12 @@ mouse_filter = 1
 wait_time = 0.3
 
 [node name="Paths" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+visible = false
 anchors_preset = 0
 mouse_filter = 1
 
 [node name="Ball" type="Sprite2D" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
+visible = false
 self_modulate = Color(1, 0.384314, 0.47451, 1)
 position = Vector2(488, 280)
 texture = ExtResource("3_4fxdc")
@@ -2193,6 +2193,7 @@ libraries = {
 
 [node name="SpeedPanel" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.5
@@ -2360,6 +2361,7 @@ vertical_alignment = 1
 
 [node name="RangePanel" type="Panel" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0

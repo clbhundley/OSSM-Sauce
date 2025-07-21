@@ -30,7 +30,7 @@ var is_dragging: bool = false
 var was_playing: bool = false
 
 var funscript_path: String = ""
-var active_path_index: int
+
 
 func _ready() -> void:
 	if OS.get_cmdline_args().size() > 1:
@@ -95,7 +95,6 @@ func _on_play_pause_button_pressed() -> void:
 			video_playback.play()
 			play_pause_button.texture_normal = icons[1]
 			# Start funscript playback
-			Global.main_scene.active_path_index = 0
 			if Global.path_playback.has_method("_on_inside_button_pressed"):
 				Global.path_playback._on_inside_button_pressed()
 				

@@ -67,6 +67,7 @@ func open_video(file_path: String) -> void:
 	if video_playback:
 		video_playback.set_video_path(file_path)
 	_try_load_funscript_for_video(file_path)
+	owner.display_active_path_index
 
 func after_video_open() -> void:
 	if video_playback and video_playback.is_open():
@@ -82,12 +83,15 @@ func _on_play_pause_button_pressed() -> void:
 	if video_playback and video_playback.is_open():
 		if video_playback.is_playing:
 			video_playback.pause()
+			Global.main_scene.paused = true
 			if play_pause_button:
 				play_pause_button.texture_normal = icons[0]
 			# Pause funscript playback
 			%CircleSelection._on_inside_button_pressed
 		else:
 			video_playback.play()
+			Global.main_scene.active_path_index = 0
+			Global.main_scene.paused = false
 			if play_pause_button:
 				play_pause_button.texture_normal = icons[1]
 			# Start funscript playback
