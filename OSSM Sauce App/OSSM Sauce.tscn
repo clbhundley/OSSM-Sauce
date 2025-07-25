@@ -601,18 +601,21 @@ script = ExtResource("2_7liag")
 
 [node name="PathDisplay" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 904.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PathArea" type="Control" parent="PathDisplay"]
+visible = false
 layout_mode = 1
-anchor_top = 0.488542
+anchor_top = 0.00688976
 anchor_right = 1.0
-anchor_bottom = 0.84375
+anchor_bottom = 0.843504
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_o3urw")
@@ -622,11 +625,13 @@ metadata/_edit_use_anchors_ = true
 wait_time = 0.3
 
 [node name="Paths" type="Control" parent="PathDisplay"]
+visible = false
 anchors_preset = 0
 
 [node name="Ball" type="Sprite2D" parent="PathDisplay"]
+visible = false
 self_modulate = Color(1, 0.384314, 0.47451, 1)
-position = Vector2(540, 1300)
+position = Vector2(507, 405)
 texture = ExtResource("3_4fxdc")
 
 [node name="PositionControls" type="Control" parent="."]
@@ -1595,7 +1600,6 @@ text = "Enable"
 
 [node name="InteractiveVideoMode" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1616,7 +1620,7 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="FramePanel" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
-custom_minimum_size = Vector2(10, 1000)
+custom_minimum_size = Vector2(10, 850)
 layout_mode = 2
 size_flags_vertical = 0
 
@@ -1657,46 +1661,14 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="FunscriptContainer" type="PanelContainer" parent="InteractiveVideoMode/VBox"]
+visible = false
 custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="FunscriptPathDisplay" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer"]
-unique_name_in_owner = true
-visible = false
-clip_contents = true
-custom_minimum_size = Vector2(0, 400)
-layout_mode = 2
-mouse_filter = 1
-
-[node name="FunscriptPathArea" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
-visible = false
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1, inf)
-mouse_filter = 1
-
-[node name="Timer" type="Timer" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay/FunscriptPathArea"]
-wait_time = 0.3
-
-[node name="Paths" type="Control" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
-visible = false
-anchors_preset = 0
-mouse_filter = 1
-
-[node name="Ball" type="Sprite2D" parent="InteractiveVideoMode/VBox/FunscriptContainer/FunscriptPathDisplay"]
-visible = false
-self_modulate = Color(1, 0.384314, 0.47451, 1)
-position = Vector2(488, 280)
-texture = ExtResource("3_4fxdc")
-
 [node name="FunscriptNotFound" type="RichTextLabel" parent="InteractiveVideoMode/VBox/FunscriptContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 30
@@ -1705,6 +1677,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LoadingPanel" type="Panel" parent="InteractiveVideoMode"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

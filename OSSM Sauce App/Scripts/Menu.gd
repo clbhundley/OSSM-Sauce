@@ -263,10 +263,11 @@ func _on_mode_selected(index:int):
 			#mode_config_panel.add_child(create_xtoys_config_ui())
 		elif mode_id == AppMode.AppMode.INTERACTIVE_VIDEO:
 			# Hide the menu and show InteractiveVideoMode
-			self.hide()
-			%InteractiveVideoMode.activate()
-			%ActionPanel.show()
-			return
+			pass
+			#self.hide()
+			#%InteractiveVideoMode.activate()
+			#%ActionPanel.show()
+			
 
 	match mode_id:
 		AppMode.AppMode.IDLE:
@@ -312,6 +313,18 @@ func _on_mode_selected(index:int):
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
 		AppMode.AppMode.INTERACTIVE_VIDEO:
+			%BridgeControls.deactivate()
+			%PositionControls.deactivate()
+			%LoopControls.deactivate()
+			%VibrationControls.deactivate()
+			owner.activate_move_mode()
+			%Menu/Main/PlaylistButtons.hide()
+			%Menu/Main/PathButtons.hide()
+			%Menu/Main/LoopPlaylistButton.hide()
+			%Menu/PathControls.hide()
+			%Menu/Playlist.hide()
+			%InteractiveVideoMode.activate()
+			%ActionPanel.show()
 			# All UI handled by InteractiveVideoMode scene
 			pass
 

@@ -27,6 +27,8 @@ var icons: Array[Texture2D] = [
 var is_dragging: bool = false
 var was_playing: bool = false
 var funscript_path: String = ""
+var dir: String = ""
+var funscript_filename: String = ""
 
 func _ready() -> void:
 	hide()  # Start hidden
@@ -67,7 +69,7 @@ func open_video(file_path: String) -> void:
 	if video_playback:
 		video_playback.set_video_path(file_path)
 	_try_load_funscript_for_video(file_path)
-	owner.display_active_path_index
+	#owner.display_active_path_index
 
 func after_video_open() -> void:
 	if video_playback and video_playback.is_open():
@@ -89,13 +91,16 @@ func _on_play_pause_button_pressed() -> void:
 			# Pause funscript playback
 			%CircleSelection._on_inside_button_pressed
 		else:
-			video_playback.play()
-			Global.main_scene.active_path_index = 0
-			Global.main_scene.paused = false
+			
+			#Global.main_scene.active_path_index = 0
+			#Global.main_scene.paused = false
 			if play_pause_button:
 				play_pause_button.texture_normal = icons[1]
+			%Menu._on_play_pressed()
+			%CircleSelection._on_inside_button_pressed()
+			video_playback.play()
 			# Start funscript playback
-			%CircleSelection._on_inside_button_pressed
+			
 			play_pause_button.release_focus()
 
 func _on_timeline_value_changed(_value: float) -> void:
@@ -136,8 +141,8 @@ func load_video(video_path: String):
 	_try_load_funscript_for_video(video_path)
 
 func _try_load_funscript_for_video(video_path: String):
-	var dir = video_path.get_base_dir()
-	var funscript_filename = video_path.get_file().get_basename() + ".funscript"
+	dir = video_path.get_base_dir()
+	funscript_filename = video_path.get_file().get_basename() + ".funscript"
 	funscript_path = dir.path_join(funscript_filename)
 	
 	print("Looking for funscript at: " + funscript_path)
@@ -147,8 +152,10 @@ func _try_load_funscript_for_video(video_path: String):
 			funscript_message.hide()
 		if owner.has_method("load_path_from_directory"):
 			# Load funscript from the same directory as the video
-			var success = owner.load_path_from_directory(funscript_filename, dir + "/")
+			#var success = owner.load_path_from_directory(funscript_filename, dir + "/")
+			var success = %AddFile._on_add_path_pressed()
 			if success:
+				#%AddFile._on_add_path_pressed()
 				print("Successfully loaded funscript: " + funscript_filename)
 			else:
 				print("Failed to load funscript: " + funscript_filename)

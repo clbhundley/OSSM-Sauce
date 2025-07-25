@@ -8,7 +8,7 @@ func _on_play_button_pressed():
 	$Play/Selection.show()
 	$Timer.start()
 	match AppMode.active:
-		AppMode.AppMode.MOVE:
+		AppMode.AppMode.MOVE or AppMode.AppMode.INTERACTIVE_VIDEO:
 			if owner.active_path_index != null:
 				owner.play()
 				$Play.hide()
@@ -43,6 +43,17 @@ func _on_pause_button_pressed():
 			%CircleSelection.hide_and_reset()
 			$Pause/Selection.show()
 			owner.pause()
+			$Timer.stop()
+			$Pause.hide()
+			$Play/Selection.show()
+			$Play.show()
+		AppMode.AppMode.INTERACTIVE_VIDEO:
+			clear_selections()
+			self_modulate.a = 1.2
+			%CircleSelection.hide_and_reset()
+			$Pause/Selection.show()
+			owner.pause()
+			%InteractiveVideoMode.video_playback.pause()
 			$Timer.stop()
 			$Pause.hide()
 			$Play/Selection.show()

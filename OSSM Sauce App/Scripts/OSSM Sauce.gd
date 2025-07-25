@@ -169,7 +169,6 @@ func _physics_process(delta):
 	
 	var depth:float = paths[active_path_index][frame]
 	frame += 1
-
 	$PathDisplay/Paths.get_child(active_path_index).position.x -= path_speed
 	$PathDisplay/Ball.position.y = render_depth(depth)
 
@@ -203,7 +202,7 @@ func home_to(target_position:int):
 
 func play(play_time_ms = null):
 	var command:PackedByteArray
-	if AppMode.active == AppMode.AppMode.MOVE and active_path_index != null:
+	if AppMode.active == AppMode.AppMode.MOVE or AppMode.AppMode.INTERACTIVE_VIDEO and active_path_index != null:
 		paused = false
 	command.resize(2)
 	command.encode_u8(0, OSSM.Command.PLAY)
@@ -507,6 +506,7 @@ func load_path_from_directory(file_name:String, directory:String) -> bool:
 		previous_frame = marker_frame
 	paths.append(path)
 	markers.append(path_new)
+	
 	$PathDisplay/Paths.add_child(path_line)
 	return true
 

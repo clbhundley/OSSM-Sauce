@@ -41,12 +41,22 @@ func _on_path_list_item_selected(index):
 	$HBox/AddPath.disabled = false
 
 
-func _on_add_path_pressed():
-	var file_name:String = $FileList.get_item_text($FileList.selected_index)
-	if owner.load_path(file_name):
-		%Menu/Playlist.add_item(file_name)
-	%Menu.show()
-	hide()
+func _on_add_path_pressed() -> bool:
+	if AppMode.active == 9:
+		var funscript_filename:String = %InteractiveVideoMode.funscript_filename
+		var dir:String = %InteractiveVideoMode.dir
+		if owner.load_path_from_directory(funscript_filename, dir +"/" ):
+			%Menu/Playlist.add_item(funscript_filename)
+			hide()
+			
+	else:
+		var file_name:String = $FileList.get_item_text($FileList.selected_index)
+		if owner.load_path(file_name):
+			%Menu/Playlist.add_item(file_name)
+		%Menu.show()
+		hide()
+		
+	return true
 
 
 func _on_load_playlist_pressed():

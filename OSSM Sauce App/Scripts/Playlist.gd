@@ -46,6 +46,8 @@ func add_item(item_text:String):
 	var item_button = item.get_node('Button')
 	item_button.connect('pressed', _on_item_selected.bind(item))
 	%Menu/Main/PlaylistButtons/SavePlaylist.disabled = false
+	if AppMode.active == 9:
+		_on_item_selected(item)
 
 
 func move_item(current_index, new_index):
