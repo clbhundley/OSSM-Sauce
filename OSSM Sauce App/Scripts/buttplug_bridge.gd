@@ -158,6 +158,14 @@ func stop_device():
 			device_connected = false
 
 
+func device_confirmed(): # Auto-disconnect device
+	if ws_client:
+		ws_client.close(1000, "Client disconnect")
+		ws_client = null
+		_log("Confirmed device connected to Buttplug main server, disconnecting client")
+		client_connected = false
+
+
 func poll_ws_client():
 	if %BridgeControls/Controls/Enable.button_pressed:
 		if client_connected:
@@ -182,6 +190,8 @@ func poll_ws_client():
 											_log("OSSM device is connected and visible!")
 											set_device_connected_ok(true)
 											found = true
+											device_confirmed()
+											return
 									if not found:
 										set_device_connected_ok(false)
 										_log("OSSM device NOT found in DeviceList.")
@@ -326,6 +336,11 @@ func set_device_connected_ok(device_connected_ok):
 		_log("[DEBUG] Device Connected !")
 
 
+func _on_reconnect_timer_timeout() -> void:
+	_show_handshake_popup()
+	_log("[DEBUG] Timer finished, showing popup")
+
+
 func _log(log_text:String):
 	if not %Menu/BridgeSettings/LoggingEnabled.button_pressed:
 		return
@@ -341,9 +356,3 @@ func _log(log_text:String):
 	var lines = log_node.text.split("\n")
 	if lines.size() > max_lines:
 		log_node.text = "\n".join(lines.slice(lines.size() - max_lines, lines.size()))
-
-
-func _on_reconnect_timer_timeout() -> void:
-	_show_handshake_popup()
-	_log("[DEBUG] Timer finished, showing popup")
-	pass # Replace with function body.

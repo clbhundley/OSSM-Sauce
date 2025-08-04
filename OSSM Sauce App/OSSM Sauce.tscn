@@ -46,6 +46,8 @@
 [ext_resource type="Script" uid="uid://c6ao0rhurexoq" path="res://Scripts/WebSocket.gd" id="42_kvii6"]
 [ext_resource type="Script" uid="uid://ftipt8s4uoxg" path="res://Scripts/buttplug_bridge.gd" id="43_dyutb"]
 [ext_resource type="Script" uid="uid://dtl7hvmljb1gb" path="res://Scripts/websocket_xtoys_bridge.gd" id="44_r8osj"]
+[ext_resource type="Script" uid="uid://4ocyantcsgu3" path="res://Scripts/mcp_command_server.gd" id="47_cxkw1"]
+[ext_resource type="Script" uid="uid://bblfppboahqc1" path="res://Scripts/websocket_mcp_bridge.gd" id="48_2hygl"]
 
 [sub_resource type="GDScript" id="GDScript_o3urw"]
 script/source = "extends Control
@@ -342,38 +344,6 @@ _data = {
 &"RESET": SubResource("Animation_il416"),
 &"Spin": SubResource("Animation_7gpwe")
 }
-
-[sub_resource type="GDScript" id="GDScript_cloqu"]
-script/source = "extends Button
-
-func _ready() -> void:
-	pressed.connect(func():
-		var server_port_text = %Menu/BridgeSettings/BPIO/ServerPort/LineEdit.text
-		var wdsm_port_text = %Menu/BridgeSettings/BPIO/WSDMPort/LineEdit.text
-		
-	)
-"
-
-[sub_resource type="GDScript" id="GDScript_cxkw1"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pressed.connect(func():
-		var port_input = %Menu/BridgeSettings/XToys/Port/LineEdit
-		var port = int(port_input.text)
-		if port >= 1024 and port <= 49151:
-			%XToysBridge.set_port(port)
-		else:
-			port_input.text = str(8080)
-	)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [sub_resource type="GDScript" id="GDScript_j8mcp"]
 script/source = "extends OptionButton
@@ -1038,7 +1008,7 @@ offset_top = 14.0
 offset_right = 98.0
 offset_bottom = 100.0
 theme_override_font_sizes/font_size = 62
-text = "?"
+text = "🔗"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2387,13 +2357,6 @@ theme_override_font_sizes/font_size = 54
 toggle_mode = true
 text = "Loop Playlist: OFF"
 
-[node name="ModeConfigPanel" type="VBoxContainer" parent="Menu/Main"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 150.0
-offset_right = 950.0
-offset_bottom = 1150.0
-
 [node name="LoopSettings" type="VBoxContainer" parent="Menu"]
 visible = false
 layout_mode = 1
@@ -2463,152 +2426,6 @@ step = 0.01
 value = 0.2
 suffix = "sec"
 
-[node name="BridgeSettingsOG" type="VBoxContainer" parent="Menu"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -446.0
-offset_top = -559.0
-offset_right = 452.0
-offset_bottom = 488.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 65
-
-[node name="BridgeMode" type="HBoxContainer" parent="Menu/BridgeSettingsOG"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/BridgeSettingsOG/BridgeMode"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_font_sizes/font_size = 45
-text = "Bridge Mode: "
-
-[node name="OptionButton" type="OptionButton" parent="Menu/BridgeSettingsOG/BridgeMode"]
-custom_minimum_size = Vector2(350, 0)
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "Buttplug.io"
-popup/item_0/id = 0
-popup/item_1/text = "XToys"
-popup/item_1/id = 1
-popup/item_2/text = "MCP"
-popup/item_2/id = 2
-
-[node name="HSeparator" type="HSeparator" parent="Menu/BridgeSettingsOG"]
-layout_mode = 2
-
-[node name="BPIO" type="VBoxContainer" parent="Menu/BridgeSettingsOG"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Address" type="HBoxContainer" parent="Menu/BridgeSettingsOG/BPIO"]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/BridgeSettingsOG/BPIO/Address"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-text = "Buttplug Address:"
-
-[node name="LineEdit" type="LineEdit" parent="Menu/BridgeSettingsOG/BPIO/Address"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-text = "127.0.0.1"
-
-[node name="ServerPort" type="HBoxContainer" parent="Menu/BridgeSettingsOG/BPIO"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/BridgeSettingsOG/BPIO/ServerPort"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-text = "Server Port:"
-
-[node name="LineEdit" type="LineEdit" parent="Menu/BridgeSettingsOG/BPIO/ServerPort"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-text = "12345"
-
-[node name="WSDMPort" type="HBoxContainer" parent="Menu/BridgeSettingsOG/BPIO"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/BridgeSettingsOG/BPIO/WSDMPort"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-text = "WSDM Port:"
-
-[node name="LineEdit" type="LineEdit" parent="Menu/BridgeSettingsOG/BPIO/WSDMPort"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-text = "54817"
-
-[node name="Apply" type="Button" parent="Menu/BridgeSettingsOG/BPIO"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 55
-text = "Apply"
-script = SubResource("GDScript_cloqu")
-
-[node name="XToys" type="VBoxContainer" parent="Menu/BridgeSettingsOG"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Port" type="HBoxContainer" parent="Menu/BridgeSettingsOG/XToys"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/BridgeSettingsOG/XToys/Port"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-text = "Port:"
-
-[node name="LineEdit" type="LineEdit" parent="Menu/BridgeSettingsOG/XToys/Port"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-text = "8080"
-
-[node name="Apply" type="Button" parent="Menu/BridgeSettingsOG/XToys/Port"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 50
-text = "Apply"
-script = SubResource("GDScript_cxkw1")
-
-[node name="Debug" type="CheckBox" parent="Menu/BridgeSettingsOG/XToys"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-button_pressed = true
-text = "Debug logging"
-
-[node name="AutoReconnect" type="CheckBox" parent="Menu/BridgeSettingsOG/XToys"]
-layout_mode = 2
-theme = ExtResource("1_2qx77")
-theme_override_fonts/font = ExtResource("33_j8mcp")
-theme_override_font_sizes/font_size = 40
-button_pressed = true
-text = "Auto-reconnect"
-
 [node name="BridgeSettings" type="VBoxContainer" parent="Menu"]
 visible = false
 layout_mode = 1
@@ -2645,7 +2462,6 @@ popup/item_1/text = "XToys"
 popup/item_1/id = 1
 popup/item_2/text = "MCP"
 popup/item_2/id = 2
-popup/item_2/disabled = true
 script = SubResource("GDScript_j8mcp")
 
 [node name="LoggingEnabled" type="CheckBox" parent="Menu/BridgeSettings"]
@@ -2658,6 +2474,7 @@ text = "Logging Enabled"
 layout_mode = 2
 
 [node name="BPIO" type="VBoxContainer" parent="Menu/BridgeSettings"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 15
 
@@ -2836,6 +2653,36 @@ theme_override_fonts/font = ExtResource("33_j8mcp")
 theme_override_font_sizes/font_size = 45
 button_pressed = true
 text = "Auto-reconnect"
+
+[node name="MCP" type="VBoxContainer" parent="Menu/BridgeSettings"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Port" type="HBoxContainer" parent="Menu/BridgeSettings/MCP"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/MCP/Port"]
+layout_mode = 2
+theme = ExtResource("1_2qx77")
+theme_override_font_sizes/font_size = 45
+text = "Port:"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/MCP/Port"]
+layout_mode = 2
+theme = ExtResource("1_2qx77")
+min_value = 1024.0
+max_value = 65535.0
+value = 8081.0
+
+[node name="Apply" type="Button" parent="Menu/BridgeSettings/MCP/Port"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_2qx77")
+theme_override_fonts/font = ExtResource("33_j8mcp")
+theme_override_font_sizes/font_size = 50
+text = "Apply"
+script = SubResource("GDScript_ov553")
 
 [node name="PathControls" type="Control" parent="Menu"]
 visible = false
@@ -3167,7 +3014,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "v1.4.0"
+text = "v1.4.1"
 horizontal_alignment = 2
 
 [node name="Settings" type="Panel" parent="."]
@@ -3742,9 +3589,12 @@ script = ExtResource("44_r8osj")
 
 [node name="SpeedTimer" type="Timer" parent="XToysBridge"]
 
-[node name="MCPCommandServer" type="Node" parent="."]
-
 [node name="MCPBridge" type="Node" parent="."]
+script = ExtResource("48_2hygl")
+
+[node name="MCPCommandServer" type="Node" parent="MCPBridge"]
+unique_name_in_owner = true
+script = ExtResource("47_cxkw1")
 
 [connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
 [connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
@@ -3790,7 +3640,6 @@ script = ExtResource("44_r8osj")
 [connection signal="item_selected" from="Menu/LoopSettings/DisplayMode/OptionButton" to="Menu" method="_on_stroke_duration_display_mode_changed"]
 [connection signal="value_changed" from="Menu/LoopSettings/MaxStrokeDuration/SpinBox" to="Menu" method="_on_max_stroke_duration_changed"]
 [connection signal="value_changed" from="Menu/LoopSettings/MinStrokeDuration/SpinBox" to="Menu" method="_on_min_stroke_duration_changed"]
-[connection signal="item_selected" from="Menu/BridgeSettingsOG/BridgeMode/OptionButton" to="Menu" method="_on_bridge_mode_item_selected"]
 [connection signal="item_selected" from="Menu/BridgeSettings/BridgeMode/OptionButton" to="Menu" method="_on_bridge_mode_selected"]
 [connection signal="pressed" from="Menu/PathControls/Down" to="Menu" method="_on_down_pressed"]
 [connection signal="pressed" from="Menu/PathControls/Up" to="Menu" method="_on_up_pressed"]

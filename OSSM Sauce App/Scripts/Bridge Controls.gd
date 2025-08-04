@@ -6,6 +6,7 @@ func _ready() -> void:
 	$ConnectionSymbol.self_modulate.a = 0.2
 	auto_smoothing = $Smoothing/TransType.get_selected_id()
 
+
 func activate():
 	%Menu/BridgeSettings.show()
 	show()
@@ -47,10 +48,10 @@ func _on_enable_toggled(toggled_on: bool) -> void:
 			1:  # XToys
 				%XToysBridge.start_xtoys()
 			2:  # MCP
-				pass
+				%MCPCommandServer.start_mcp_server()
 	else:
 		$Controls/Enable.text = "Disabled"
 		%BPIOBridge.stop_device()
 		%BPIOBridge.stop_client()
 		%XToysBridge.stop_xtoys()
-		
+		%MCPCommandServer.stop_mcp_server()

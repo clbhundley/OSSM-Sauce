@@ -234,19 +234,29 @@ func select_mode(index):
 
 
 func _on_bridge_mode_selected(index: int) -> void:
-	#%BridgeControls.deactivate()
 	var bpio = %Menu/BridgeSettings/BPIO
 	var xtoys = %Menu/BridgeSettings/XToys
+	var mcp = %Menu/BridgeSettings/MCP
 	match index:
 		0:  # Buttplug.io
 			bpio.show()
 			xtoys.hide()
+			mcp.hide()
+			%BridgeControls/Smoothing/Label.self_modulate.a = 1
+			%BridgeControls/Smoothing/TransType.disabled = false
 		1:  # XToys
 			bpio.hide()
 			xtoys.show()
+			mcp.hide()
+			%BridgeControls/Smoothing/Label.self_modulate.a = 1
+			%BridgeControls/Smoothing/TransType.disabled = false
 		2:  # MCP
 			bpio.hide()
 			xtoys.hide()
+			mcp.show()
+			%BridgeControls/Smoothing/Label.self_modulate.a = 0.4
+			%BridgeControls/Smoothing/TransType.disabled = true
+	
 	%BridgeControls/Controls/Enable.button_pressed = false
 	%BridgeControls.activate()
 
