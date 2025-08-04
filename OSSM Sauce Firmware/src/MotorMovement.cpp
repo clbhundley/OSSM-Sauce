@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "MotorMovement.h"
+#include "Configuration.h"
 
 float powerAvgRangeMultiplier = 1.5; // Raise to decrease, or lower to increase sensitivity of sensorless homing
 const int outliersSampleSize = 10;
@@ -185,8 +186,14 @@ void sensorlessHoming() {
 
   // Set hard limits
   float hardLimitBuffer = abs(limitPhysicalMax - limitPhysicalMin) * 0.06;
-  rangeLimitHardMin = limitPhysicalMin + hardLimitBuffer;
-  rangeLimitHardMax = limitPhysicalMax - hardLimitBuffer;
+
+  if (preferences.getBool("motor_reversed", false)) {
+    rangeLimitHardMin = limitPhysicalMax - hardLimitBuffer;
+    rangeLimitHardMax = limitPhysicalMin + hardLimitBuffer;
+  } else {
+    rangeLimitHardMin = limitPhysicalMin + hardLimitBuffer;
+    rangeLimitHardMax = limitPhysicalMax - hardLimitBuffer;
+  }
 
   rangeLimitUserMin = rangeLimitHardMin;
   rangeLimitUserMax = rangeLimitHardMax;

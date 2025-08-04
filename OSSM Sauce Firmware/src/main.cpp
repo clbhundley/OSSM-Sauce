@@ -337,7 +337,7 @@ void setup() {
   Serial.println("/ __)  /__\\  (  )(  )/ __)( ___) ");
   Serial.println("\\__ \\ /(__)\\  )(__)(( (__  )__)");
   Serial.println("(___/(__)(__)(______)\\___)(____) ");
-  Serial.println(" Firmware v1.4.2");
+  Serial.println(" Firmware v1.4.3");
   Serial.println("");
 
   moveQueue = xQueueCreate(moveQueueSize, 9);

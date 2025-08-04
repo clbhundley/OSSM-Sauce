@@ -248,10 +248,11 @@ void showConfigMenu() {
   Serial.println("2. Update WebSocket server address");
   Serial.println("3. Update WiFi credentials");
   Serial.println("4. Update sensorless homing sensitivity");
-  Serial.println("5. Reset all settings");
-  Serial.println("6. Continue with current settings");
+  Serial.println("5. Reverse motor direction");
+  Serial.println("6. Reset all settings");
+  Serial.println("7. Continue with current settings");
   Serial.println("");
-  Serial.println("Enter your choice (1-6):");
+  Serial.println("Enter your choice (1-7):");
 }
 
 
@@ -407,6 +408,45 @@ void handleConfigMenu() {
       }
       
     } else if (choice == "5") {
+      // Reverse motor direction
+      bool motorDirectionReversed = preferences.getBool("motor_reversed", false);
+      Serial.println("");
+      Serial.println("Current motor direction: " + String(motorDirectionReversed ? "Reversed" : "Normal"));
+      Serial.println("");
+      Serial.println("Options:");
+      Serial.println("1. Normal direction");
+      Serial.println("2. Reversed direction");
+      Serial.println("3. Cancel");
+      Serial.println("");
+      
+      String directionChoice = getSerialInput("Enter your choice (1-3):");
+      
+      if (directionChoice == "1") {
+        preferences.putBool("motor_reversed", false);
+        Serial.println("Motor direction set to: Normal");
+        Serial.println("Changes will take effect during next homing cycle.");
+        
+        currentLEDStatus = LED_CONNECTED;
+        delay(1500);
+        
+      } else if (directionChoice == "2") {
+        preferences.putBool("motor_reversed", true);
+        Serial.println("Motor direction set to: Reversed");
+        Serial.println("Changes will take effect during next homing cycle.");
+        
+        currentLEDStatus = LED_CONNECTED;
+        delay(1500);
+        
+      } else if (directionChoice == "3") {
+        Serial.println("Motor direction unchanged.");
+        
+      } else {
+        Serial.println("Invalid choice! Motor direction unchanged.");
+        currentLEDStatus = LED_ERROR;
+        delay(1000);
+      }
+      
+    } else if (choice == "6") {
       // Reset all settings
       Serial.println("Are you sure you want to reset ALL settings? (y/n)");
       String confirm = getSerialInput("");
@@ -417,8 +457,8 @@ void handleConfigMenu() {
         delay(2000);
         ESP.restart();
       }
-      
-    } else if (choice == "6") {
+
+    } else if (choice == "7") {
       // Continue with current settings
       Serial.println("Continuing with current settings...");
       break;
