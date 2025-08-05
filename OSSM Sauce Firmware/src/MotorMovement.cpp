@@ -85,7 +85,7 @@ void getPowerReading(bool takeDeltaSample = false, int deltaSampleIndex = 0) {
 
 
 void sensorlessHoming() {
-// root mean square could be a better way to determine averages
+// Root mean square could be a better way to determine averages
   Serial.println("");
   Serial.println("Scanning power consumption variance...");
   Serial.println("");
