@@ -8,27 +8,28 @@ func _on_play_button_pressed():
 	$Play/Selection.show()
 	$Timer.start()
 	match AppMode.active:
-		AppMode.AppMode.MOVE:
+		AppMode.MOVE:
 			if owner.active_path_index != null:
 				owner.play()
 				$Play.hide()
 				$Pause/Selection.show()
 				$Pause.show()
-		AppMode.AppMode.POSITION:
+		AppMode.POSITION:
 			%PositionControls.set_physics_process(true)
 			%PositionControls.set_process_input(true)
 			owner.play()
 			$Play.hide()
 			$Pause/Selection.show()
 			$Pause.show()
-		AppMode.AppMode.LOOP:
+		AppMode.LOOP:
 			%LoopControls.active = true
 			owner.play()
 			%LoopControls/Pause.hide()
 			$Play.hide()
 			$Pause/Selection.show()
 			$Pause.show()
-		AppMode.AppMode.VIBRATE:
+		AppMode.VIBRATE:
+			%VibrationControls.paused = false
 			owner.play()
 			$Play.hide()
 			$Pause/Selection.show()
@@ -37,7 +38,7 @@ func _on_play_button_pressed():
 func _on_pause_button_pressed():
 	#owner.vid_pause()
 	match AppMode.active:
-		AppMode.AppMode.MOVE:
+		AppMode.MOVE:
 			clear_selections()
 			self_modulate.a = 1.2
 			%CircleSelection.hide_and_reset()
@@ -47,21 +48,22 @@ func _on_pause_button_pressed():
 			$Pause.hide()
 			$Play/Selection.show()
 			$Play.show()
-		AppMode.AppMode.POSITION:
+		AppMode.POSITION:
 			%PositionControls.set_physics_process(false)
 			%PositionControls.set_process_input(false)
 			owner.pause()
 			$Play.show()
 			$Play/Selection.show()
 			$Pause.hide()
-		AppMode.AppMode.LOOP:
+		AppMode.LOOP:
 			owner.pause()
 			%LoopControls.active = false
 			%LoopControls/Pause.show()
 			$Play.show()
 			$Play/Selection.show()
 			$Pause.hide()
-		AppMode.AppMode.VIBRATE:
+		AppMode.VIBRATE:
+			%VibrationControls.paused = true
 			owner.pause()
 			$Play.show()
 			$Play/Selection.show()

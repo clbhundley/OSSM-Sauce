@@ -55,9 +55,9 @@ func _ready():
 
 func start_client():
 	ws_client = WebSocketPeer.new()
-	var address:String = %Menu/BridgeSettings/BPIO/ServerAddress/TextEdit.text
+	var server_address:String = %Menu/BridgeSettings/BPIO/ServerAddress/LineEdit.text
 	var server_port: int = int (%Menu/BridgeSettings/BPIO/ServerPort/LineEdit.text)
-	var ws_client_url:String = "ws://%s:%d" % [address, server_port]
+	var ws_client_url:String = "ws://%s:%d" % [server_address, server_port]
 	ws_client.connect_to_url(ws_client_url)
 	await get_tree().create_timer(0.2).timeout
 	ws_client.poll()
@@ -105,8 +105,9 @@ func start_device():
 	if %BridgeControls/Controls/Enable.button_pressed:
 		ws_device_client = WebSocketPeer.new()
 		wdsmconnectioncounter += 1
+		var wsdm_address:String = %Menu/BridgeSettings/BPIO/ServerAddress/LineEdit.text
 		var wsdm_port: int  = int (%Menu/BridgeSettings/BPIO/WSDMPort/LineEdit.text)
-		var ws_device_client_url:String = "ws://127.0.0.1:%d" % [wsdm_port]
+		var ws_device_client_url:String = "ws://%s:%d" % [wsdm_address, wsdm_port]
 		ws_device_client.connect_to_url(ws_device_client_url)
 		await get_tree().create_timer(0.2).timeout
 		_log("Connecting attempt %d to WSDM at %s" % [wdsmconnectioncounter, ws_device_client_url])

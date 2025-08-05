@@ -277,43 +277,43 @@ func _on_mode_selected(index:int):
 	%ActionPanel.clear_selections()
 	
 	match mode_id:
-		AppMode.AppMode.IDLE:
+		AppMode.IDLE:
 			owner.deactivate_move_mode()
 			%BridgeControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
-		AppMode.AppMode.HOMING:
+		AppMode.HOMING:
 			owner.deactivate_move_mode()
 			%BridgeControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
-		AppMode.AppMode.MOVE:
+		AppMode.MOVE:
 			%BridgeControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
 			owner.activate_move_mode()
-		AppMode.AppMode.POSITION:
+		AppMode.POSITION:
 			owner.deactivate_move_mode()
 			%BridgeControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.deactivate()
 			%PositionControls.activate()
-		AppMode.AppMode.LOOP:
+		AppMode.LOOP:
 			owner.deactivate_move_mode()
 			%BridgeControls.deactivate()
 			%VibrationControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.activate()
-		AppMode.AppMode.VIBRATE:
+		AppMode.VIBRATE:
 			owner.deactivate_move_mode()
 			%BridgeControls.deactivate()
 			%PositionControls.deactivate()
 			%LoopControls.deactivate()
 			%VibrationControls.activate()
-		AppMode.AppMode.BRIDGE:
+		AppMode.BRIDGE:
 			owner.deactivate_move_mode()
 			%BridgeControls.activate()
 			%PositionControls.deactivate()

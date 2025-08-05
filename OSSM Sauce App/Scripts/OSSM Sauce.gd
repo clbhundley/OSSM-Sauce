@@ -260,7 +260,7 @@ func home_to(target_position:int):
 
 func play(play_time_ms = null):
 	var command:PackedByteArray
-	if AppMode.active == AppMode.AppMode.MOVE and active_path_index != null:
+	if AppMode.active == AppMode.MOVE and active_path_index != null:
 		paused = false
 		#if play_time_ms != null:
 			#command.resize(6)

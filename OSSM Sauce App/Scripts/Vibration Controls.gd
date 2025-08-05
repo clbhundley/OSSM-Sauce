@@ -19,6 +19,8 @@ var pulse_active:bool
 var pulse_length_ms:int
 var pulse_ms:int
 
+var paused:bool
+
 func _ready() -> void:
 	$RangeSlider/Slider.gui_input.connect(_on_slider_gui_input.bind($RangeSlider/Slider))
 	$FrequencySlider/Slider.gui_input.connect(_on_slider_gui_input.bind($FrequencySlider/Slider))
@@ -122,6 +124,8 @@ func pulse_controller():
 
 
 func send_vibrate_command(duration:int = -1) -> void:
+	if paused:
+		return
 	var command:PackedByteArray
 	command.resize(13)
 	command.encode_u8(0, OSSM.Command.VIBRATE)
@@ -134,6 +138,7 @@ func send_vibrate_command(duration:int = -1) -> void:
 
 
 func activate():
+	paused = false
 	set_physics_process(true)
 	set_process_input(true)
 	reset_sliders()

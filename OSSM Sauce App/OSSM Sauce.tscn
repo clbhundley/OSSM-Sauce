@@ -2487,7 +2487,7 @@ theme = ExtResource("1_2qx77")
 theme_override_font_sizes/font_size = 45
 text = "Server Address: "
 
-[node name="TextEdit" type="TextEdit" parent="Menu/BridgeSettings/BPIO/ServerAddress"]
+[node name="LineEdit" type="LineEdit" parent="Menu/BridgeSettings/BPIO/ServerAddress"]
 custom_minimum_size = Vector2(500, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
@@ -3014,7 +3014,7 @@ offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "v1.4.1"
+text = "v1.4.2"
 horizontal_alignment = 2
 
 [node name="Settings" type="Panel" parent="."]

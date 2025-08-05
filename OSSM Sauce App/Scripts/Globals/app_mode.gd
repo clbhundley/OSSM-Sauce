@@ -2,7 +2,7 @@ extends Node
 
 var active:int
 
-enum AppMode {
+enum {
 	IDLE,
 	HOMING,
 	MOVE,
