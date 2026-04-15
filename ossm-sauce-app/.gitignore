@@ -1,0 +1,12 @@
+# Godot
+.godot/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Exports
+*.apk
+*.aab
+*.exe
+*.pck

@@ -1,0 +1,3533 @@
+[gd_scene format=3 uid="uid://d3cq3b5o0feo0"]
+
+[ext_resource type="Theme" uid="uid://dqhnc02ffxjr2" path="res://theme.tres" id="1_g6hv1"]
+[ext_resource type="Script" uid="uid://bcl1axbtw05ci" path="res://scripts/ossm_sauce.gd" id="2_ru8sx"]
+[ext_resource type="Texture2D" uid="uid://da3nxjs8pqcoy" path="res://textures/dot_small.svg" id="3_3abtc"]
+[ext_resource type="Script" uid="uid://cxtahcwhofid1" path="res://scripts/path_area.gd" id="3_8ho8d"]
+[ext_resource type="Script" uid="uid://brrct0qmqq407" path="res://scripts/position_controls.gd" id="4_qnwk1"]
+[ext_resource type="Texture2D" uid="uid://du8j273r744tn" path="res://textures/straight.svg" id="5_hjbjw"]
+[ext_resource type="Texture2D" uid="uid://bm14gbhhm3uqb" path="res://textures/smooth.svg" id="6_hej02"]
+[ext_resource type="Texture2D" uid="uid://cb703kraugp85" path="res://textures/s32.svg" id="7_8ho8d"]
+[ext_resource type="Texture2D" uid="uid://cnyl16jr7jd8g" path="res://textures/dot.svg" id="8_04y8j"]
+[ext_resource type="Script" uid="uid://cu75s80u86jl" path="res://scripts/loop_controls.gd" id="9_6esss"]
+[ext_resource type="Texture2D" uid="uid://bssf5wkfubmdu" path="res://textures/pause_large.svg" id="10_bvbk1"]
+[ext_resource type="Script" uid="uid://vj00uw01chaq" path="res://scripts/loop_controller.gd" id="11_8ho8d"]
+[ext_resource type="Script" uid="uid://vf6er30rg7gg" path="res://scripts/vibration_controls.gd" id="11_v152v"]
+[ext_resource type="Texture2D" uid="uid://bsgwwhgpuqxap" path="res://textures/wave_triangle.svg" id="12_0eolm"]
+[ext_resource type="Texture2D" uid="uid://it37h4mnryeh" path="res://textures/wave_square.svg" id="13_obp4u"]
+[ext_resource type="Script" uid="uid://dry5gv2u7j5ix" path="res://scripts/bridge_controls.gd" id="14_2hnso"]
+[ext_resource type="Script" uid="uid://chirlya65yehq" path="res://scripts/action_panel.gd" id="15_flajy"]
+[ext_resource type="Texture2D" uid="uid://dkpllak4evknm" path="res://textures/play.svg" id="16_0xvdx"]
+[ext_resource type="Texture2D" uid="uid://dcx71x8114vuv" path="res://textures/selection.svg" id="17_l5cbh"]
+[ext_resource type="Texture2D" uid="uid://fxyub7xy8ha5" path="res://textures/pause.svg" id="18_xjxk6"]
+[ext_resource type="Texture2D" uid="uid://dd4yrbph2jgxm" path="res://textures/speed.svg" id="19_l1tpd"]
+[ext_resource type="Texture2D" uid="uid://df1fg8fsnax6k" path="res://textures/range.svg" id="20_gjk78"]
+[ext_resource type="Texture2D" uid="uid://biyi8wy11rxn2" path="res://textures/menu.svg" id="21_ob2g7"]
+[ext_resource type="Script" uid="uid://c7byjwheu5qbc" path="res://scripts/circle_selection.gd" id="22_rmgx1"]
+[ext_resource type="Texture2D" uid="uid://8r6wnojlpyb2" path="res://textures/circle_selection.svg" id="23_jfjoi"]
+[ext_resource type="Texture2D" uid="uid://ceigu0byvwpor" path="res://textures/play_large.svg" id="24_3nund"]
+[ext_resource type="Texture2D" uid="uid://dtor82hfkxpes" path="res://textures/restart_large.svg" id="25_koa0t"]
+[ext_resource type="Texture2D" uid="uid://ceniqb8fv6rr" path="res://textures/hourglass.svg" id="26_ceu5t"]
+[ext_resource type="Script" uid="uid://bpsi0jcewjfkb" path="res://scripts/speed_panel.gd" id="27_wewnm"]
+[ext_resource type="Texture2D" uid="uid://btmbmu74nqhry" path="res://textures/back.svg" id="28_bsb3a"]
+[ext_resource type="Script" uid="uid://r4wmcbentqpr" path="res://scripts/range_panel.gd" id="29_ij1mi"]
+[ext_resource type="Script" uid="uid://geh3ju1otcwn" path="res://scripts/menu.gd" id="30_hoeyu"]
+[ext_resource type="Texture2D" uid="uid://1yuj650f5xs" path="res://textures/gear.svg" id="31_725o0"]
+[ext_resource type="Texture2D" uid="uid://o6gdsdww0cu4" path="res://textures/exit.svg" id="32_fqnn4"]
+[ext_resource type="FontFile" uid="uid://c2wtnhu46b5xf" path="res://font/Rubik-Light.ttf" id="33_odb15"]
+[ext_resource type="Texture2D" uid="uid://bvlmowqblmdgt" path="res://textures/down.svg" id="34_5sqpr"]
+[ext_resource type="Texture2D" uid="uid://hdymqqpd3vf" path="res://textures/up.svg" id="35_nt4sp"]
+[ext_resource type="Texture2D" uid="uid://rcaxkukbqghe" path="res://textures/restart.svg" id="36_5c8pd"]
+[ext_resource type="Texture2D" uid="uid://bd8t1o4bylcx0" path="res://textures/trash.svg" id="37_vmrs4"]
+[ext_resource type="Script" uid="uid://ctf5xg6wcbhqx" path="res://scripts/playlist.gd" id="38_g1b48"]
+[ext_resource type="Texture2D" uid="uid://6v1hvd7m2vhs" path="res://textures/t3.svg" id="39_7ok7h"]
+[ext_resource type="Script" uid="uid://ccimjgty86f8v" path="res://scripts/settings.gd" id="40_u5kb6"]
+[ext_resource type="Script" uid="uid://qc06washnpwx" path="res://scripts/add_file.gd" id="41_gwrhd"]
+[ext_resource type="Script" uid="uid://dfqaq8bhaml37" path="res://scripts/playlist_item.gd" id="41_qnwk1"]
+[ext_resource type="Script" uid="uid://borvji2u3vb68" path="res://scripts/file_list.gd" id="42_i7h0y"]
+[ext_resource type="Texture2D" uid="uid://c0bgeto1j6das" path="res://textures/wifi.svg" id="43_12g22"]
+[ext_resource type="Script" uid="uid://w1hne745oxnm" path="res://scripts/add_delay.gd" id="43_hjbjw"]
+[ext_resource type="Script" uid="uid://cwcy6j6yfk7gq" path="res://scripts/save_playlist.gd" id="44_hej02"]
+[ext_resource type="Script" uid="uid://c6ao0rhurexoq" path="res://scripts/websocket.gd" id="44_qjjoe"]
+[ext_resource type="Script" uid="uid://ftipt8s4uoxg" path="res://scripts/websocket_bpio_bridge.gd" id="45_vjww0"]
+[ext_resource type="Script" uid="uid://dtl7hvmljb1gb" path="res://scripts/websocket_xtoys_bridge.gd" id="46_158sr"]
+[ext_resource type="Script" uid="uid://dpq3eqxv0c6tc" path="res://scripts/homing_trigger_popup.gd" id="47_04y8j"]
+[ext_resource type="Script" uid="uid://bblfppboahqc1" path="res://scripts/websocket_mcp_bridge.gd" id="47_j3fne"]
+[ext_resource type="Script" uid="uid://4ocyantcsgu3" path="res://scripts/mcp_command_server.gd" id="48_bme4d"]
+[ext_resource type="Script" uid="uid://y456l2fev7al" path="res://scripts/video_player.gd" id="55_04y8j"]
+
+[sub_resource type="StyleBoxFlat" id="button_hover"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.26, 0.26, 0.29, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.38, 0.42, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="button_normal"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.19, 0.19, 0.21, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.38, 0.42, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="button_pressed"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.12, 0.12, 0.14, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.38, 0.42, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="checkbox_normal"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.19, 0.19, 0.21, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="slider_track"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.16, 0.16, 0.18, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="lineedit_normal"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.16, 0.16, 0.18, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.3, 0.3, 0.33, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="control_normal"]
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+bg_color = Color(0.19, 0.19, 0.21, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="spinbox_down_bg"]
+content_margin_left = 9.0
+content_margin_top = 6.0
+content_margin_right = 9.0
+content_margin_bottom = 6.0
+bg_color = Color(0.19, 0.19, 0.21, 1)
+corner_radius_bottom_right = 9
+
+[sub_resource type="StyleBoxFlat" id="spinbox_up_bg"]
+content_margin_left = 9.0
+content_margin_top = 6.0
+content_margin_right = 9.0
+content_margin_bottom = 6.0
+bg_color = Color(0.19, 0.19, 0.21, 1)
+corner_radius_top_right = 9
+
+[sub_resource type="Theme" id="Theme_3abtc"]
+default_font_size = 38
+Button/font_sizes/font_size = 54
+Button/styles/hover = SubResource("button_hover")
+Button/styles/normal = SubResource("button_normal")
+Button/styles/pressed = SubResource("button_pressed")
+CheckBox/constants/h_separation = 16
+CheckBox/font_sizes/font_size = 54
+CheckBox/styles/normal = SubResource("checkbox_normal")
+HSlider/styles/slider = SubResource("slider_track")
+LineEdit/font_sizes/font_size = 54
+LineEdit/styles/normal = SubResource("lineedit_normal")
+OptionButton/constants/arrow_margin = 20
+OptionButton/font_sizes/font_size = 54
+OptionButton/styles/normal = SubResource("control_normal")
+PopupMenu/constants/item_end_padding = 20
+PopupMenu/constants/item_start_padding = 20
+PopupMenu/constants/v_separation = 16
+PopupMenu/font_sizes/font_size = 54
+SpinBox/constants/buttons_width = 48
+SpinBox/styles/down_background = SubResource("spinbox_down_bg")
+SpinBox/styles/up_background = SubResource("spinbox_up_bg")
+TextEdit/font_sizes/font_size = 54
+TextEdit/styles/normal = SubResource("lineedit_normal")
+Tree/font_sizes/font_size = 54
+VSlider/styles/slider = SubResource("slider_track")
+
+[sub_resource type="Theme" id="Theme_qnwk1"]
+default_font_size = 38
+Button/font_sizes/font_size = 54
+Button/styles/hover = SubResource("button_hover")
+Button/styles/normal = SubResource("button_normal")
+Button/styles/pressed = SubResource("button_pressed")
+CheckBox/constants/h_separation = 16
+CheckBox/font_sizes/font_size = 54
+CheckBox/styles/normal = SubResource("checkbox_normal")
+HSlider/styles/slider = SubResource("slider_track")
+LineEdit/font_sizes/font_size = 54
+LineEdit/styles/normal = SubResource("lineedit_normal")
+OptionButton/constants/arrow_margin = 20
+OptionButton/font_sizes/font_size = 54
+OptionButton/styles/normal = SubResource("control_normal")
+PopupMenu/constants/item_end_padding = 20
+PopupMenu/constants/item_start_padding = 20
+PopupMenu/constants/v_separation = 16
+PopupMenu/font_sizes/font_size = 54
+SpinBox/constants/buttons_width = 48
+SpinBox/styles/down_background = SubResource("spinbox_down_bg")
+SpinBox/styles/up_background = SubResource("spinbox_up_bg")
+TextEdit/font_sizes/font_size = 54
+TextEdit/styles/normal = SubResource("lineedit_normal")
+Tree/font_sizes/font_size = 54
+VSlider/styles/slider = SubResource("slider_track")
+
+[sub_resource type="Animation" id="Animation_4ant3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_cbmbt"]
+resource_name = "Spin"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_avydh"]
+_data = {
+&"RESET": SubResource("Animation_4ant3"),
+&"Spin": SubResource("Animation_cbmbt")
+}
+
+[sub_resource type="GDScript" id="GDScript_rckrg"]
+script/source = "extends Panel
+
+func select():
+	$Label.self_modulate = Color.SANDY_BROWN
+	self_modulate = Color.SLATE_GRAY
+
+func deselect():
+	$Label.self_modulate = Color.WHITE
+	$Label.self_modulate.a = 0.765
+	self_modulate.a = 0.7
+	self_modulate = Color.WHITE
+"
+
+[sub_resource type="Animation" id="Animation_il416"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_7gpwe"]
+resource_name = "Spin"
+length = 90.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 90),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u5ydg"]
+_data = {
+&"RESET": SubResource("Animation_il416"),
+&"Spin": SubResource("Animation_7gpwe")
+}
+
+[sub_resource type="GDScript" id="GDScript_dqjk0"]
+script/source = "extends Panel
+
+
+func _ready():
+	self_modulate.a = 2
+
+
+func _on_accept_pressed():
+	hide()
+
+
+func _on_dont_show_toggled(toggled_on):
+	owner.user_settings.set_value('app_settings', 'show_splash', !toggled_on)
+"
+
+[node name="OSSMSauce" type="Control" unique_id=732584772]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_g6hv1")
+script = ExtResource("2_ru8sx")
+
+[node name="PathDisplay" type="Control" parent="." unique_id=1506618737]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PathArea" type="Control" parent="PathDisplay" unique_id=46881861]
+layout_mode = 1
+anchor_top = 0.0625
+anchor_right = 1.0
+anchor_bottom = 0.84375
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_8ho8d")
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="PathDisplay/PathArea" unique_id=1492239332]
+wait_time = 0.3
+
+[node name="Paths" type="Control" parent="PathDisplay" unique_id=1983399160]
+anchors_preset = 0
+
+[node name="Ball" type="Sprite2D" parent="PathDisplay" unique_id=87996262]
+self_modulate = Color(1, 0.384314, 0.47451, 1)
+position = Vector2(540, 960)
+texture = ExtResource("3_3abtc")
+
+[node name="AccelTimer" type="Timer" parent="PathDisplay" unique_id=1546967046]
+wait_time = 0.8
+one_shot = true
+
+[node name="PositionControls" type="Control" parent="." unique_id=1320873934]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_qnwk1")
+metadata/_edit_use_anchors_ = true
+
+[node name="Smoothing" type="Control" parent="PositionControls" unique_id=1254659248]
+custom_minimum_size = Vector2(860, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -430.0
+offset_right = 430.0
+offset_bottom = 160.0
+grow_horizontal = 2
+
+[node name="HSlider" type="HSlider" parent="PositionControls/Smoothing" unique_id=1846687378]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -310.0
+offset_top = 45.0
+offset_right = 310.0
+offset_bottom = 119.0
+grow_horizontal = 2
+focus_mode = 0
+min_value = 0.5
+max_value = 20.0
+step = 0.5
+value = 16.0
+
+[node name="Straight" type="TextureRect" parent="PositionControls/Smoothing" unique_id=916494001]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -40.0
+offset_right = 86.0
+offset_bottom = 40.0
+grow_vertical = 2
+texture = ExtResource("5_hjbjw")
+
+[node name="Smooth" type="TextureRect" parent="PositionControls/Smoothing" unique_id=2004178549]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -40.5
+offset_bottom = 40.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("6_hej02")
+
+[node name="MovementBar" type="NinePatchRect" parent="PositionControls" unique_id=1726514688]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -669.0
+offset_right = 86.0
+offset_bottom = 779.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="SliderTop" type="TextureRect" parent="PositionControls/MovementBar" unique_id=287482137]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -708.0
+offset_right = 69.0
+offset_bottom = -570.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="Slider" type="TextureRect" parent="PositionControls/MovementBar" unique_id=1953419292]
+self_modulate = Color(0.941176, 0.501961, 0.501961, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 570.0
+offset_right = 69.0
+offset_bottom = 708.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="LoopControls" type="Control" parent="." unique_id=2027657941]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_6esss")
+metadata/_edit_use_anchors_ = true
+
+[node name="In" type="Control" parent="LoopControls" unique_id=355844383]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 26.0
+offset_bottom = 288.0
+grow_horizontal = 2
+script = ExtResource("11_8ho8d")
+
+[node name="StrokeDurationLabel" type="Label" parent="LoopControls/In" unique_id=939822982]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.5
+offset_right = 278.5
+offset_bottom = 78.166664
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "IN: OFF"
+
+[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls/In" unique_id=1879791266]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 468.0
+offset_top = 78.0
+offset_right = 638.0
+offset_bottom = 1014.0
+grow_horizontal = 2
+rotation = 1.5707964
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="LoopControls/In/StrokeDurationSlider" unique_id=1966990955]
+self_modulate = Color(0.858824, 0.439216, 0.576471, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.9999
+offset_top = 782.0
+offset_right = 69.00009
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderStop" type="TextureRect" parent="LoopControls/In/StrokeDurationSlider" unique_id=1787445849]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -452.0
+offset_right = 69.0
+offset_bottom = -314.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="AccelerationControls" type="HBoxContainer" parent="LoopControls/In" unique_id=373587491]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.5
+offset_top = 18.0
+offset_right = 401.5
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Transition" type="OptionButton" parent="LoopControls/In/AccelerationControls" unique_id=1546578725]
+custom_minimum_size = Vector2(346, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+selected = 1
+item_count = 8
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Easing" type="OptionButton" parent="LoopControls/In/AccelerationControls" unique_id=1453302147]
+layout_mode = 2
+size_flags_horizontal = 8
+selected = 2
+item_count = 4
+popup/item_0/text = "Ease In"
+popup/item_0/id = 0
+popup/item_1/text = "Ease Out"
+popup/item_1/id = 1
+popup/item_2/text = "Ease In/Out"
+popup/item_2/id = 2
+popup/item_3/text = "Ease Out/In"
+popup/item_3/id = 3
+
+[node name="Out" type="Control" parent="LoopControls" unique_id=1878196447]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 542.0
+offset_bottom = 804.0
+grow_horizontal = 2
+script = ExtResource("11_8ho8d")
+
+[node name="StrokeDurationLabel" type="Label" parent="LoopControls/Out" unique_id=1956638814]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.5
+offset_right = 278.5
+offset_bottom = 78.166664
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "OUT: OFF"
+
+[node name="StrokeDurationSlider" type="NinePatchRect" parent="LoopControls/Out" unique_id=822996100]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 468.0
+offset_top = 78.0
+offset_right = 638.0
+offset_bottom = 1014.0
+grow_horizontal = 2
+rotation = 1.5707964
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="LoopControls/Out/StrokeDurationSlider" unique_id=103288846]
+self_modulate = Color(0.356863, 0.423529, 0.643137, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.9999
+offset_top = 782.0
+offset_right = 69.00009
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderStop" type="TextureRect" parent="LoopControls/Out/StrokeDurationSlider" unique_id=655924307]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -452.0
+offset_right = 69.0
+offset_bottom = -314.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="AccelerationControls" type="HBoxContainer" parent="LoopControls/Out" unique_id=1855515311]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.5
+offset_top = 18.0
+offset_right = 401.5
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Transition" type="OptionButton" parent="LoopControls/Out/AccelerationControls" unique_id=52432579]
+custom_minimum_size = Vector2(346, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+selected = 1
+item_count = 8
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Easing" type="OptionButton" parent="LoopControls/Out/AccelerationControls" unique_id=1220507733]
+layout_mode = 2
+size_flags_horizontal = 8
+selected = 2
+item_count = 4
+popup/item_0/text = "Ease In"
+popup/item_0/id = 0
+popup/item_1/text = "Ease Out"
+popup/item_1/id = 1
+popup/item_2/text = "Ease In/Out"
+popup/item_2/id = 2
+popup/item_3/text = "Ease Out/In"
+popup/item_3/id = 3
+
+[node name="LinkSpeedSliders" type="Button" parent="LoopControls" unique_id=892686487]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.0
+offset_top = 421.0
+offset_right = 54.0
+offset_bottom = 521.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+toggle_mode = true
+button_pressed = true
+
+[node name="Label" type="Label" parent="LoopControls/LinkSpeedSliders" unique_id=1183647026]
+modulate = Color(0, 0.72549, 0.490196, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -43.0
+offset_right = 42.5
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 62
+text = "🔗"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Line2D" type="Line2D" parent="LoopControls" unique_id=696023243]
+position = Vector2(0, 25.9997)
+
+[node name="Pause" type="TextureRect" parent="LoopControls" unique_id=1701961204]
+visible = false
+modulate = Color(1, 1, 1, 0.478431)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 231.5
+offset_right = 150.0
+offset_bottom = 690.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_bvbk1")
+
+[node name="Control" type="Control" parent="LoopControls" unique_id=546685081]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -383.0
+offset_top = 131.0
+offset_right = 383.0
+offset_bottom = 743.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LoopControls/Control" unique_id=1654467574]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebounceTimer" type="Timer" parent="LoopControls" unique_id=10324849]
+
+[node name="VibrationControls" type="Control" parent="." unique_id=1839922688]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.898958
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_v152v")
+metadata/_edit_use_anchors_ = true
+
+[node name="Waveform" type="Control" parent="VibrationControls" unique_id=437974971]
+custom_minimum_size = Vector2(860, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -430.0
+offset_top = 63.0
+offset_right = 430.0
+offset_bottom = 223.0
+grow_horizontal = 2
+
+[node name="HSlider" type="HSlider" parent="VibrationControls/Waveform" unique_id=589648221]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = -0.39400002
+anchor_right = 0.5
+anchor_bottom = -0.39400002
+offset_left = -310.0
+offset_top = 93.04001
+offset_right = 310.0
+offset_bottom = 193.04001
+grow_horizontal = 2
+focus_mode = 0
+min_value = 100.0
+max_value = 200.0
+value = 105.0
+
+[node name="TriangleWave" type="TextureRect" parent="VibrationControls/Waveform" unique_id=143904624]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -21.5
+offset_right = 93.0
+offset_bottom = 21.5
+grow_vertical = 2
+texture = ExtResource("12_0eolm")
+
+[node name="SquareWave" type="TextureRect" parent="VibrationControls/Waveform" unique_id=496470923]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -21.5
+offset_right = 75.0
+offset_bottom = 21.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("13_obp4u")
+
+[node name="RangeSlider" type="NinePatchRect" parent="VibrationControls" unique_id=1734890273]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -438.0
+offset_top = -476.0
+offset_right = -268.0
+offset_bottom = 460.0
+grow_horizontal = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/RangeSlider" unique_id=119247156]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -83.5
+offset_top = -77.0
+offset_right = 83.5
+offset_bottom = 1.1666641
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "100%"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/RangeSlider" unique_id=1413189796]
+self_modulate = Color(0.4386, 0.761673, 0.86, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/RangeSlider" unique_id=1546704712]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/RangeSlider" unique_id=655393650]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/RangeSlider" unique_id=575187784]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.5
+offset_right = 83.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Range"
+horizontal_alignment = 1
+
+[node name="FrequencySlider" type="NinePatchRect" parent="VibrationControls" unique_id=504317004]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -476.0
+offset_right = 85.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/FrequencySlider" unique_id=979271177]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = -164.0
+offset_right = 123.0
+offset_bottom = 1.3333282
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "3ms
+166.66Hz"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/FrequencySlider" unique_id=1173054387]
+self_modulate = Color(0.38056, 0.67, 0.3082, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/FrequencySlider" unique_id=225647815]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/FrequencySlider" unique_id=634189754]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/FrequencySlider" unique_id=983822801]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -83.0
+offset_right = 84.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Frequency"
+horizontal_alignment = 1
+
+[node name="PositionSlider" type="NinePatchRect" parent="VibrationControls" unique_id=1253699311]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 268.0
+offset_top = -476.0
+offset_right = 438.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="ValueLabel" type="Label" parent="VibrationControls/PositionSlider" unique_id=1838828062]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_top = -77.0
+offset_right = 110.0
+offset_bottom = 1.1666641
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "100%"
+horizontal_alignment = 1
+
+[node name="Slider" type="TextureRect" parent="VibrationControls/PositionSlider" unique_id=776136079]
+self_modulate = Color(0.941176, 0.501961, 0.501961, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 782.0
+offset_right = 69.0
+offset_bottom = 920.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="MaxLimit" type="TextureRect" parent="VibrationControls/PositionSlider" unique_id=1672636979]
+visible = false
+modulate = Color(1, 1, 1, 0.7058824)
+show_behind_parent = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -76.0
+offset_top = 10.000305
+offset_right = 62.0
+offset_bottom = 57.27301
+grow_horizontal = 2
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("8_04y8j")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="MinLimit" type="TextureRect" parent="VibrationControls/PositionSlider" unique_id=942546848]
+visible = false
+modulate = Color(1, 1, 1, 0.7058824)
+show_behind_parent = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 76.0
+offset_top = 925.6588
+offset_right = 214.0
+offset_bottom = 972.9315
+grow_horizontal = 2
+rotation = 3.1415927
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("8_04y8j")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="SliderMax" type="TextureRect" parent="VibrationControls/PositionSlider" unique_id=1758377449]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderMin" type="TextureRect" parent="VibrationControls/PositionSlider" unique_id=1549790128]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.9999
+offset_top = 314.0
+offset_right = 69.0001
+offset_bottom = 452.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="TitleLabel" type="Label" parent="VibrationControls/PositionSlider" unique_id=235098502]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -109.5
+offset_right = 109.5
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 56
+text = "Position"
+horizontal_alignment = 1
+
+[node name="PulseControl" type="VBoxContainer" parent="VibrationControls" unique_id=1673709747]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8482039
+anchor_right = 1.0
+anchor_bottom = 0.95828503
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="VibrationControls/PulseControl" unique_id=383985347]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Pulse Control"
+horizontal_alignment = 1
+
+[node name="Timers" type="HBoxContainer" parent="VibrationControls/PulseControl" unique_id=2072047933]
+layout_mode = 2
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="OnTime" type="SpinBox" parent="VibrationControls/PulseControl/Timers" unique_id=495120690]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+max_value = 99950.0
+step = 50.0
+prefix = "ON"
+suffix = "ms"
+
+[node name="OffTime" type="SpinBox" parent="VibrationControls/PulseControl/Timers" unique_id=677084025]
+custom_minimum_size = Vector2(435, 0)
+layout_mode = 2
+max_value = 99950.0
+step = 50.0
+prefix = "OFF"
+suffix = "ms"
+
+[node name="DebounceTimer" type="Timer" parent="VibrationControls" unique_id=266008043]
+wait_time = 0.1
+one_shot = true
+
+[node name="BridgeControls" type="Control" parent="." unique_id=1886174770]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.897
+offset_bottom = -0.23999
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_2hnso")
+
+[node name="Smoothing" type="HBoxContainer" parent="BridgeControls" unique_id=1116279339]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.5
+offset_top = 49.0
+offset_right = 380.5
+offset_bottom = 131.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="BridgeControls/Smoothing" unique_id=145859090]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Stroke Smoothing: "
+
+[node name="TransType" type="OptionButton" parent="BridgeControls/Smoothing" unique_id=50539647]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+selected = 1
+item_count = 8
+popup/item_0/text = "Linear"
+popup/item_0/id = 0
+popup/item_1/text = "Sine"
+popup/item_1/id = 1
+popup/item_2/text = "Circ"
+popup/item_2/id = 2
+popup/item_3/text = "Expo"
+popup/item_3/id = 3
+popup/item_4/text = "Quad"
+popup/item_4/id = 4
+popup/item_5/text = "Cubic"
+popup/item_5/id = 5
+popup/item_6/text = "Quart"
+popup/item_6/id = 6
+popup/item_7/text = "Quint"
+popup/item_7/id = 7
+
+[node name="Controls" type="HBoxContainer" parent="BridgeControls" unique_id=1095016046]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -480.0
+offset_top = 270.0
+offset_right = 480.0
+offset_bottom = 369.0
+grow_horizontal = 2
+theme_override_constants/separation = 35
+
+[node name="Enable" type="Button" parent="BridgeControls/Controls" unique_id=241246709]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.698039, 0.133333, 0.133333, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.501961, 0, 1)
+theme_override_font_sizes/font_size = 60
+toggle_mode = true
+text = "Disabled"
+
+[node name="AutoScroll" type="Button" parent="BridgeControls/Controls" unique_id=1469812859]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Autoscroll: ON"
+
+[node name="ClearLog" type="Button" parent="BridgeControls/Controls" unique_id=879164042]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Clear Log"
+
+[node name="BG" type="Panel" parent="BridgeControls" unique_id=855326616]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037037
+anchor_top = 0.221835
+anchor_right = 0.962963
+anchor_bottom = 0.976771
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Log" type="RichTextLabel" parent="BridgeControls" unique_id=919937009]
+self_modulate = Color(0, 0.701961, 0.701961, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0444444
+anchor_top = 0.226481
+anchor_right = 0.95463
+anchor_bottom = 0.971545
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme_override_font_sizes/normal_font_size = 32
+scroll_following = true
+selection_enabled = true
+metadata/_edit_use_anchors_ = true
+
+[node name="ConnectionSymbol" type="Label" parent="BridgeControls" unique_id=25730142]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_top = 111.0
+offset_right = 66.0
+offset_bottom = 276.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "⚯"
+
+[node name="ClientStatus" type="Label" parent="BridgeControls" unique_id=1462918165]
+visible = false
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 264.0
+offset_right = 597.0
+offset_bottom = 354.0
+theme_override_font_sizes/font_size = 54
+text = "Client Status"
+
+[node name="SeekSlider" type="VSlider" parent="." unique_id=1890627724]
+visible = false
+layout_mode = 0
+offset_top = 27.0
+offset_right = 112.0
+offset_bottom = 1690.0
+max_value = 1.0
+step = 0.001
+
+[node name="TimeDisplay" type="Label" parent="." unique_id=1039559277]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.5
+offset_top = 5.0
+offset_right = 64.5
+offset_bottom = 67.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("33_odb15")
+theme_override_font_sizes/font_size = 52
+
+[node name="ActionPanel" type="Panel" parent="." unique_id=1866836416]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.67451)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_top = -194.0
+offset_right = 541.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("15_flajy")
+
+[node name="Play" type="TextureRect" parent="ActionPanel" unique_id=217179704]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 78.0
+offset_top = -47.5
+offset_right = 152.0
+offset_bottom = 47.5
+grow_vertical = 2
+texture = ExtResource("16_0xvdx")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Play" unique_id=449359006]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -90.0
+offset_right = 83.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_l5cbh")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Play" unique_id=1630886284]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.783784
+anchor_top = -0.442105
+anchor_right = 1.60811
+anchor_bottom = 1.44211
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Pause" type="TextureRect" parent="ActionPanel" unique_id=152297683]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 86.0
+offset_top = -40.5
+offset_right = 133.0
+offset_bottom = 40.5
+grow_vertical = 2
+texture = ExtResource("18_xjxk6")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Pause" unique_id=1685936057]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = -90.0
+offset_right = 89.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_l5cbh")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Pause" unique_id=103440265]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.40426
+anchor_top = -0.592593
+anchor_right = 2.38298
+anchor_bottom = 1.59259
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Speed" type="TextureRect" parent="ActionPanel" unique_id=345229142]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 289.0
+offset_top = -52.0
+offset_right = 469.0
+offset_bottom = 53.0
+grow_vertical = 2
+texture = ExtResource("19_l1tpd")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Speed" unique_id=1507553294]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_l5cbh")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Speed" unique_id=950444155]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.352381
+anchor_right = 1.0
+anchor_bottom = 1.35238
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Range" type="TextureRect" parent="ActionPanel" unique_id=1183280750]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -27.0
+offset_right = -301.0
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("20_gjk78")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Range" unique_id=306584857]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -61.5
+offset_bottom = 61.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_l5cbh")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Range" unique_id=759681353]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -1.07018
+anchor_right = 1.0
+anchor_bottom = 2.08772
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="TextureRect" parent="ActionPanel" unique_id=1203791932]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -51.0
+offset_right = -60.0
+offset_bottom = 51.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("21_ob2g7")
+
+[node name="Selection" type="TextureRect" parent="ActionPanel/Menu" unique_id=731425098]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = -90.0
+offset_right = 90.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_l5cbh")
+
+[node name="Button" type="TextureButton" parent="ActionPanel/Menu" unique_id=1961680164]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.362745
+anchor_top = -0.362745
+anchor_right = 1.36275
+anchor_bottom = 1.36275
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="ActionPanel" unique_id=1310741589]
+wait_time = 0.8
+one_shot = true
+
+[node name="SpeedPanel" type="Panel" parent="." unique_id=1471480981]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("27_wewnm")
+metadata/_edit_use_anchors_ = true
+
+[node name="SpeedBar" type="NinePatchRect" parent="SpeedPanel" unique_id=1274384455]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -806.5
+offset_right = 1.0
+offset_bottom = 806.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="SpeedPanel/SpeedBar" unique_id=350533424]
+self_modulate = Color(0.498039, 1, 0.831373, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -791.0
+offset_right = 69.0
+offset_bottom = -653.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderBottom" type="TextureRect" parent="SpeedPanel/SpeedBar" unique_id=491371145]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="AccelerationBar" type="NinePatchRect" parent="SpeedPanel" unique_id=1271305917]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -806.5
+offset_right = 158.0
+offset_bottom = 806.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="Slider" type="TextureRect" parent="SpeedPanel/AccelerationBar" unique_id=1322989311]
+self_modulate = Color(1, 0.713726, 0.756863, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -791.0
+offset_right = 69.0
+offset_bottom = -653.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="SliderBottom" type="TextureRect" parent="SpeedPanel/AccelerationBar" unique_id=187195291]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="BackTexture" type="TextureRect" parent="SpeedPanel" unique_id=2100013807]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 46.0
+offset_top = -61.5
+offset_right = 167.0
+offset_bottom = 61.5
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("28_bsb3a")
+
+[node name="BackButton" type="TextureButton" parent="SpeedPanel" unique_id=43531138]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 540.0
+offset_right = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTop" type="Label" parent="SpeedPanel" unique_id=1612861549]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Speed:
+20000 steps/sec"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBot" type="Label" parent="SpeedPanel" unique_id=923611555]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -151.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 54
+text = "Acceleration:
+200000 steps/sec²"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebounceTimer" type="Timer" parent="SpeedPanel" unique_id=742807715]
+wait_time = 0.1
+one_shot = true
+
+[node name="RangePanel" type="Panel" parent="." unique_id=1645157176]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.5
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("29_ij1mi")
+metadata/_edit_use_anchors_ = true
+
+[node name="RangeBar" type="NinePatchRect" parent="RangePanel" unique_id=427544516]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -806.0
+offset_right = 86.0
+offset_bottom = 807.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_8ho8d")
+patch_margin_top = 80
+patch_margin_bottom = 80
+
+[node name="MaxSlider" type="TextureRect" parent="RangePanel/RangeBar" unique_id=2079339300]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 16.0
+offset_right = 69.0
+offset_bottom = 154.0
+grow_horizontal = 2
+texture = ExtResource("8_04y8j")
+
+[node name="MinSlider" type="TextureRect" parent="RangePanel/RangeBar" unique_id=1855965222]
+self_modulate = Color(1, 0.498039, 0.313726, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 652.0
+offset_right = 69.0
+offset_bottom = 790.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_04y8j")
+
+[node name="BackTexture" type="TextureRect" parent="RangePanel" unique_id=253655899]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -167.0
+offset_top = -61.5
+offset_right = -46.0
+offset_bottom = 61.5
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("28_bsb3a")
+flip_h = true
+
+[node name="BackButton" type="TextureButton" parent="RangePanel" unique_id=7892112]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_right = -540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTop" type="Label" parent="RangePanel" unique_id=175213199]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 151.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Position:
+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBot" type="Label" parent="RangePanel" unique_id=913498166]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -151.0
+offset_right = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 54
+text = "Min Position:
+0%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebounceTimer" type="Timer" parent="RangePanel" unique_id=1746402904]
+wait_time = 0.1
+one_shot = true
+
+[node name="Menu" type="Panel" parent="." unique_id=1084806274]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("30_hoeyu")
+
+[node name="Header" type="HBoxContainer" parent="Menu" unique_id=378866692]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 228.0
+grow_horizontal = 2
+theme_override_constants/separation = 261
+alignment = 1
+
+[node name="Back" type="TextureButton" parent="Menu/Header" unique_id=536625969]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("28_bsb3a")
+stretch_mode = 3
+
+[node name="Settings" type="TextureButton" parent="Menu/Header" unique_id=149463077]
+self_modulate = Color(0.560784, 0.737255, 0.560784, 1)
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("31_725o0")
+stretch_mode = 3
+
+[node name="Exit" type="TextureButton" parent="Menu/Header" unique_id=917494698]
+modulate = Color(0.862745, 0.0784314, 0.235294, 1)
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("32_fqnn4")
+stretch_mode = 3
+
+[node name="Main" type="VBoxContainer" parent="Menu" unique_id=582386316]
+custom_minimum_size = Vector2(1020, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -510.0
+offset_top = 231.0
+offset_right = 510.0
+offset_bottom = 767.0
+grow_horizontal = 2
+theme_override_constants/separation = 42
+
+[node name="Mode" type="OptionButton" parent="Menu/Main" unique_id=1215641101]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.498039, 0.313726, 1)
+alignment = 1
+expand_icon = true
+selected = 0
+item_count = 5
+popup/item_0/text = "Path Mode"
+popup/item_0/id = 2
+popup/item_1/text = "Position Mode"
+popup/item_1/id = 3
+popup/item_2/text = "Loop Mode"
+popup/item_2/id = 4
+popup/item_3/text = "Vibration Mode"
+popup/item_3/id = 5
+popup/item_4/text = "Protocol Bridge Mode"
+popup/item_4/id = 6
+
+[node name="PlaylistButtons" type="HBoxContainer" parent="Menu/Main" unique_id=483721368]
+layout_mode = 2
+theme_override_constants/separation = 117
+alignment = 1
+
+[node name="LoadPlaylist" type="Button" parent="Menu/Main/PlaylistButtons" unique_id=1922371626]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Load Playlist"
+
+[node name="SavePlaylist" type="Button" parent="Menu/Main/PlaylistButtons" unique_id=260950165]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+disabled = true
+text = "Save Playlist"
+
+[node name="PathButtons" type="HBoxContainer" parent="Menu/Main" unique_id=589001713]
+layout_mode = 2
+theme_override_constants/separation = 175
+alignment = 1
+
+[node name="AddPath" type="Button" parent="Menu/Main/PathButtons" unique_id=91273644]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Add Path"
+
+[node name="AddDelay" type="Button" parent="Menu/Main/PathButtons" unique_id=1078339877]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Add Delay"
+
+[node name="LoopAndVideoButtons" type="HBoxContainer" parent="Menu/Main" unique_id=1321644064]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="LoopPlaylistButton" type="Button" parent="Menu/Main/LoopAndVideoButtons" unique_id=994928288]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_pressed_color = Color(0, 0.815686, 0.627451, 1)
+theme_override_font_sizes/font_size = 54
+toggle_mode = true
+text = "Loop Playlist: OFF"
+
+[node name="VideoPlayerSync" type="Button" parent="Menu/Main/LoopAndVideoButtons" unique_id=741368855]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 54
+text = "Video Player Sync"
+
+[node name="LoopSettings" type="VBoxContainer" parent="Menu" unique_id=128984050]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -446.0
+offset_top = -569.0
+offset_right = 452.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 65
+
+[node name="DisplayMode" type="VBoxContainer" parent="Menu/LoopSettings" unique_id=1761197383]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/DisplayMode" unique_id=1279679228]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Stroke Speed Display:"
+
+[node name="OptionButton" type="OptionButton" parent="Menu/LoopSettings/DisplayMode" unique_id=161608527]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+selected = 0
+item_count = 2
+popup/item_0/text = "Seconds"
+popup/item_0/id = 0
+popup/item_1/text = "Percentage"
+popup/item_1/id = 1
+
+[node name="HSeparator" type="HSeparator" parent="Menu/LoopSettings" unique_id=322085403]
+layout_mode = 2
+
+[node name="MaxStrokeDuration" type="VBoxContainer" parent="Menu/LoopSettings" unique_id=40757341]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/MaxStrokeDuration" unique_id=1973704345]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Max Stroke Duration:"
+
+[node name="Input" type="SpinBox" parent="Menu/LoopSettings/MaxStrokeDuration" unique_id=1495327353 groups=["spinboxes"]]
+layout_mode = 2
+min_value = 1.0
+max_value = 99999.0
+step = 0.01
+value = 6.0
+suffix = "sec"
+
+[node name="MinStrokeDuration" type="VBoxContainer" parent="Menu/LoopSettings" unique_id=403106122]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/LoopSettings/MinStrokeDuration" unique_id=1864511693]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Min Stroke Duration:"
+
+[node name="Input" type="SpinBox" parent="Menu/LoopSettings/MinStrokeDuration" unique_id=1726979116 groups=["spinboxes"]]
+layout_mode = 2
+min_value = 0.01
+max_value = 9999.0
+step = 0.01
+value = 0.2
+suffix = "sec"
+
+[node name="BridgeSettings" type="VBoxContainer" parent="Menu" unique_id=981717794]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -458.5
+offset_top = 390.0
+offset_right = 458.5
+offset_bottom = 1025.0
+grow_horizontal = 2
+theme_override_constants/separation = 45
+
+[node name="BridgeMode" type="HBoxContainer" parent="Menu/BridgeSettings" unique_id=137349744]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BridgeMode" unique_id=1261254279]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+text = "Bridge Mode: "
+
+[node name="ModeSelection" type="OptionButton" parent="Menu/BridgeSettings/BridgeMode" unique_id=21449957]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Buttplug.io"
+popup/item_0/id = 0
+popup/item_1/text = "XToys"
+popup/item_1/id = 1
+popup/item_2/text = "MCP"
+popup/item_2/id = 2
+
+[node name="SpeedOverrides" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=2079345714]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/SpeedOverrides" unique_id=20304086]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Speed Overrides:"
+
+[node name="Inputs" type="VBoxContainer" parent="Menu/BridgeSettings/SpeedOverrides" unique_id=1058693076]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="MinMoveDuration" type="HBoxContainer" parent="Menu/BridgeSettings/SpeedOverrides/Inputs" unique_id=1728946758]
+layout_mode = 2
+theme_override_constants/separation = 43
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/SpeedOverrides/Inputs/MinMoveDuration" unique_id=1207009320]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Minimum Duration (Fastest):"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/SpeedOverrides/Inputs/MinMoveDuration" unique_id=966705508 groups=["spinboxes"]]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 99999.0
+value = 500.0
+suffix = "ms"
+
+[node name="MaxMoveDuration" type="HBoxContainer" parent="Menu/BridgeSettings/SpeedOverrides/Inputs" unique_id=75146284]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/SpeedOverrides/Inputs/MaxMoveDuration" unique_id=440815081]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Maximum Duration (Slowest):"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/SpeedOverrides/Inputs/MaxMoveDuration" unique_id=1242532690 groups=["spinboxes"]]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 99999.0
+value = 6000.0
+suffix = "ms"
+
+[node name="LoggingEnabled" type="CheckBox" parent="Menu/BridgeSettings" unique_id=50957844]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+button_pressed = true
+text = "Logging Enabled"
+
+[node name="HSeparator" type="HSeparator" parent="Menu/BridgeSettings" unique_id=444758103]
+layout_mode = 2
+
+[node name="BPIO" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=1444458726]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="ServerAddress" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO" unique_id=1919564427]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/ServerAddress" unique_id=2021756074]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_font_sizes/font_size = 45
+text = "Server Address: "
+
+[node name="Input" type="LineEdit" parent="Menu/BridgeSettings/BPIO/ServerAddress" unique_id=1038318493 groups=["lineedits"]]
+custom_minimum_size = Vector2(548, 70)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "127.0.0.1"
+placeholder_text = "127.0.0.1"
+select_all_on_focus = true
+
+[node name="Ports" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO" unique_id=852189478]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="ServerPort" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO/Ports" unique_id=1301790179]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/Ports/ServerPort" unique_id=899662662]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+theme_override_font_sizes/font_size = 40
+text = "Server Port:"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/BPIO/Ports/ServerPort" unique_id=220396977 groups=["spinboxes"]]
+layout_mode = 2
+theme = SubResource("Theme_3abtc")
+min_value = 1024.0
+max_value = 49151.0
+value = 12345.0
+select_all_on_focus = true
+
+[node name="WSDMPort" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO/Ports" unique_id=1549024775]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/Ports/WSDMPort" unique_id=177044009]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+theme_override_font_sizes/font_size = 40
+text = "WSDM Port:"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/BPIO/Ports/WSDMPort" unique_id=2019312124 groups=["spinboxes"]]
+layout_mode = 2
+theme = SubResource("Theme_qnwk1")
+min_value = 1024.0
+max_value = 65535.0
+value = 54817.0
+select_all_on_focus = true
+
+[node name="HSeparator" type="HSeparator" parent="Menu/BridgeSettings/BPIO" unique_id=915123333]
+layout_mode = 2
+
+[node name="Identifier" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO" unique_id=253669934]
+layout_mode = 2
+theme_override_constants/separation = 101
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/Identifier" unique_id=2122546271]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "Identifier:"
+
+[node name="Input" type="LineEdit" parent="Menu/BridgeSettings/BPIO/Identifier" unique_id=2085382525 groups=["lineedits"]]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "ossm"
+placeholder_text = "ossm"
+select_all_on_focus = true
+
+[node name="ClientName" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO" unique_id=87862195]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/ClientName" unique_id=1515386137]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "Client Name:"
+
+[node name="Input" type="LineEdit" parent="Menu/BridgeSettings/BPIO/ClientName" unique_id=1886973366 groups=["lineedits"]]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "ossm-client"
+placeholder_text = "ossm-client"
+select_all_on_focus = true
+
+[node name="Address" type="HBoxContainer" parent="Menu/BridgeSettings/BPIO" unique_id=1382072914]
+layout_mode = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/BPIO/Address" unique_id=219778403]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "Address:"
+
+[node name="Input" type="LineEdit" parent="Menu/BridgeSettings/BPIO/Address" unique_id=1802331815 groups=["lineedits"]]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+text = "ossm-sauce"
+placeholder_text = "ossm-sauce"
+select_all_on_focus = true
+
+[node name="XToys" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=2023993159]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Port" type="HBoxContainer" parent="Menu/BridgeSettings/XToys" unique_id=1150731783]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/XToys/Port" unique_id=815691031]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+theme_override_font_sizes/font_size = 60
+text = "Port:"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/XToys/Port" unique_id=2092779775 groups=["spinboxes"]]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+min_value = 1024.0
+max_value = 49151.0
+value = 8080.0
+
+[node name="MaxMsgFrequency" type="HBoxContainer" parent="Menu/BridgeSettings/XToys" unique_id=263189429]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/XToys/MaxMsgFrequency" unique_id=1330363098]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Max Message Frequency: "
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/XToys/MaxMsgFrequency" unique_id=616032507 groups=["spinboxes"]]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+min_value = 1.0
+max_value = 1000.0
+value = 4.0
+alignment = 1
+suffix = "/sec"
+
+[node name="UseCommandDuration" type="CheckBox" parent="Menu/BridgeSettings/XToys" unique_id=248928590]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+theme_override_fonts/font = ExtResource("33_odb15")
+theme_override_font_sizes/font_size = 52
+text = "Get stroke duration from command"
+
+[node name="MCP" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=786206401]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Port" type="HBoxContainer" parent="Menu/BridgeSettings/MCP" unique_id=2108491557]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Label" type="Label" parent="Menu/BridgeSettings/MCP/Port" unique_id=873659490]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+text = "Port:"
+
+[node name="Input" type="SpinBox" parent="Menu/BridgeSettings/MCP/Port" unique_id=1445660732 groups=["spinboxes"]]
+layout_mode = 2
+theme = ExtResource("1_g6hv1")
+min_value = 1024.0
+max_value = 49151.0
+value = 8081.0
+
+[node name="PathControls" type="Control" parent="Menu" unique_id=590072759]
+visible = false
+layout_mode = 1
+anchor_top = 0.397917
+anchor_right = 1.0
+anchor_bottom = 0.488021
+metadata/_edit_use_anchors_ = true
+
+[node name="Down" type="TextureButton" parent="Menu/PathControls" unique_id=1544325375]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 58.0
+offset_right = 169.0
+offset_bottom = 127.0
+texture_normal = ExtResource("34_5sqpr")
+
+[node name="Up" type="TextureButton" parent="Menu/PathControls" unique_id=969734520]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 58.0
+offset_right = 323.0
+offset_bottom = 127.0
+texture_normal = ExtResource("35_nt4sp")
+
+[node name="HBox" type="HBoxContainer" parent="Menu/PathControls" unique_id=8334231]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -484.0
+offset_top = -57.5
+offset_right = -53.0
+offset_bottom = 57.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 83
+alignment = 2
+
+[node name="Play" type="TextureButton" parent="Menu/PathControls/HBox" unique_id=1587899378]
+layout_mode = 2
+texture_normal = ExtResource("16_0xvdx")
+stretch_mode = 3
+
+[node name="Pause" type="TextureButton" parent="Menu/PathControls/HBox" unique_id=1452645429]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("18_xjxk6")
+stretch_mode = 3
+
+[node name="Restart" type="TextureButton" parent="Menu/PathControls/HBox" unique_id=1443409086]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("36_5c8pd")
+stretch_mode = 3
+
+[node name="Delete" type="TextureButton" parent="Menu/PathControls/HBox" unique_id=2142431064]
+layout_mode = 2
+texture_normal = ExtResource("37_vmrs4")
+stretch_mode = 3
+
+[node name="Playlist" type="Panel" parent="Menu" unique_id=913476229]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.492708
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("38_g1b48")
+metadata/_edit_use_anchors_ = true
+
+[node name="Scroll" type="ScrollContainer" parent="Menu/Playlist" unique_id=1367561541]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Menu/Playlist/Scroll" unique_id=1093308456]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Item" type="Panel" parent="Menu/Playlist/Scroll/VBox" unique_id=787483948]
+self_modulate = Color(1, 1, 1, 0.701961)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+script = ExtResource("41_qnwk1")
+
+[node name="Label" type="Label" parent="Menu/Playlist/Scroll/VBox/Item" unique_id=2006283633]
+self_modulate = Color(1, 1, 1, 0.764706)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -37.0
+offset_right = 988.0
+offset_bottom = 37.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Icon" type="TextureRect" parent="Menu/Playlist/Scroll/VBox/Item" unique_id=378431718]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -33.0
+offset_right = -10.9996
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(33, 33)
+mouse_filter = 2
+texture = ExtResource("39_7ok7h")
+
+[node name="Button" type="TextureButton" parent="Menu/Playlist/Scroll/VBox/Item" unique_id=492920567]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DoubleTapTimer" type="Timer" parent="Menu/Playlist/Scroll/VBox/Item" unique_id=1636321121]
+wait_time = 0.5
+one_shot = true
+
+[node name="Animation" type="AnimationPlayer" parent="Menu/Playlist/Scroll/VBox/Item" unique_id=427370084]
+libraries/ = SubResource("AnimationLibrary_avydh")
+
+[node name="AddDelay" type="Control" parent="Menu" unique_id=1921948117]
+visible = false
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("43_hjbjw")
+
+[node name="Box" type="Control" parent="Menu/AddDelay" unique_id=1372752723]
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchor_top = 0.166146
+anchor_right = 1.0
+anchor_bottom = 0.453125
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Menu/AddDelay/Box" unique_id=935568304]
+modulate = Color(0.27, 0.27, 0.27, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="Menu/AddDelay/Box" unique_id=1734058222]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -204.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="AddDelay" type="Button" parent="Menu/AddDelay/Box/HBox" unique_id=783335758]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Add Delay"
+
+[node name="Back" type="Button" parent="Menu/AddDelay/Box/HBox" unique_id=1909351787]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="SpinBox" type="SpinBox" parent="Menu/AddDelay/Box" unique_id=1365845919 groups=["spinboxes"]]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.5
+offset_top = -41.0
+offset_right = 156.5
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+min_value = 0.2
+max_value = 99999.0
+step = 0.01
+value = 1.5
+
+[node name="Label" type="Label" parent="Menu/AddDelay/Box" unique_id=184550705]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -365.0
+offset_top = -36.5
+offset_right = -281.0
+offset_bottom = 37.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+text = "sec"
+
+[node name="SavePlaylist" type="Control" parent="Menu" unique_id=50855965]
+visible = false
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -641.0
+offset_right = 540.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("44_hej02")
+
+[node name="Panel" type="Panel" parent="Menu/SavePlaylist" unique_id=573401693]
+modulate = Color(0.27, 0.27, 0.27, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBox" type="HBoxContainer" parent="Menu/SavePlaylist" unique_id=1132957304]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -204.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 115
+alignment = 1
+
+[node name="Save" type="Button" parent="Menu/SavePlaylist/HBox" unique_id=325462563]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Save Playlist"
+
+[node name="Back" type="Button" parent="Menu/SavePlaylist/HBox" unique_id=1707594368]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="TextEdit" type="TextEdit" parent="Menu/SavePlaylist" unique_id=1656368764]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.0
+offset_top = -45.0
+offset_right = 296.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+
+[node name="Label" type="Label" parent="Menu/SavePlaylist" unique_id=1431228768]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -37.0
+offset_right = -108.0
+offset_bottom = 37.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 54
+text = ".bxpl"
+
+[node name="VersionLabel" type="Label" parent="Menu" unique_id=89542835]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -60.0
+offset_right = -12.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 2
+
+[node name="VideoPlayer" type="Panel" parent="." unique_id=43259500]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("55_04y8j")
+
+[node name="Back" type="TextureButton" parent="VideoPlayer" unique_id=136448095]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049999963
+anchor_top = 0.022916635
+anchor_right = 0.18888886
+anchor_bottom = 0.0958333
+grow_horizontal = 2
+texture_normal = ExtResource("28_bsb3a")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VBox" type="VBoxContainer" parent="VideoPlayer" unique_id=729513820]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -326.0
+offset_top = 231.0
+offset_right = 326.0
+offset_bottom = 1107.0
+grow_horizontal = 2
+theme_override_constants/separation = 45
+
+[node name="PlayerSelection" type="OptionButton" parent="VideoPlayer/VBox" unique_id=294356304]
+layout_mode = 2
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "VLC"
+popup/item_1/id = 1
+popup/item_2/text = "MPC"
+popup/item_2/id = 2
+
+[node name="ConnectionIndicator" type="Label" parent="VideoPlayer/VBox" unique_id=1089808435]
+visible = false
+layout_mode = 2
+text = "🟢 Player Connected"
+
+[node name="PlayerAddress" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1048459900]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/PlayerAddress" unique_id=289585054]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Player Address:"
+
+[node name="Input" type="LineEdit" parent="VideoPlayer/VBox/PlayerAddress" unique_id=1517336264 groups=["lineedits"]]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "127.0.0.1"
+
+[node name="PlayerPort" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=938855095]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/PlayerPort" unique_id=663043847]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Server Port:"
+
+[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/PlayerPort" unique_id=1288297405 groups=["spinboxes"]]
+layout_mode = 2
+min_value = 1024.0
+max_value = 49151.0
+value = 8080.0
+
+[node name="VLCPassword" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=612327876]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/VLCPassword" unique_id=1213026165]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "VLC Password:"
+
+[node name="Input" type="LineEdit" parent="VideoPlayer/VBox/VLCPassword" unique_id=959658136 groups=["lineedits"]]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+
+[node name="VLCSeekCorrection" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=2018718004]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/VLCSeekCorrection" unique_id=708242684]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Seek Correction:"
+
+[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/VLCSeekCorrection" unique_id=1080762800 groups=["spinboxes"]]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+min_value = -99.9
+max_value = 99.9
+step = 0.1
+value = 5.0
+suffix = "ms/min"
+
+[node name="DelayMs" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1783883329]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/DelayMs" unique_id=1540644440]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Path delay:"
+
+[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/DelayMs" unique_id=702213238 groups=["spinboxes"]]
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+max_value = 5000.0
+step = 10.0
+suffix = "ms"
+
+[node name="AdvanceMs" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1703214418]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/AdvanceMs" unique_id=1150395683]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Path Advance:"
+
+[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/AdvanceMs" unique_id=1334908436 groups=["spinboxes"]]
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+max_value = 5000.0
+step = 10.0
+value = 100.0
+suffix = "ms"
+
+[node name="VideoOffset" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=145575943]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VideoPlayer/VBox/VideoOffset" unique_id=1827145093]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Video Offset Buffer:"
+
+[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/VideoOffset" unique_id=694489491 groups=["spinboxes"]]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+max_value = 9999999.0
+step = 10.0
+suffix = "ms"
+
+[node name="Settings" type="Panel" parent="." unique_id=1451848364]
+unique_name_in_owner = true
+visible = false
+self_modulate = Color(0.364706, 0.364706, 0.364706, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("40_u5kb6")
+
+[node name="Back" type="TextureButton" parent="Settings" unique_id=1705527057]
+custom_minimum_size = Vector2(150, 140)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049999963
+anchor_top = 0.022916635
+anchor_right = 0.18888886
+anchor_bottom = 0.0958333
+grow_horizontal = 2
+texture_normal = ExtResource("28_bsb3a")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VBox" type="VBoxContainer" parent="Settings" unique_id=1885049252]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -506.0
+offset_top = 205.0
+offset_right = 506.0
+offset_bottom = 1698.0
+grow_horizontal = 2
+theme_override_constants/separation = 56
+
+[node name="Network" type="VBoxContainer" parent="Settings/VBox" unique_id=1884196467]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Address" type="VBoxContainer" parent="Settings/VBox/Network" unique_id=1300497027]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Settings/VBox/Network/Address" unique_id=359745637]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Local server address for this device:"
+
+[node name="TextEdit" type="TextEdit" parent="Settings/VBox/Network/Address" unique_id=2070388168]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_override_colors/font_readonly_color = Color(0.988787, 0.906948, 0.799518, 1)
+theme_override_font_sizes/font_size = 52
+editable = false
+
+[node name="Port" type="HBoxContainer" parent="Settings/VBox/Network" unique_id=39184683]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="Settings/VBox/Network/Port" unique_id=1399484584]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Server Port:"
+
+[node name="Input" type="SpinBox" parent="Settings/VBox/Network/Port" unique_id=1783381345 groups=["spinboxes"]]
+layout_mode = 2
+min_value = 1024.0
+max_value = 49151.0
+value = 8008.0
+
+[node name="ChangePort" type="Button" parent="Settings/VBox/Network/Port" unique_id=2009095448]
+custom_minimum_size = Vector2(384.88, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.824375, 0.977674, 0.808093, 1)
+theme_override_font_sizes/font_size = 50
+text = "Change Port"
+
+[node name="HSeparator" type="HSeparator" parent="Settings/VBox" unique_id=1983728631]
+layout_mode = 2
+
+[node name="Sliders" type="VBoxContainer" parent="Settings/VBox" unique_id=1499956392]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="MaxSpeed" type="HBoxContainer" parent="Settings/VBox/Sliders" unique_id=1207165784]
+layout_mode = 2
+theme_override_constants/separation = 188
+
+[node name="Label" type="Label" parent="Settings/VBox/Sliders/MaxSpeed" unique_id=1365414019]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Speed Slider Max:"
+
+[node name="Input" type="SpinBox" parent="Settings/VBox/Sliders/MaxSpeed" unique_id=1626038288 groups=["spinboxes"]]
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+min_value = 100.0
+max_value = 200000.0
+value = 25000.0
+
+[node name="MaxAcceleration" type="HBoxContainer" parent="Settings/VBox/Sliders" unique_id=1244010314]
+layout_mode = 2
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="Settings/VBox/Sliders/MaxAcceleration" unique_id=1151818386]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Acceleration Slider Max:"
+
+[node name="Input" type="SpinBox" parent="Settings/VBox/Sliders/MaxAcceleration" unique_id=994149337 groups=["spinboxes"]]
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+min_value = 5000.0
+max_value = 9000000.0
+value = 500000.0
+
+[node name="HSeparator2" type="HSeparator" parent="Settings/VBox" unique_id=1841765557]
+layout_mode = 2
+
+[node name="SyncingSpeed" type="HBoxContainer" parent="Settings/VBox" unique_id=958061326]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Label" type="Label" parent="Settings/VBox/SyncingSpeed" unique_id=1024085948]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Syncing Speed:"
+
+[node name="Input" type="SpinBox" parent="Settings/VBox/SyncingSpeed" unique_id=1263358194 groups=["spinboxes"]]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+min_value = 100.0
+max_value = 9999.0
+value = 1000.0
+suffix = "steps/sec"
+
+[node name="DebounceTimer" type="Timer" parent="Settings/VBox/SyncingSpeed" unique_id=803426202]
+wait_time = 0.3
+one_shot = true
+
+[node name="HomingTrigger" type="HBoxContainer" parent="Settings/VBox" unique_id=321405889]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Label" type="Label" parent="Settings/VBox/HomingTrigger" unique_id=1098382437]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Sensorless Homing Sensitivity:"
+
+[node name="Input" type="SpinBox" parent="Settings/VBox/HomingTrigger" unique_id=1515982946 groups=["spinboxes"]]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.001
+value = 1.5
+
+[node name="DebounceTimer" type="Timer" parent="Settings/VBox/HomingTrigger" unique_id=944361696]
+wait_time = 0.3
+one_shot = true
+
+[node name="ReverseMotorDirection" type="CheckBox" parent="Settings/VBox" unique_id=1980012450]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Reverse motor direction"
+
+[node name="HSeparator3" type="HSeparator" parent="Settings/VBox" unique_id=1485238401]
+layout_mode = 2
+
+[node name="AlwaysOnTop" type="CheckBox" parent="Settings/VBox" unique_id=680577138]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Keep app on top of other windows"
+
+[node name="TransparentBackground" type="CheckBox" parent="Settings/VBox" unique_id=597515866]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+
+[node name="HomingTriggerPopup" type="Panel" parent="Settings" unique_id=1042146635]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("47_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="Settings/HomingTriggerPopup" unique_id=1317207501]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -473.0
+offset_top = 119.0
+offset_right = 473.0
+offset_bottom = 1464.0
+grow_horizontal = 2
+theme_override_constants/separation = 75
+
+[node name="Label" type="Label" parent="Settings/HomingTriggerPopup/VBox" unique_id=440316631]
+custom_minimum_size = Vector2(0, 940)
+layout_mode = 2
+theme_override_font_sizes/font_size = 55
+text = "You have changed the sensorless homing voltage sensitivity multiplier.
+
+This value determines the sensitivity of sensorless homing's edge detection during OSSM startup.
+
+Setting this higher than necessary can damage your machine!"
+autowrap_mode = 3
+
+[node name="ValueLabel" type="Label" parent="Settings/HomingTriggerPopup/VBox" unique_id=347462866]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6745098, 0.8039216, 0.85490197, 1)
+theme_override_font_sizes/font_size = 62
+text = "Default value: 1.5
+Your value is: "
+
+[node name="Label2" type="Label" parent="Settings/HomingTriggerPopup/VBox" unique_id=1645241689]
+layout_mode = 2
+text = "Would you like to apply this change?"
+
+[node name="Buttons" type="HBoxContainer" parent="Settings/HomingTriggerPopup/VBox" unique_id=794953635]
+layout_mode = 2
+theme_override_constants/separation = 205
+alignment = 1
+
+[node name="YesButton" type="Button" parent="Settings/HomingTriggerPopup/VBox/Buttons" unique_id=790304111]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = " YES "
+
+[node name="NoButton" type="Button" parent="Settings/HomingTriggerPopup/VBox/Buttons" unique_id=311776730]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = " NO "
+
+[node name="AddFile" type="Panel" parent="." unique_id=1439324391]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("41_gwrhd")
+
+[node name="Label" type="Label" parent="AddFile" unique_id=226532596]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -424.5
+offset_top = 14.0
+offset_right = 424.5
+offset_bottom = 102.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Internal Storage/OSSM Sauce/Paths"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="AddFile" unique_id=2052954574]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0723958
+anchor_right = 1.0
+anchor_bottom = 0.115104
+grow_horizontal = 2
+theme_override_constants/separation = 175
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AddPath" type="Button" parent="AddFile/HBox" unique_id=66280021]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Add Path"
+
+[node name="LoadPlaylist" type="Button" parent="AddFile/HBox" unique_id=314431235]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+disabled = true
+text = "Load Playlist"
+
+[node name="Back" type="Button" parent="AddFile/HBox" unique_id=1518485900]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Back"
+
+[node name="FileList" type="Panel" parent="AddFile" unique_id=540745817]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.139583
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("42_i7h0y")
+metadata/_edit_use_anchors_ = true
+
+[node name="Scroll" type="ScrollContainer" parent="AddFile/FileList" unique_id=1040986524]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="AddFile/FileList/Scroll" unique_id=690783993]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Item" type="Panel" parent="AddFile/FileList/Scroll/VBox" unique_id=114382165]
+self_modulate = Color(1, 1, 1, 0.701961)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+script = SubResource("GDScript_rckrg")
+
+[node name="Label" type="Label" parent="AddFile/FileList/Scroll/VBox/Item" unique_id=656358119]
+self_modulate = Color(1, 1, 1, 0.764706)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -37.0
+offset_right = 988.0
+offset_bottom = 37.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Button" type="TextureButton" parent="AddFile/FileList/Scroll/VBox/Item" unique_id=726728023]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="AddFile/FileList/Scroll/VBox/Item" unique_id=514759655]
+wait_time = 0.5
+one_shot = true
+
+[node name="CircleSelection" type="Control" parent="." unique_id=808786019]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.313726)
+layout_mode = 1
+anchor_left = 0.244444
+anchor_top = 0.305729
+anchor_right = 0.755556
+anchor_bottom = 0.593229
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("22_rmgx1")
+metadata/_edit_use_anchors_ = true
+
+[node name="Circle" type="TextureRect" parent="CircleSelection" unique_id=961752401]
+self_modulate = Color(1, 1, 1, 0.666667)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -258.0
+offset_right = 258.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(258, 258)
+texture = ExtResource("23_jfjoi")
+
+[node name="Pause" type="TextureRect" parent="CircleSelection" unique_id=509997172]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.5
+offset_top = -121.5
+offset_right = 73.5
+offset_bottom = 121.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_bvbk1")
+
+[node name="Play" type="TextureRect" parent="CircleSelection" unique_id=26065240]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.360507
+anchor_top = 0.271739
+anchor_right = 0.719203
+anchor_bottom = 0.728261
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("24_3nund")
+metadata/_edit_use_anchors_ = true
+
+[node name="Restart" type="TextureButton" parent="CircleSelection" unique_id=2122955442]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -188.5
+offset_right = 147.0
+offset_bottom = 154.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("25_koa0t")
+stretch_mode = 3
+
+[node name="Hourglass" type="TextureRect" parent="CircleSelection" unique_id=645164141]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -154.0
+offset_right = 125.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("26_ceu5t")
+stretch_mode = 3
+
+[node name="HomingLabel" type="Label" parent="CircleSelection/Hourglass" unique_id=719257110]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -273.5
+offset_top = -363.0
+offset_right = 273.5
+offset_bottom = -118.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 88
+text = "SYNCING
+PLEASE WAIT"
+horizontal_alignment = 1
+
+[node name="OutsideButton" type="TextureButton" parent="CircleSelection" unique_id=2081136988]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.478261
+anchor_top = -1.06341
+anchor_right = 1.47826
+anchor_bottom = 2.06341
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InsideButton" type="TextureButton" parent="CircleSelection" unique_id=1077581992]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CircleSelection" unique_id=691105534]
+libraries/ = SubResource("AnimationLibrary_u5ydg")
+
+[node name="WiFi" type="Sprite2D" parent="." unique_id=509088683]
+unique_name_in_owner = true
+visible = false
+position = Vector2(1031, 45)
+texture = ExtResource("43_12g22")
+
+[node name="Splash" type="Panel" parent="." unique_id=2057065976]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_dqjk0")
+
+[node name="VBox" type="VBoxContainer" parent="Splash" unique_id=818911266]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0875
+anchor_top = 0.055989582
+anchor_right = 0.91157407
+anchor_bottom = 0.8700521
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 75
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="RichTextLabel" parent="Splash/VBox" unique_id=1017608270]
+custom_minimum_size = Vector2(0, 1220)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "OSSM Sauce is an experimental WebSocket motor controller designed to give users maximum control over their OSSM devices.
+
+Extensive testing has been done to ensure reliable performance and safety, however, this app can damage your OSSM and yourself if used carelessly.
+
+It's up to YOU to understand how this app behaves before using it in a live environment.
+
+-Opti"
+
+[node name="DontShowAgain" type="CheckBox" parent="Splash/VBox" unique_id=721201867]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "Don't show again "
+
+[node name="Accept" type="Button" parent="Splash/VBox" unique_id=1493509811]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "ACCEPT"
+
+[node name="WebSocket" type="Node" parent="." unique_id=817264323]
+unique_name_in_owner = true
+script = ExtResource("44_qjjoe")
+
+[node name="BPIOBridge" type="Node" parent="." unique_id=39381897]
+unique_name_in_owner = true
+script = ExtResource("45_vjww0")
+
+[node name="XToysBridge" type="Node" parent="." unique_id=625706038]
+unique_name_in_owner = true
+script = ExtResource("46_158sr")
+
+[node name="SpeedTimer" type="Timer" parent="XToysBridge" unique_id=936084726]
+
+[node name="PingTimer" type="Timer" parent="XToysBridge" unique_id=1327553181]
+wait_time = 3.0
+
+[node name="MCPBridge" type="Node" parent="." unique_id=1855281648]
+script = ExtResource("47_j3fne")
+
+[node name="MCPCommandServer" type="Node" parent="MCPBridge" unique_id=1342975163]
+unique_name_in_owner = true
+script = ExtResource("48_bme4d")
+
+[connection signal="gui_input" from="PathDisplay/PathArea" to="PathDisplay/PathArea" method="_on_gui_input"]
+[connection signal="timeout" from="PathDisplay/PathArea/Timer" to="PathDisplay/PathArea" method="_on_timer_timeout"]
+[connection signal="timeout" from="PathDisplay/AccelTimer" to="SpeedPanel" method="update_acceleration"]
+[connection signal="value_changed" from="PositionControls/Smoothing/HSlider" to="PositionControls" method="_on_smoothing_slider_value_changed"]
+[connection signal="gui_input" from="PositionControls/MovementBar/Slider" to="PositionControls" method="_on_slider_gui_input"]
+[connection signal="gui_input" from="LoopControls/In/StrokeDurationSlider/Slider" to="LoopControls/In" method="_on_slider_gui_input"]
+[connection signal="item_selected" from="LoopControls/In/AccelerationControls/Transition" to="LoopControls/In" method="_on_transition_item_selected"]
+[connection signal="item_selected" from="LoopControls/In/AccelerationControls/Easing" to="LoopControls/In" method="_on_easing_item_selected"]
+[connection signal="gui_input" from="LoopControls/Out/StrokeDurationSlider/Slider" to="LoopControls/Out" method="_on_slider_gui_input"]
+[connection signal="item_selected" from="LoopControls/Out/AccelerationControls/Transition" to="LoopControls/Out" method="_on_transition_item_selected"]
+[connection signal="item_selected" from="LoopControls/Out/AccelerationControls/Easing" to="LoopControls/Out" method="_on_easing_item_selected"]
+[connection signal="toggled" from="LoopControls/LinkSpeedSliders" to="LoopControls" method="_on_link_speed_sliders_toggled"]
+[connection signal="value_changed" from="VibrationControls/Waveform/HSlider" to="VibrationControls" method="_on_waveform_value_changed" unbinds=1]
+[connection signal="value_changed" from="VibrationControls/PulseControl/Timers/OnTime" to="VibrationControls" method="_on_pulse_control_time_value_changed" unbinds=1]
+[connection signal="value_changed" from="VibrationControls/PulseControl/Timers/OffTime" to="VibrationControls" method="_on_pulse_control_time_value_changed" unbinds=1]
+[connection signal="timeout" from="VibrationControls/DebounceTimer" to="VibrationControls" method="send_vibrate_command"]
+[connection signal="item_selected" from="BridgeControls/Smoothing/TransType" to="BridgeControls" method="_on_trans_type_selected"]
+[connection signal="toggled" from="BridgeControls/Controls/Enable" to="BridgeControls" method="_on_enable_toggled"]
+[connection signal="pressed" from="BridgeControls/Controls/AutoScroll" to="BridgeControls" method="_on_autoscroll_pressed"]
+[connection signal="pressed" from="BridgeControls/Controls/ClearLog" to="BridgeControls" method="_on_clear_log_pressed"]
+[connection signal="drag_ended" from="SeekSlider" to="." method="seek" unbinds=1]
+[connection signal="drag_started" from="SeekSlider" to="." method="_on_seek_slider_drag_started"]
+[connection signal="value_changed" from="SeekSlider" to="." method="_on_seek_slider_value_changed"]
+[connection signal="pressed" from="ActionPanel/Play/Button" to="ActionPanel" method="_on_play_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Pause/Button" to="ActionPanel" method="_on_pause_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Speed/Button" to="ActionPanel" method="_on_speed_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Range/Button" to="ActionPanel" method="_on_range_button_pressed"]
+[connection signal="pressed" from="ActionPanel/Menu/Button" to="ActionPanel" method="_on_menu_button_pressed"]
+[connection signal="timeout" from="ActionPanel/Timer" to="ActionPanel" method="_on_timer_timeout"]
+[connection signal="gui_input" from="SpeedPanel/SpeedBar/Slider" to="SpeedPanel" method="_on_speed_slider_gui_input"]
+[connection signal="gui_input" from="SpeedPanel/AccelerationBar/Slider" to="SpeedPanel" method="_on_acceleration_slider_gui_input"]
+[connection signal="pressed" from="SpeedPanel/BackButton" to="SpeedPanel" method="_on_back_button_pressed"]
+[connection signal="timeout" from="SpeedPanel/DebounceTimer" to="SpeedPanel" method="send_speed_limits"]
+[connection signal="gui_input" from="RangePanel/RangeBar/MaxSlider" to="RangePanel" method="_on_max_slider_gui_input"]
+[connection signal="gui_input" from="RangePanel/RangeBar/MinSlider" to="RangePanel" method="_on_min_slider_gui_input"]
+[connection signal="pressed" from="RangePanel/BackButton" to="RangePanel" method="_on_back_button_pressed"]
+[connection signal="timeout" from="RangePanel/DebounceTimer" to="RangePanel" method="send_range_limits"]
+[connection signal="pressed" from="Menu/Header/Back" to="Menu" method="_on_Back_pressed"]
+[connection signal="pressed" from="Menu/Header/Settings" to="Menu" method="_on_Settings_pressed"]
+[connection signal="pressed" from="Menu/Header/Exit" to="Menu" method="_on_Exit_pressed"]
+[connection signal="item_selected" from="Menu/Main/Mode" to="Menu" method="_on_mode_selected"]
+[connection signal="pressed" from="Menu/Main/PlaylistButtons/LoadPlaylist" to="Menu" method="_on_load_playlist_pressed"]
+[connection signal="pressed" from="Menu/Main/PlaylistButtons/SavePlaylist" to="Menu" method="_on_save_playlist_pressed"]
+[connection signal="pressed" from="Menu/Main/PathButtons/AddPath" to="Menu" method="_on_add_path_pressed"]
+[connection signal="pressed" from="Menu/Main/PathButtons/AddDelay" to="Menu" method="_on_add_delay_pressed"]
+[connection signal="toggled" from="Menu/Main/LoopAndVideoButtons/LoopPlaylistButton" to="Menu" method="_on_loop_playlist_button_toggled"]
+[connection signal="pressed" from="Menu/Main/LoopAndVideoButtons/VideoPlayerSync" to="Menu" method="_on_video_player_sync_pressed"]
+[connection signal="item_selected" from="Menu/LoopSettings/DisplayMode/OptionButton" to="Menu" method="_on_stroke_duration_display_mode_changed"]
+[connection signal="value_changed" from="Menu/LoopSettings/MaxStrokeDuration/Input" to="Menu" method="_on_max_stroke_duration_changed"]
+[connection signal="value_changed" from="Menu/LoopSettings/MinStrokeDuration/Input" to="Menu" method="_on_min_stroke_duration_changed"]
+[connection signal="item_selected" from="Menu/BridgeSettings/BridgeMode/ModeSelection" to="Menu" method="_on_bridge_mode_selected"]
+[connection signal="value_changed" from="Menu/BridgeSettings/SpeedOverrides/Inputs/MinMoveDuration/Input" to="BridgeControls" method="_on_min_move_duration_value_changed"]
+[connection signal="value_changed" from="Menu/BridgeSettings/SpeedOverrides/Inputs/MaxMoveDuration/Input" to="BridgeControls" method="_on_max_move_duration_value_changed"]
+[connection signal="toggled" from="Menu/BridgeSettings/LoggingEnabled" to="BridgeControls" method="_on_logging_enabled_toggled"]
+[connection signal="text_changed" from="Menu/BridgeSettings/BPIO/ServerAddress/Input" to="BridgeControls" method="_on_bpio_server_address_changed"]
+[connection signal="value_changed" from="Menu/BridgeSettings/BPIO/Ports/ServerPort/Input" to="BridgeControls" method="_on_bpio_server_port_changed"]
+[connection signal="value_changed" from="Menu/BridgeSettings/BPIO/Ports/WSDMPort/Input" to="BridgeControls" method="_on_bpio_wsdm_port_changed"]
+[connection signal="text_changed" from="Menu/BridgeSettings/BPIO/Identifier/Input" to="BridgeControls" method="_on_bpio_identifier_changed"]
+[connection signal="text_changed" from="Menu/BridgeSettings/BPIO/ClientName/Input" to="BridgeControls" method="_on_bpio_client_name_changed"]
+[connection signal="text_changed" from="Menu/BridgeSettings/BPIO/Address/Input" to="BridgeControls" method="_on_bpio_address_changed"]
+[connection signal="value_changed" from="Menu/BridgeSettings/XToys/Port/Input" to="BridgeControls" method="_on_xtoys_port_changed"]
+[connection signal="value_changed" from="Menu/BridgeSettings/XToys/MaxMsgFrequency/Input" to="BridgeControls" method="_on_xtoys_max_msg_frequency_changed"]
+[connection signal="toggled" from="Menu/BridgeSettings/XToys/UseCommandDuration" to="BridgeControls" method="_on_xtoys_use_command_duration_toggled"]
+[connection signal="value_changed" from="Menu/BridgeSettings/MCP/Port/Input" to="BridgeControls" method="_on_mcp_port_changed"]
+[connection signal="pressed" from="Menu/PathControls/Down" to="Menu" method="_on_down_pressed"]
+[connection signal="pressed" from="Menu/PathControls/Up" to="Menu" method="_on_up_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Play" to="Menu" method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Pause" to="Menu" method="_on_pause_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="Menu/PathControls/HBox/Delete" to="Menu" method="_on_delete_pressed"]
+[connection signal="pressed" from="Menu/AddDelay/Box/HBox/AddDelay" to="Menu/AddDelay" method="_on_add_delay_pressed"]
+[connection signal="pressed" from="Menu/AddDelay/Box/HBox/Back" to="Menu/AddDelay" method="_on_back_pressed"]
+[connection signal="pressed" from="Menu/SavePlaylist/HBox/Save" to="Menu/SavePlaylist" method="_on_save_pressed"]
+[connection signal="pressed" from="Menu/SavePlaylist/HBox/Back" to="Menu/SavePlaylist" method="_on_back_pressed"]
+[connection signal="text_changed" from="Menu/SavePlaylist/TextEdit" to="Menu/SavePlaylist" method="_on_text_edit_text_changed"]
+[connection signal="pressed" from="VideoPlayer/Back" to="VideoPlayer" method="_on_back_pressed"]
+[connection signal="item_selected" from="VideoPlayer/VBox/PlayerSelection" to="VideoPlayer" method="_on_player_selection_item_selected"]
+[connection signal="text_submitted" from="VideoPlayer/VBox/PlayerAddress/Input" to="VideoPlayer" method="_on_player_address_text_submitted"]
+[connection signal="value_changed" from="VideoPlayer/VBox/PlayerPort/Input" to="VideoPlayer" method="_on_player_port_value_changed"]
+[connection signal="text_submitted" from="VideoPlayer/VBox/VLCPassword/Input" to="VideoPlayer" method="_on_vlc_password_text_submitted"]
+[connection signal="value_changed" from="VideoPlayer/VBox/VLCSeekCorrection/Input" to="VideoPlayer" method="_on_vlc_seek_correction_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/VBox/DelayMs/Input" to="VideoPlayer" method="_on_delay_ms_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/VBox/AdvanceMs/Input" to="VideoPlayer" method="_on_advance_ms_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/VBox/VideoOffset/Input" to="VideoPlayer" method="_on_video_offset_ms_value_changed"]
+[connection signal="pressed" from="Settings/Back" to="Settings" method="_on_Back_pressed"]
+[connection signal="pressed" from="Settings/VBox/Network/Port/ChangePort" to="Settings" method="_on_change_port_pressed"]
+[connection signal="value_changed" from="Settings/VBox/Sliders/MaxSpeed/Input" to="Settings" method="_on_slider_max_speed_value_changed"]
+[connection signal="value_changed" from="Settings/VBox/Sliders/MaxAcceleration/Input" to="Settings" method="_on_slider_max_acceleration_value_changed"]
+[connection signal="value_changed" from="Settings/VBox/SyncingSpeed/Input" to="Settings" method="_on_syncing_speed_changed" unbinds=1]
+[connection signal="timeout" from="Settings/VBox/SyncingSpeed/DebounceTimer" to="Settings" method="_on_syncing_speed_debounce_timer_timeout"]
+[connection signal="value_changed" from="Settings/VBox/HomingTrigger/Input" to="Settings" method="_on_homing_trigger_changed" unbinds=1]
+[connection signal="timeout" from="Settings/VBox/HomingTrigger/DebounceTimer" to="Settings" method="_on_homing_trigger_debounce_timer_timeout"]
+[connection signal="toggled" from="Settings/VBox/ReverseMotorDirection" to="Settings" method="_on_reverse_motor_direction_toggled"]
+[connection signal="toggled" from="Settings/VBox/AlwaysOnTop" to="Settings" method="_on_always_on_top_toggled"]
+[connection signal="pressed" from="Settings/HomingTriggerPopup/VBox/Buttons/YesButton" to="Settings/HomingTriggerPopup" method="_on_yes_button_pressed"]
+[connection signal="pressed" from="Settings/HomingTriggerPopup/VBox/Buttons/NoButton" to="Settings/HomingTriggerPopup" method="_on_no_button_pressed"]
+[connection signal="pressed" from="AddFile/HBox/AddPath" to="AddFile" method="_on_add_path_pressed"]
+[connection signal="pressed" from="AddFile/HBox/LoadPlaylist" to="AddFile" method="_on_load_playlist_pressed"]
+[connection signal="pressed" from="AddFile/HBox/Back" to="AddFile" method="_on_back_pressed"]
+[connection signal="pressed" from="CircleSelection/Restart" to="Menu" method="_on_restart_pressed"]
+[connection signal="pressed" from="CircleSelection/OutsideButton" to="CircleSelection" method="_on_outside_button_pressed"]
+[connection signal="pressed" from="CircleSelection/InsideButton" to="CircleSelection" method="_on_inside_button_pressed"]
+[connection signal="toggled" from="Splash/VBox/DontShowAgain" to="Splash" method="_on_dont_show_toggled"]
+[connection signal="pressed" from="Splash/VBox/Accept" to="Splash" method="_on_accept_pressed"]
+[connection signal="timeout" from="XToysBridge/SpeedTimer" to="XToysBridge" method="_on_speed_timer_timeout"]
+[connection signal="timeout" from="XToysBridge/PingTimer" to="XToysBridge" method="_on_ping_timer_timeout"]
