@@ -18,16 +18,12 @@ func _on_Exit_pressed():
 
 func _on_up_pressed():
 	flash_button($PathControls/Up)
-	var selected_index = $Playlist.selected_index
-	if selected_index > 0:
-		$Playlist.move_item(selected_index, selected_index - 1)
+	owner.move_selected_playlist_item(-1)
 
 
 func _on_down_pressed():
 	flash_button($PathControls/Down)
-	var selected_index = $Playlist.selected_index
-	if selected_index < $Playlist/Scroll/VBox.get_child_count() - 1:
-		$Playlist.move_item(selected_index, selected_index + 1)
+	owner.move_selected_playlist_item(1)
 
 
 func _on_play_pressed():
@@ -66,29 +62,7 @@ func _on_restart_pressed():
 
 func _on_delete_pressed():
 	flash_button($PathControls/HBox/Delete)
-	var selected_item = $Playlist.selected_index
-	if owner.active_path_index == selected_item:
-		owner.paused = true
-		owner.active_path_index = null
-		$PathControls.hide()
-		%ActionPanel.clear_selections()
-		%ActionPanel/Play.show()
-		%ActionPanel/Pause.hide()
-		owner.send_command(OSSM.Command.PAUSE)
-		owner.send_command(OSSM.Command.RESET)
-		owner.home_to(0)
-	elif owner.active_path_index != null and selected_item < owner.active_path_index:
-		owner.active_path_index -= 1
-	%PathDisplay/Paths.remove_child(%PathDisplay/Paths.get_child(selected_item))
-	var pl_item = $Playlist/Scroll/VBox.get_child(selected_item)
-	$Playlist/Scroll/VBox.remove_child(pl_item)
-	owner.paths.remove_at(selected_item)
-	owner.marker_frames.remove_at(selected_item)
-	owner.network_paths.remove_at(selected_item)
-	$Playlist.selected_index = null
-	if $Playlist/Scroll/VBox.get_child_count() == 0:
-		$Main/PlaylistButtons/SavePlaylist.disabled = true
-	refresh_selection()
+	owner.delete_selected_playlist_item()
 
 
 func _on_load_playlist_pressed():

@@ -1,0 +1,13 @@
+# Godot
+.godot/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Exports
+*.apk
+*.aab
+*.exe
+*.pck
+ossm-sauce-app/android/build/

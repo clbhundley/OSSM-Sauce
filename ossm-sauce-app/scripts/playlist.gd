@@ -48,29 +48,12 @@ func add_item(item_text:String):
 	%Menu/Main/PlaylistButtons/SavePlaylist.disabled = false
 
 
-func move_item(current_index, new_index):
+func move_item_ui(current_index, new_index):
 	var item = $Scroll/VBox.get_child(current_index)
 	var path = %PathDisplay/Paths.get_child(current_index)
 	$Scroll/VBox.move_child(item, new_index)
 	%PathDisplay/Paths.move_child(path, new_index)
 	selected_index = new_index
-	
-	var path_data = owner.paths[current_index]
-	owner.paths.remove_at(current_index)
-	owner.paths.insert(new_index, path_data)
-	
-	var marker_data = owner.marker_frames[current_index]
-	owner.marker_frames.remove_at(current_index)
-	owner.marker_frames.insert(new_index, marker_data)
-	
-	var network_data = owner.network_paths[current_index]
-	owner.network_paths.remove_at(current_index)
-	owner.network_paths.insert(new_index, network_data)
-	
-	if owner.active_path_index == current_index:
-		owner.active_path_index = new_index
-	elif owner.active_path_index == new_index:
-		owner.active_path_index = current_index
 
 
 func get_items() -> Array:
@@ -95,16 +78,18 @@ func deselect_all():
 
 
 func clear():
-	if owner.active_path_index != null:
-		owner.active_path_index = null
-		%Menu/PathControls.hide()
-		if not owner.paused:
-			%Menu._on_pause_pressed()
-	owner.paths.clear()
-	owner.marker_frames.clear()
-	owner.network_paths.clear()
+	owner.clear_playlist()
+
+
+func clear_ui():
 	for item in $Scroll/VBox.get_children():
 		$Scroll/VBox.remove_child(item)
-	for path in %PathDisplay/Paths.get_children():
-		%PathDisplay/Paths.remove_child(path)
-	%PathDisplay/Ball.hide()
+
+
+func remove_item_ui(index: int):
+	var item = $Scroll/VBox.get_child(index)
+	$Scroll/VBox.remove_child(item)
+
+
+func get_item_count() -> int:
+	return $Scroll/VBox.get_child_count()

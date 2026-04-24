@@ -1,5 +1,7 @@
 extends Node
 
+const WebSocketSessionManagerScript = preload("res://scripts/ossm_sauce_parts/websocket_session_manager.gd")
+
 var server: WebSocketServer
 
 var port: int = 8008
@@ -8,8 +10,10 @@ var host: String = "0.0.0.0"
 var server_started: bool
 var ossm_connected: bool
 var ping_timer: Timer
+var _session_manager = WebSocketSessionManagerScript.new()
 
 func _ready():
+	_session_manager.setup(owner, self)
 	server = WebSocketServer.new()
 	server.client_connected.connect(_on_client_connected)
 	server.client_disconnected.connect(_on_client_disconnected)
@@ -75,68 +79,11 @@ func _on_message_received(client_id, message):
 
 func _on_data_received(client_id, data):
 	if data[0] == OSSM.Command.RESPONSE:
-		match data[1]:
-			OSSM.Command.CONNECTION:
-				%WiFi.self_modulate = Color.SEA_GREEN
-				%WiFi.show()
-				
-				# Stop fast processes for safety
-				%VibrationControls.set_process(false)
-				%PositionControls.set_physics_process(false)
-				
-				# Release any held click/press input for safety
-				var release_event = InputEventMouseButton.new()
-				release_event.button_index = MOUSE_BUTTON_LEFT
-				release_event.pressed = false
-				Input.parse_input_event(release_event)
-				
-				ossm_connected = true
-				owner.apply_device_settings()
-				
-				# Reset and home to base by reselecting mode
-				%Menu._on_mode_selected(%Menu/Main/Mode.selected)
-			
-			OSSM.Command.HOMING:
-				%CircleSelection.hide()
-				%CircleSelection.homing_lock = false
-				%ActionPanel.disable_buttons(false)
-				var displays = [
-					%PathDisplay,
-					%PositionControls,
-					%LoopControls,
-					%VibrationControls,
-					%BridgeControls,
-					%ActionPanel,
-					%VideoPlayer,
-					%Settings,
-					%AddFile,
-					%Menu]
-				for node in displays:
-					node.modulate.a = 1
-				owner.emit_signal("homing_complete")
-				if AppMode.active == AppMode.MOVE:
-					if owner.active_path_index != null and owner.frame == 0:
-						%CircleSelection.show_play()
+		_session_manager.handle_response(data)
 
 
 func _on_client_disconnected_cleanup():
-	ossm_connected = false
-	%WiFi.self_modulate = Color.WHITE
-	%ActionPanel._on_pause_button_pressed()
-	# Unblock any awaiting homing
-	%CircleSelection.hide()
-	%CircleSelection.homing_lock = false
-	%ActionPanel.disable_buttons(false)
-	var display = [
-			%PathDisplay,
-			%PositionControls,
-			%LoopControls,
-			%VibrationControls,
-			%ActionPanel,
-			%Menu]
-	for node in display:
-		node.modulate.a = 1
-	owner.emit_signal("homing_complete")
+	_session_manager.handle_disconnect_cleanup()
 
 
 func _on_server_error(error):
