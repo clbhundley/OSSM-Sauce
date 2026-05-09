@@ -20,6 +20,7 @@ func activate():
 
 func deactivate():
 	%Menu/BridgeSettings.hide()
+	%Menu/BridgeHelp.hide()
 	%BPIOBridge.stop_device()
 	%BPIOBridge.stop_client()
 	%XToysBridge.stop_xtoys()
@@ -130,3 +131,29 @@ func _on_xtoys_use_command_duration_toggled(toggled_on: bool) -> void:
 
 func _on_mcp_port_changed(value: float) -> void:
 	owner.user_settings.set_value('mcp_settings', 'port', int(value))
+
+
+func _on_bpio_help_button_pressed() -> void:
+	_open_bridge_help(%Menu/BridgeHelp/BPIOInfo)
+
+
+func _on_xtoys_help_button_pressed() -> void:
+	_open_bridge_help(%Menu/BridgeHelp/XToysInfo)
+
+
+func _on_mcp_help_button_pressed() -> void:
+	_open_bridge_help(%Menu/BridgeHelp/MCPInfo)
+
+
+func _open_bridge_help(info_panel: Control) -> void:
+	%Menu/BridgeSettings.hide()
+	%Menu/BridgeHelp/BPIOInfo.hide()
+	%Menu/BridgeHelp/XToysInfo.hide()
+	%Menu/BridgeHelp/MCPInfo.hide()
+	info_panel.show()
+	%Menu/BridgeHelp.show()
+
+
+func _close_bridge_help() -> void:
+	%Menu/BridgeHelp.hide()
+	%Menu/BridgeSettings.show()

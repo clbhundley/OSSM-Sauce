@@ -4,9 +4,13 @@
 # OS
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Exports
-*.apk
-*.aab
-*.exe
-*.pck
+# Windows temp / antivirus shadow artifacts
+*.tmp
+*.TMP
+~*.TMP
+
+# Editor swap/backup files
+*.swp
+*~

@@ -1,11 +1,13 @@
 extends Panel
 
-func create_file_list(directory: String, file_types: PackedStringArray):
-	var dir = DirAccess.open(directory)
-	for file_name in dir.get_files():
-		for type in file_types:
-			if file_name.ends_with(type):
-				$FileList.add_item(file_name)
+
+func _ready() -> void:
+	self_modulate.a = 2
+
+
+func create_file_list(category: String, file_types: PackedStringArray):
+	for file_name in owner.list_files(category, file_types):
+		$FileList.add_item(file_name)
 
 
 func show_paths():
@@ -15,11 +17,8 @@ func show_paths():
 	$HBox/AddPath.disabled = true
 	$HBox/AddPath.show()
 	$HBox/LoadPlaylist.hide()
-	create_file_list(owner.paths_dir, [".bx", ".funscript"])
-	if OS.get_name() == 'Android':
-		$Label.text = "Internal Storage/OSSM Sauce/Paths"
-	else:
-		$Label.text = "Documents/OSSM Sauce/Paths"
+	create_file_list("paths", [".bx", ".funscript"])
+	$Label.text = owner.get_storage_label("paths")
 
 
 func show_playlists():
@@ -29,11 +28,8 @@ func show_playlists():
 	$HBox/LoadPlaylist.disabled = true
 	$HBox/LoadPlaylist.show()
 	$HBox/AddPath.hide()
-	create_file_list(owner.playlists_dir, [".bxpl"])
-	if OS.get_name() == 'Android':
-		$Label.text = "Internal Storage/OSSM Sauce/Playlists"
-	else:
-		$Label.text = "Documents/OSSM Sauce/Playlists"
+	create_file_list("playlists", [".bxpl"])
+	$Label.text = owner.get_storage_label("playlists")
 
 
 func _on_add_path_pressed():
@@ -46,7 +42,7 @@ func _on_add_path_pressed():
 
 func _on_load_playlist_pressed():
 	var file_name: String = $FileList.get_item_text($FileList.selected_index)
-	var file = FileAccess.open(owner.playlists_dir + file_name, FileAccess.READ)
+	var file = owner.playlists_open_read(file_name)
 	if not file:
 		return
 	%Menu/Playlist.clear()

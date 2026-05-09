@@ -135,6 +135,7 @@ PopupMenu/font_sizes/font_size = 54
 SpinBox/constants/buttons_width = 48
 SpinBox/styles/down_background = SubResource("spinbox_down_bg")
 SpinBox/styles/up_background = SubResource("spinbox_up_bg")
+TextEdit/colors/background_color = Color(0.07016479, 0.11207495, 0.11774104, 0.90900004)
 TextEdit/font_sizes/font_size = 54
 TextEdit/styles/normal = SubResource("lineedit_normal")
 Tree/font_sizes/font_size = 54

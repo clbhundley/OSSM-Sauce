@@ -2,29 +2,14 @@ extends Panel
 
 
 func _ready():
-	$VBox/Network/Address/TextEdit.text = get_primary_ip()
-
-
-func get_primary_ip() -> String:
-	var addresses = IP.get_local_addresses()
-	# Priority: real LAN ranges first, virtual-adapter-prone ranges last
-	# 192.168.x.x — typical home router
-	# 10.x.x.x    — corporate/hotspot LANs, or VPN tunnels
-	# 172.16-31   — usually WSL/Docker/Hyper-V virtual switches
-	for prefix in ["192.168.", "10.", "172."]:
-		for addr in addresses:
-			if addr.begins_with(prefix) and is_private_ip(addr):
-				return addr
-	return "No WiFi IP found"
-
-
-func is_private_ip(ip: String) -> bool:
-	if ip.begins_with("192.168.") or ip.begins_with("10."):
-		return true
-	if ip.begins_with("172."):
-		var second_octet := int(ip.split(".")[1])
-		return second_octet >= 16 and second_octet <= 31
-	return false
+	$VBox/Network/Address/TextEdit.text = LanAddress.get_primary()
+	$IPListPanel/TextEdit.text = LanAddress.get_candidate_list()
+	if OS.get_name() == 'Android':
+		$VBox/ReselectAndroidStorage.show()
+		$VBox/AlwaysOnTop.hide()
+	else:
+		$VBox/ReselectAndroidStorage.hide()
+		$VBox/AlwaysOnTop.show()
 
 
 func _on_Back_pressed():
@@ -99,3 +84,31 @@ func _on_always_on_top_toggled(toggled):
 #func _on_transparent_background_toggled(toggled):
 	#DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_TRANSPARENT, toggled)
 	#owner.user_settings.set_value('window', 'transparent_background', toggled)
+
+
+const HOLD_TICKS_REQUIRED := 3
+const RESELECT_LABEL := "Hold to reselect storage location"
+var _hold_ticks_remaining: int = 0
+
+func _on_reselect_android_storage_button_down() -> void:
+	$VBox/ReselectAndroidStorage.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_hold_ticks_remaining = HOLD_TICKS_REQUIRED
+	$VBox/ReselectAndroidStorage.text = str(_hold_ticks_remaining)
+	$StorageHoldTimer.start()
+
+
+func _on_reselect_android_storage_button_up() -> void:
+	$VBox/ReselectAndroidStorage.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	$StorageHoldTimer.stop()
+	_hold_ticks_remaining = 0
+	$VBox/ReselectAndroidStorage.text = RESELECT_LABEL
+
+
+func _on_storage_hold_timer_timeout() -> void:
+	_hold_ticks_remaining -= 1
+	if _hold_ticks_remaining <= 0:
+		$StorageHoldTimer.stop()
+		$VBox/ReselectAndroidStorage.release_focus()
+		owner.pick_storage_folder()
+	else:
+		$VBox/ReselectAndroidStorage.text = str(_hold_ticks_remaining)

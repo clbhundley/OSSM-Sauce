@@ -44,6 +44,7 @@
 [ext_resource type="Script" uid="uid://ccimjgty86f8v" path="res://scripts/settings.gd" id="40_u5kb6"]
 [ext_resource type="Script" uid="uid://qc06washnpwx" path="res://scripts/add_file.gd" id="41_gwrhd"]
 [ext_resource type="Script" uid="uid://dfqaq8bhaml37" path="res://scripts/playlist_item.gd" id="41_qnwk1"]
+[ext_resource type="FontFile" uid="uid://cp6qe0wexovpi" path="res://font/SGr-Iosevka-Regular.ttc" id="42_6esss"]
 [ext_resource type="Script" uid="uid://borvji2u3vb68" path="res://scripts/file_list.gd" id="42_i7h0y"]
 [ext_resource type="Texture2D" uid="uid://c0bgeto1j6das" path="res://textures/wifi.svg" id="43_12g22"]
 [ext_resource type="Script" uid="uid://w1hne745oxnm" path="res://scripts/add_delay.gd" id="43_hjbjw"]
@@ -223,6 +224,14 @@ TextEdit/styles/normal = SubResource("lineedit_normal")
 Tree/font_sizes/font_size = 54
 VSlider/styles/slider = SubResource("slider_track")
 
+[sub_resource type="GDScript" id="GDScript_04y8j"]
+script/source = "extends Panel
+
+
+func _ready():
+	self_modulate.a = 2
+"
+
 [sub_resource type="Animation" id="Animation_4ant3"]
 length = 0.001
 tracks/0/type = "value"
@@ -260,6 +269,22 @@ _data = {
 &"RESET": SubResource("Animation_4ant3"),
 &"Spin": SubResource("Animation_cbmbt")
 }
+
+[sub_resource type="GDScript" id="GDScript_6esss"]
+script/source = "extends Panel
+
+
+func _ready() -> void:
+	self_modulate.a = 1.6
+
+
+func _on_close_button_pressed() -> void:
+	hide()
+
+
+func _on_text_edit_focus_entered() -> void:
+	show()
+"
 
 [sub_resource type="GDScript" id="GDScript_rckrg"]
 script/source = "extends Panel
@@ -1363,10 +1388,11 @@ theme_override_font_sizes/font_size = 54
 text = "Client Status"
 
 [node name="SeekSlider" type="VSlider" parent="." unique_id=1890627724]
-visible = false
+modulate = Color(1, 1, 1, 0.88000005)
 layout_mode = 0
+offset_left = 10.0
 offset_top = 27.0
-offset_right = 112.0
+offset_right = 122.0
 offset_bottom = 1690.0
 max_value = 1.0
 step = 0.001
@@ -2127,6 +2153,12 @@ popup/item_1/id = 1
 popup/item_2/text = "MCP"
 popup/item_2/id = 2
 
+[node name="LoggingEnabled" type="CheckBox" parent="Menu/BridgeSettings" unique_id=50957844]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+button_pressed = true
+text = "Logging Enabled"
+
 [node name="SpeedOverrides" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=2079345714]
 layout_mode = 2
 theme_override_constants/separation = 14
@@ -2175,12 +2207,6 @@ min_value = 1.0
 max_value = 99999.0
 value = 6000.0
 suffix = "ms"
-
-[node name="LoggingEnabled" type="CheckBox" parent="Menu/BridgeSettings" unique_id=50957844]
-layout_mode = 2
-theme_override_font_sizes/font_size = 45
-button_pressed = true
-text = "Logging Enabled"
 
 [node name="HSeparator" type="HSeparator" parent="Menu/BridgeSettings" unique_id=444758103]
 layout_mode = 2
@@ -2313,6 +2339,11 @@ text = "ossm-sauce"
 placeholder_text = "ossm-sauce"
 select_all_on_focus = true
 
+[node name="HelpButton" type="Button" parent="Menu/BridgeSettings/BPIO" unique_id=1883838498]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Intiface Central Setup"
+
 [node name="XToys" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=2023993159]
 visible = false
 layout_mode = 2
@@ -2360,6 +2391,11 @@ theme_override_fonts/font = ExtResource("33_odb15")
 theme_override_font_sizes/font_size = 52
 text = "Get stroke duration from command"
 
+[node name="HelpButton" type="Button" parent="Menu/BridgeSettings/XToys" unique_id=1562185512]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "XToys Setup"
+
 [node name="MCP" type="VBoxContainer" parent="Menu/BridgeSettings" unique_id=786206401]
 visible = false
 layout_mode = 2
@@ -2380,6 +2416,181 @@ theme = ExtResource("1_g6hv1")
 min_value = 1024.0
 max_value = 49151.0
 value = 8081.0
+
+[node name="HelpButton" type="Button" parent="Menu/BridgeSettings/MCP" unique_id=1784972055]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "MCP Setup"
+
+[node name="BridgeHelp" type="Control" parent="Menu" unique_id=355166878]
+visible = false
+custom_minimum_size = Vector2(1020, 0)
+anchors_preset = 0
+offset_left = 38.0
+offset_top = 231.0
+offset_right = 1058.0
+offset_bottom = 1701.0
+mouse_filter = 2
+
+[node name="BPIOInfo" type="Panel" parent="Menu/BridgeHelp" unique_id=674392060]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="Menu/BridgeHelp/BPIOInfo" unique_id=136584467]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -458.5
+offset_top = 90.0
+offset_right = 458.5
+offset_bottom = 1487.0
+grow_horizontal = 2
+theme_override_constants/separation = 65
+
+[node name="Label" type="RichTextLabel" parent="Menu/BridgeHelp/BPIOInfo/VBox" unique_id=1110395742]
+custom_minimum_size = Vector2(0, 1550)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 46
+bbcode_enabled = true
+text = "1. [u]Enable the WebSocket server:[/u]
+    Intiface Central → App Modes →
+    Show Advanced Settings →
+    [u]ENABLE[/u] Device Websocket Server.
+
+
+2. [u]Add OSSM Sauce to devices:[/u]
+    Intiface Central → Devices →
+    Websocket Devices → Add Websocket
+    device.
+
+    [u]Protocol Type:[/u] - tcode-v03
+
+    [u]Name:[/u] - ossm
+    (Must match [u]Identifier[/u] in OSSM Sauce)
+
+
+3. [u]Start Intiface Central's server:[/u]
+    Press the large play button in the
+    upper left.
+
+
+4. [u]Enable the bridge in OSSM Sauce![/u]"
+
+[node name="Back" type="Button" parent="Menu/BridgeHelp/BPIOInfo/VBox" unique_id=266083736]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Back"
+
+[node name="XToysInfo" type="Panel" parent="Menu/BridgeHelp" unique_id=674496046]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="Menu/BridgeHelp/XToysInfo" unique_id=1478660498]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -458.5
+offset_top = 90.0
+offset_right = 458.5
+offset_bottom = 1487.0
+grow_horizontal = 2
+theme_override_constants/separation = 65
+
+[node name="Label" type="RichTextLabel" parent="Menu/BridgeHelp/XToysInfo/VBox" unique_id=376364192]
+custom_minimum_size = Vector2(0, 1560)
+layout_mode = 2
+theme_override_constants/line_separation = -2
+theme_override_font_sizes/normal_font_size = 44
+bbcode_enabled = true
+text = "Log in with XToys account.
+
+XToys menu → Manage Your Data →
+Custom Toys.
+
+Click [u]+[/u] button in bottom right of screen → Create a new Websocket Toy.
+
+[u]Name:[/u]
+  OSSM Sauce
+
+[u]Format:[/u]
+  JSON
+
+[u]Type:[/u]
+  Stroke or Thrust Toy (Speed + Position)
+
+[u]# of Intensity Steps:[/u]
+  100
+
+[u]Max Message Frequency:[/u]
+  Suggested 4-10, adjust for comfort.
+  Make sure to match this setting in app.
+
+[u]Websocket Info:[/u]
+  ws://localhost:8080"
+
+[node name="Back" type="Button" parent="Menu/BridgeHelp/XToysInfo/VBox" unique_id=1844497480]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Back"
+
+[node name="MCPInfo" type="Panel" parent="Menu/BridgeHelp" unique_id=823490159]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="Menu/BridgeHelp/MCPInfo" unique_id=23807432]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -458.5
+offset_top = 90.0
+offset_right = 458.5
+offset_bottom = 1487.0
+grow_horizontal = 2
+theme_override_constants/separation = 65
+
+[node name="Label" type="RichTextLabel" parent="Menu/BridgeHelp/MCPInfo/VBox" unique_id=952197678]
+custom_minimum_size = Vector2(0, 210)
+layout_mode = 2
+theme_override_constants/line_separation = 1
+theme_override_font_sizes/normal_font_size = 47
+bbcode_enabled = true
+text = "LLM that support tool calling can drive your OSSM via Model Context Protocol.
+See GitHub for setup."
+
+[node name="TextEdit" type="TextEdit" parent="Menu/BridgeHelp/MCPInfo/VBox" unique_id=1599827894]
+custom_minimum_size = Vector2(0, 210)
+layout_mode = 2
+text = "https://github.com/clbhundley/ossm-mcp-server"
+wrap_mode = 1
+
+[node name="Back" type="Button" parent="Menu/BridgeHelp/MCPInfo/VBox" unique_id=1643064046]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Back"
 
 [node name="PathControls" type="Control" parent="Menu" unique_id=590072759]
 visible = false
@@ -2731,7 +2942,8 @@ texture_normal = ExtResource("28_bsb3a")
 stretch_mode = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="VBox" type="VBoxContainer" parent="VideoPlayer" unique_id=729513820]
+[node name="Main" type="VBoxContainer" parent="VideoPlayer" unique_id=729513820]
+custom_minimum_size = Vector2(1020, 0)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -2741,78 +2953,82 @@ offset_top = 231.0
 offset_right = 326.0
 offset_bottom = 1107.0
 grow_horizontal = 2
-theme_override_constants/separation = 45
+theme_override_constants/separation = 70
 
-[node name="PlayerSelection" type="OptionButton" parent="VideoPlayer/VBox" unique_id=294356304]
+[node name="PlayerSelection" type="OptionButton" parent="VideoPlayer/Main" unique_id=294356304]
 layout_mode = 2
 alignment = 1
 selected = 0
-item_count = 3
+item_count = 5
 popup/item_0/text = "Off"
 popup/item_0/id = 0
 popup/item_1/text = "VLC"
 popup/item_1/id = 1
 popup/item_2/text = "MPC"
 popup/item_2/id = 2
+popup/item_3/text = "mpv"
+popup/item_3/id = 3
+popup/item_4/text = "mpv-android"
+popup/item_4/id = 4
 
-[node name="ConnectionIndicator" type="Label" parent="VideoPlayer/VBox" unique_id=1089808435]
+[node name="ConnectionIndicator" type="Label" parent="VideoPlayer/Main" unique_id=1089808435]
 visible = false
 layout_mode = 2
 text = "🟢 Player Connected"
 
-[node name="PlayerAddress" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1048459900]
+[node name="PlayerAddress" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=1048459900]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/PlayerAddress" unique_id=289585054]
+[node name="Label" type="Label" parent="VideoPlayer/Main/PlayerAddress" unique_id=289585054]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "Player Address:"
 
-[node name="Input" type="LineEdit" parent="VideoPlayer/VBox/PlayerAddress" unique_id=1517336264 groups=["lineedits"]]
-custom_minimum_size = Vector2(520, 0)
+[node name="Input" type="LineEdit" parent="VideoPlayer/Main/PlayerAddress" unique_id=1517336264 groups=["lineedits"]]
+custom_minimum_size = Vector2(580, 0)
 layout_mode = 2
 text = "127.0.0.1"
 placeholder_text = "127.0.0.1"
 
-[node name="PlayerPort" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=938855095]
+[node name="PlayerPort" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=938855095]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/PlayerPort" unique_id=663043847]
+[node name="Label" type="Label" parent="VideoPlayer/Main/PlayerPort" unique_id=663043847]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "Server Port:"
 
-[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/PlayerPort" unique_id=1288297405 groups=["spinboxes"]]
+[node name="Input" type="SpinBox" parent="VideoPlayer/Main/PlayerPort" unique_id=1288297405 groups=["spinboxes"]]
 layout_mode = 2
 min_value = 1024.0
 max_value = 49151.0
 value = 8080.0
 
-[node name="VLCPassword" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=612327876]
+[node name="VLCPassword" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=612327876]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/VLCPassword" unique_id=1213026165]
+[node name="Label" type="Label" parent="VideoPlayer/Main/VLCPassword" unique_id=1213026165]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "VLC Password:"
 
-[node name="Input" type="LineEdit" parent="VideoPlayer/VBox/VLCPassword" unique_id=959658136 groups=["lineedits"]]
-custom_minimum_size = Vector2(520, 0)
+[node name="Input" type="LineEdit" parent="VideoPlayer/Main/VLCPassword" unique_id=959658136 groups=["lineedits"]]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 
-[node name="VLCSeekCorrection" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=2018718004]
+[node name="VLCSeekCorrection" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=2018718004]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/VLCSeekCorrection" unique_id=708242684]
+[node name="Label" type="Label" parent="VideoPlayer/Main/VLCSeekCorrection" unique_id=708242684]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "Seek Correction:"
 
-[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/VLCSeekCorrection" unique_id=1080762800 groups=["spinboxes"]]
+[node name="Input" type="SpinBox" parent="VideoPlayer/Main/VLCSeekCorrection" unique_id=1080762800 groups=["spinboxes"]]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 min_value = -99.9
@@ -2821,32 +3037,32 @@ step = 0.1
 value = 5.0
 suffix = "ms/min"
 
-[node name="DelayMs" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1783883329]
+[node name="DelayMs" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=1783883329]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/DelayMs" unique_id=1540644440]
+[node name="Label" type="Label" parent="VideoPlayer/Main/DelayMs" unique_id=1540644440]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "Path delay:"
+text = "Path Delay:"
 
-[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/DelayMs" unique_id=702213238 groups=["spinboxes"]]
+[node name="Input" type="SpinBox" parent="VideoPlayer/Main/DelayMs" unique_id=702213238 groups=["spinboxes"]]
 custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
 max_value = 5000.0
 step = 10.0
 suffix = "ms"
 
-[node name="AdvanceMs" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=1703214418]
+[node name="AdvanceMs" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=1703214418]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/AdvanceMs" unique_id=1150395683]
+[node name="Label" type="Label" parent="VideoPlayer/Main/AdvanceMs" unique_id=1150395683]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
 text = "Path Advance:"
 
-[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/AdvanceMs" unique_id=1334908436 groups=["spinboxes"]]
+[node name="Input" type="SpinBox" parent="VideoPlayer/Main/AdvanceMs" unique_id=1334908436 groups=["spinboxes"]]
 custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
 max_value = 5000.0
@@ -2854,21 +3070,368 @@ step = 10.0
 value = 100.0
 suffix = "ms"
 
-[node name="VideoOffset" type="HBoxContainer" parent="VideoPlayer/VBox" unique_id=145575943]
+[node name="VideoOffset" type="HBoxContainer" parent="VideoPlayer/Main" unique_id=145575943]
 layout_mode = 2
 theme_override_constants/separation = 22
 
-[node name="Label" type="Label" parent="VideoPlayer/VBox/VideoOffset" unique_id=1827145093]
+[node name="Label" type="Label" parent="VideoPlayer/Main/VideoOffset" unique_id=1827145093]
 layout_mode = 2
-theme_override_font_sizes/font_size = 54
-text = "Video Offset Buffer:"
+theme_override_font_sizes/font_size = 51
+text = "Video/Path Start Offset:"
 
-[node name="Input" type="SpinBox" parent="VideoPlayer/VBox/VideoOffset" unique_id=694489491 groups=["spinboxes"]]
+[node name="Input" type="SpinBox" parent="VideoPlayer/Main/VideoOffset" unique_id=694489491 groups=["spinboxes"]]
 custom_minimum_size = Vector2(390, 0)
 layout_mode = 2
 max_value = 9999999.0
 step = 10.0
 suffix = "ms"
+
+[node name="HelpButton" type="Button" parent="VideoPlayer/Main" unique_id=592166974]
+layout_mode = 2
+text = "Help & Info"
+
+[node name="Help" type="VBoxContainer" parent="VideoPlayer" unique_id=57645384]
+visible = false
+custom_minimum_size = Vector2(1020, 0)
+layout_mode = 0
+offset_left = 38.0
+offset_top = 231.0
+offset_right = 1042.0
+offset_bottom = 1701.0
+theme_override_constants/separation = 70
+
+[node name="VLCInfo" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=1406560026]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/VLCInfo" unique_id=44962865]
+custom_minimum_size = Vector2(0, 1200)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[u]Seek Correction[/u] - Default: 5ms
+  Counters VLC timing drift when seeking
+  near the end of longer videos.
+
+[u]Path Delay[/u]  - Default: 0ms
+  Pausing/playing in app is delayed
+  by this amount to account for latency
+
+[u]Path Advance[/u] - Default: 100ms
+  Nudge the path forward by this amount
+  when pressing play in the video player.
+
+[u]Video Offset[/u] - Default: 0ms
+  The amount of time before
+  the path starts moving in the video.
+  Set by `video_offset_ms` in .bx files."
+autowrap_mode = 0
+
+[node name="VLCSetupInstructions" type="Button" parent="VideoPlayer/Help/VLCInfo" unique_id=718229599]
+layout_mode = 2
+text = "VLC Setup Instructions"
+
+[node name="MPCInfo" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=1787518868]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/MPCInfo" unique_id=49539576]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[u]Path Delay[/u]  - Default: 0ms
+  Pausing/playing in app is delayed
+  by this amount to account for latency
+
+[u]Path Advance[/u] - Default: 100ms
+  Nudge the path forward by this amount
+  when pressing play in the video player.
+
+[u]Video Offset[/u] - Default: 0ms
+  The amount of time before
+  the path starts moving in the video.
+  Set by `video_offset_ms` in .bx files."
+autowrap_mode = 0
+
+[node name="MPCSetupInstructions" type="Button" parent="VideoPlayer/Help/MPCInfo" unique_id=2097642592]
+layout_mode = 2
+text = "MPC Setup Instructions"
+
+[node name="mpvInfo" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=491157886]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/mpvInfo" unique_id=1823731831]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[u]Path Delay[/u]  - Default: 0ms
+  Pausing/playing in app is delayed
+  by this amount to account for latency
+
+[u]Path Advance[/u] - Default: 100ms
+  Nudge the path forward by this amount
+  when pressing play in the video player.
+
+[u]Video Offset[/u] - Default: 0ms
+  The amount of time before
+  the path starts moving in the video.
+  Set by `video_offset_ms` in .bx files."
+autowrap_mode = 0
+
+[node name="OpenMpvDirectory" type="Button" parent="VideoPlayer/Help/mpvInfo" unique_id=1688502955]
+layout_mode = 2
+text = "Open mpv Directory"
+
+[node name="ReinstallLuaScripts" type="Button" parent="VideoPlayer/Help/mpvInfo" unique_id=1692910168]
+layout_mode = 2
+text = "Reinstall mpv Lua Scripts"
+
+[node name="mpvAndroidInfo" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=2115159424]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/mpvAndroidInfo" unique_id=544694226]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[u]Path Delay[/u]  - Default: 0ms
+  Pausing/playing in app is delayed
+  by this amount to account for latency
+
+[u]Path Advance[/u] - Default: 100ms
+  Nudge the path forward by this amount
+  when pressing play in the video player.
+
+[u]Video Offset[/u] - Default: 0ms
+  The amount of time before
+  the path starts moving in the video.
+  Set by `video_offset_ms` in .bx files."
+autowrap_mode = 0
+
+[node name="ReinstallMpvAndroidLua" type="Button" parent="VideoPlayer/Help/mpvAndroidInfo" unique_id=139890291]
+layout_mode = 2
+text = "Reinstall mpv-android Lua Scripts"
+
+[node name="VLCSetupInstructions" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=352240345]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/VLCSetupInstructions" unique_id=184442485]
+custom_minimum_size = Vector2(0, 1400)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 41
+bbcode_enabled = true
+text = "1. [u]Enable the HTTP interface:[/u]
+  - Open VLC → Tools → Preferences
+  - At the bottom left, switch \"Show settings\" to [u]All[/u]
+  - Navigate to Interface → Main interfaces
+  - Check Web.
+  - Then go to Interface → Main interfaces → Lua
+  - Set a Lua HTTP password - [u]VLC requires this[/u]
+  - Restart VLC
+
+2. [u]In OSSM Sauce:[/u]
+  - Select VLC from the player dropdown
+  - Address: 127.0.0.1 (localhost default)
+  - Port: 8080 (default for VLC)
+  - Enter the same password you set in VLC
+
+3. [u]Open a video in VLC[/u], then try:
+    [u]play / pause / seek[/u] commands
+    from either OSSM Sauce or VLC player.
+    They should stay in sync!
+"
+autowrap_mode = 0
+
+[node name="MPCSetupInstructions" type="VBoxContainer" parent="VideoPlayer/Help" unique_id=1818408734]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/Help/MPCSetupInstructions" unique_id=531842084]
+custom_minimum_size = Vector2(0, 1400)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 43
+bbcode_enabled = true
+text = "1. [u]Enable the web interface:[/u]
+  - Open MPC → View → Options
+  - Navigate to Player → Web Interface
+  - Check Listen on port (default 13579)
+  - Click OK
+
+2. [u]In OSSM Sauce:[/u]
+  - Select MPC from the player dropdown
+  - Address: 127.0.0.1
+  - Port: 13579 (auto-set when you pick MPC)
+
+3. [u]Open a video in MPC and you're good to go![/u]"
+autowrap_mode = 0
+
+[node name="mpvRestartReminder" type="Label" parent="VideoPlayer/Help" unique_id=1891794000]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 47
+text = "Lua scripts installed! - Please restart mpv."
+horizontal_alignment = 1
+
+[node name="MPVBridgeSplash" type="Panel" parent="VideoPlayer" unique_id=1883516330]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="VideoPlayer/MPVBridgeSplash" unique_id=586657646]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -490.5
+offset_top = 108.0
+offset_right = 490.5
+offset_bottom = 1392.0
+grow_horizontal = 2
+theme_override_constants/separation = 90
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/MPVBridgeSplash/VBox" unique_id=920008657]
+custom_minimum_size = Vector2(0, 920)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[i]Setup 1/2:[/i]
+
+OSSM Sauce needs to access mpv-android's folder for video sync.
+
+Tap [u]Pick mpv-android folder[/u] below, then navigate to:
+
+[u]Internal storage → Android → media → is.xyz.mpv[/u]
+
+then tap [u]Use this folder[/u]."
+
+[node name="PickButton" type="Button" parent="VideoPlayer/MPVBridgeSplash/VBox" unique_id=2129497231]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Pick mpv-android folder"
+
+[node name="CancelButton" type="Button" parent="VideoPlayer/MPVBridgeSplash/VBox" unique_id=1193579171]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Cancel"
+
+[node name="MPVSettingsCopySplash" type="Panel" parent="VideoPlayer" unique_id=344626012]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="VideoPlayer/MPVSettingsCopySplash" unique_id=1334830387]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -490.5
+offset_top = 108.0
+offset_right = 490.5
+offset_bottom = 1512.0
+grow_horizontal = 2
+theme_override_constants/separation = 65
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/MPVSettingsCopySplash/VBox" unique_id=896889777]
+custom_minimum_size = Vector2(0, 610)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[i]Setup 2/2:[/i]
+
+mpv-android needs to know where the bridge script is.
+
+Open mpv-android → Settings → Advanced → Edit mpv.conf, then add this line:"
+
+[node name="ScriptLine" type="TextEdit" parent="VideoPlayer/MPVSettingsCopySplash/VBox" unique_id=1408993642]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+text = "script=/sdcard/Android/media/is.xyz.mpv/scripts/ossm_android_bridge.lua"
+editable = false
+empty_selection_clipboard_enabled = false
+wrap_mode = 1
+
+[node name="CopyButton" type="Button" parent="VideoPlayer/MPVSettingsCopySplash/VBox" unique_id=882768289]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Copy to clipboard"
+
+[node name="Label2" type="RichTextLabel" parent="VideoPlayer/MPVSettingsCopySplash/VBox" unique_id=652659783]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "Save mpv.conf, then restart the mpv-android app. You only need to do this once."
+
+[node name="DoneButton" type="Button" parent="VideoPlayer/MPVSettingsCopySplash/VBox" unique_id=1079492088]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Done"
+
+[node name="MPVBridgeDesktopSplash" type="Panel" parent="VideoPlayer" unique_id=324191240]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="VideoPlayer/MPVBridgeDesktopSplash" unique_id=1237245261]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -490.5
+offset_top = 108.0
+offset_right = 490.5
+offset_bottom = 1512.0
+grow_horizontal = 2
+theme_override_constants/separation = 65
+
+[node name="Label" type="RichTextLabel" parent="VideoPlayer/MPVBridgeDesktopSplash/VBox" unique_id=241441458]
+custom_minimum_size = Vector2(0, 1200)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+
+[node name="InstallButton" type="Button" parent="VideoPlayer/MPVBridgeDesktopSplash/VBox" unique_id=868626365]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Install mpv bridge"
+
+[node name="CancelButton" type="Button" parent="VideoPlayer/MPVBridgeDesktopSplash/VBox" unique_id=1059304167]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Cancel"
 
 [node name="Settings" type="Panel" parent="." unique_id=1451848364]
 unique_name_in_owner = true
@@ -2918,11 +3481,12 @@ theme_override_constants/separation = 12
 [node name="Label" type="Label" parent="Settings/VBox/Network/Address" unique_id=359745637]
 layout_mode = 2
 theme_override_font_sizes/font_size = 54
-text = "Local server address for this device:"
+text = "Server address for OSSM:"
 
 [node name="TextEdit" type="TextEdit" parent="Settings/VBox/Network/Address" unique_id=2070388168]
 custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
+focus_mode = 1
 theme_override_colors/font_readonly_color = Color(0.988787, 0.906948, 0.799518, 1)
 theme_override_font_sizes/font_size = 52
 editable = false
@@ -2938,6 +3502,7 @@ text = "Server Port:"
 
 [node name="Input" type="SpinBox" parent="Settings/VBox/Network/Port" unique_id=1783381345 groups=["spinboxes"]]
 layout_mode = 2
+focus_mode = 1
 min_value = 1024.0
 max_value = 49151.0
 value = 8008.0
@@ -2968,6 +3533,7 @@ text = "Speed Slider Max:"
 [node name="Input" type="SpinBox" parent="Settings/VBox/Sliders/MaxSpeed" unique_id=1626038288 groups=["spinboxes"]]
 custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
+focus_mode = 1
 min_value = 100.0
 max_value = 200000.0
 value = 25000.0
@@ -2984,6 +3550,7 @@ text = "Acceleration Slider Max:"
 [node name="Input" type="SpinBox" parent="Settings/VBox/Sliders/MaxAcceleration" unique_id=994149337 groups=["spinboxes"]]
 custom_minimum_size = Vector2(310, 0)
 layout_mode = 2
+focus_mode = 1
 min_value = 5000.0
 max_value = 9000000.0
 value = 500000.0
@@ -3003,6 +3570,7 @@ text = "Syncing Speed:"
 [node name="Input" type="SpinBox" parent="Settings/VBox/SyncingSpeed" unique_id=1263358194 groups=["spinboxes"]]
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
+focus_mode = 1
 min_value = 100.0
 max_value = 9999.0
 value = 1000.0
@@ -3023,6 +3591,7 @@ text = "Sensorless Homing Sensitivity:"
 
 [node name="Input" type="SpinBox" parent="Settings/VBox/HomingTrigger" unique_id=1515982946 groups=["spinboxes"]]
 layout_mode = 2
+focus_mode = 1
 min_value = 0.1
 max_value = 10.0
 step = 0.001
@@ -3034,6 +3603,7 @@ one_shot = true
 
 [node name="ReverseMotorDirection" type="CheckBox" parent="Settings/VBox" unique_id=1980012450]
 layout_mode = 2
+focus_mode = 1
 theme_override_font_sizes/font_size = 54
 text = "Reverse motor direction"
 
@@ -3042,13 +3612,72 @@ layout_mode = 2
 
 [node name="AlwaysOnTop" type="CheckBox" parent="Settings/VBox" unique_id=680577138]
 layout_mode = 2
+focus_mode = 1
 theme_override_font_sizes/font_size = 54
 text = "Keep app on top of other windows"
 
 [node name="TransparentBackground" type="CheckBox" parent="Settings/VBox" unique_id=597515866]
 visible = false
 layout_mode = 2
+focus_mode = 1
 theme_override_font_sizes/font_size = 54
+text = "Transparent app background"
+
+[node name="ReselectAndroidStorage" type="Button" parent="Settings/VBox" unique_id=346974972]
+layout_mode = 2
+text = "Hold to reselect storage location"
+
+[node name="IPListPanel" type="Panel" parent="Settings" unique_id=1554583848]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_6esss")
+
+[node name="TextEdit" type="TextEdit" parent="Settings/IPListPanel" unique_id=654502770]
+top_level = true
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 0
+offset_left = 33.0
+offset_top = 292.0
+offset_right = 1047.0
+offset_bottom = 1689.0
+theme_override_colors/font_readonly_color = Color(0.988787, 0.906948, 0.799518, 1)
+theme_override_constants/line_spacing = 4
+theme_override_fonts/font = ExtResource("42_6esss")
+theme_override_font_sizes/font_size = 52
+text = "wesf - awefhouawet
+fuyk - wyewsry
+rtyae"
+editable = false
+
+[node name="CloseButton" type="Button" parent="Settings/IPListPanel" unique_id=1635518781]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -162.0
+offset_right = 124.0
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "    Close    "
+
+[node name="CloseButtonTop" type="TextureButton" parent="Settings/IPListPanel" unique_id=210093972]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -539.5
+offset_right = 539.5
+offset_bottom = 263.0
+grow_horizontal = 2
 
 [node name="HomingTriggerPopup" type="Panel" parent="Settings" unique_id=1042146635]
 visible = false
@@ -3109,6 +3738,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 72
 text = " NO "
 
+[node name="StorageHoldTimer" type="Timer" parent="Settings" unique_id=329770416]
+
 [node name="AddFile" type="Panel" parent="." unique_id=1439324391]
 unique_name_in_owner = true
 visible = false
@@ -3122,17 +3753,14 @@ script = ExtResource("41_gwrhd")
 
 [node name="Label" type="Label" parent="AddFile" unique_id=226532596]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -424.5
-offset_top = 14.0
-offset_right = 424.5
-offset_bottom = 102.0
+anchors_preset = -1
+offset_left = 32.0
+offset_top = 34.0
+offset_right = 1078.0
+offset_bottom = 89.833336
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 54
+theme_override_font_sizes/font_size = 40
 text = "Internal Storage/OSSM Sauce/Paths"
-horizontal_alignment = 1
 
 [node name="HBox" type="HBoxContainer" parent="AddFile" unique_id=2052954574]
 layout_mode = 1
@@ -3141,7 +3769,7 @@ anchor_top = 0.0723958
 anchor_right = 1.0
 anchor_bottom = 0.115104
 grow_horizontal = 2
-theme_override_constants/separation = 175
+theme_override_constants/separation = 155
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -3355,6 +3983,45 @@ visible = false
 position = Vector2(1031, 45)
 texture = ExtResource("43_12g22")
 
+[node name="FolderPickSplash" type="Panel" parent="." unique_id=288582537]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_04y8j")
+
+[node name="VBox" type="VBoxContainer" parent="FolderPickSplash" unique_id=1167042694]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0875
+anchor_top = 0.055989582
+anchor_right = 0.91157407
+anchor_bottom = 0.8700521
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 75
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="RichTextLabel" parent="FolderPickSplash/VBox" unique_id=1130872963]
+custom_minimum_size = Vector2(0, 1220)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "OSSM Sauce needs a folder to store your .bx and .funscript paths and playlists.
+
+Tap the button below and pick (or create) a folder anywhere on your device that's easy for you to access.
+
+You can change this later in Settings."
+
+[node name="PickButton" type="Button" parent="FolderPickSplash/VBox" unique_id=396680829]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Select Folder"
+
 [node name="Splash" type="Panel" parent="." unique_id=2057065976]
 visible = false
 layout_mode = 1
@@ -3476,19 +4143,25 @@ script = ExtResource("48_bme4d")
 [connection signal="value_changed" from="Menu/LoopSettings/MaxStrokeDuration/Input" to="Menu" method="_on_max_stroke_duration_changed"]
 [connection signal="value_changed" from="Menu/LoopSettings/MinStrokeDuration/Input" to="Menu" method="_on_min_stroke_duration_changed"]
 [connection signal="item_selected" from="Menu/BridgeSettings/BridgeMode/ModeSelection" to="Menu" method="_on_bridge_mode_selected"]
+[connection signal="toggled" from="Menu/BridgeSettings/LoggingEnabled" to="BridgeControls" method="_on_logging_enabled_toggled"]
 [connection signal="value_changed" from="Menu/BridgeSettings/SpeedOverrides/Inputs/MinMoveDuration/Input" to="BridgeControls" method="_on_min_move_duration_value_changed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/SpeedOverrides/Inputs/MaxMoveDuration/Input" to="BridgeControls" method="_on_max_move_duration_value_changed"]
-[connection signal="toggled" from="Menu/BridgeSettings/LoggingEnabled" to="BridgeControls" method="_on_logging_enabled_toggled"]
 [connection signal="text_changed" from="Menu/BridgeSettings/BPIO/ServerAddress/Input" to="BridgeControls" method="_on_bpio_server_address_changed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/BPIO/Ports/ServerPort/Input" to="BridgeControls" method="_on_bpio_server_port_changed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/BPIO/Ports/WSDMPort/Input" to="BridgeControls" method="_on_bpio_wsdm_port_changed"]
 [connection signal="text_changed" from="Menu/BridgeSettings/BPIO/Identifier/Input" to="BridgeControls" method="_on_bpio_identifier_changed"]
 [connection signal="text_changed" from="Menu/BridgeSettings/BPIO/ClientName/Input" to="BridgeControls" method="_on_bpio_client_name_changed"]
 [connection signal="text_changed" from="Menu/BridgeSettings/BPIO/Address/Input" to="BridgeControls" method="_on_bpio_address_changed"]
+[connection signal="pressed" from="Menu/BridgeSettings/BPIO/HelpButton" to="BridgeControls" method="_on_bpio_help_button_pressed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/XToys/Port/Input" to="BridgeControls" method="_on_xtoys_port_changed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/XToys/MaxMsgFrequency/Input" to="BridgeControls" method="_on_xtoys_max_msg_frequency_changed"]
 [connection signal="toggled" from="Menu/BridgeSettings/XToys/UseCommandDuration" to="BridgeControls" method="_on_xtoys_use_command_duration_toggled"]
+[connection signal="pressed" from="Menu/BridgeSettings/XToys/HelpButton" to="BridgeControls" method="_on_xtoys_help_button_pressed"]
 [connection signal="value_changed" from="Menu/BridgeSettings/MCP/Port/Input" to="BridgeControls" method="_on_mcp_port_changed"]
+[connection signal="pressed" from="Menu/BridgeSettings/MCP/HelpButton" to="BridgeControls" method="_on_mcp_help_button_pressed"]
+[connection signal="pressed" from="Menu/BridgeHelp/BPIOInfo/VBox/Back" to="BridgeControls" method="_close_bridge_help"]
+[connection signal="pressed" from="Menu/BridgeHelp/XToysInfo/VBox/Back" to="BridgeControls" method="_close_bridge_help"]
+[connection signal="pressed" from="Menu/BridgeHelp/MCPInfo/VBox/Back" to="BridgeControls" method="_close_bridge_help"]
 [connection signal="pressed" from="Menu/PathControls/Down" to="Menu" method="_on_down_pressed"]
 [connection signal="pressed" from="Menu/PathControls/Up" to="Menu" method="_on_up_pressed"]
 [connection signal="pressed" from="Menu/PathControls/HBox/Play" to="Menu" method="_on_play_pressed"]
@@ -3501,15 +4174,28 @@ script = ExtResource("48_bme4d")
 [connection signal="pressed" from="Menu/SavePlaylist/HBox/Back" to="Menu/SavePlaylist" method="_on_back_pressed"]
 [connection signal="text_changed" from="Menu/SavePlaylist/TextEdit" to="Menu/SavePlaylist" method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="VideoPlayer/Back" to="VideoPlayer" method="_on_back_pressed"]
-[connection signal="item_selected" from="VideoPlayer/VBox/PlayerSelection" to="VideoPlayer" method="_on_player_selection_item_selected"]
-[connection signal="text_submitted" from="VideoPlayer/VBox/PlayerAddress/Input" to="VideoPlayer" method="_on_player_address_text_submitted"]
-[connection signal="value_changed" from="VideoPlayer/VBox/PlayerPort/Input" to="VideoPlayer" method="_on_player_port_value_changed"]
-[connection signal="text_submitted" from="VideoPlayer/VBox/VLCPassword/Input" to="VideoPlayer" method="_on_vlc_password_text_submitted"]
-[connection signal="value_changed" from="VideoPlayer/VBox/VLCSeekCorrection/Input" to="VideoPlayer" method="_on_vlc_seek_correction_value_changed"]
-[connection signal="value_changed" from="VideoPlayer/VBox/DelayMs/Input" to="VideoPlayer" method="_on_delay_ms_value_changed"]
-[connection signal="value_changed" from="VideoPlayer/VBox/AdvanceMs/Input" to="VideoPlayer" method="_on_advance_ms_value_changed"]
-[connection signal="value_changed" from="VideoPlayer/VBox/VideoOffset/Input" to="VideoPlayer" method="_on_video_offset_ms_value_changed"]
+[connection signal="item_selected" from="VideoPlayer/Main/PlayerSelection" to="VideoPlayer" method="_on_player_selection_item_selected"]
+[connection signal="text_submitted" from="VideoPlayer/Main/PlayerAddress/Input" to="VideoPlayer" method="_on_player_address_text_submitted"]
+[connection signal="value_changed" from="VideoPlayer/Main/PlayerPort/Input" to="VideoPlayer" method="_on_player_port_value_changed"]
+[connection signal="text_submitted" from="VideoPlayer/Main/VLCPassword/Input" to="VideoPlayer" method="_on_vlc_password_text_submitted"]
+[connection signal="value_changed" from="VideoPlayer/Main/VLCSeekCorrection/Input" to="VideoPlayer" method="_on_vlc_seek_correction_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/Main/DelayMs/Input" to="VideoPlayer" method="_on_delay_ms_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/Main/AdvanceMs/Input" to="VideoPlayer" method="_on_advance_ms_value_changed"]
+[connection signal="value_changed" from="VideoPlayer/Main/VideoOffset/Input" to="VideoPlayer" method="_on_video_offset_ms_value_changed"]
+[connection signal="pressed" from="VideoPlayer/Main/HelpButton" to="VideoPlayer" method="_on_help_button_pressed"]
+[connection signal="pressed" from="VideoPlayer/Help/VLCInfo/VLCSetupInstructions" to="VideoPlayer" method="_on_vlc_setup_instructions_pressed"]
+[connection signal="pressed" from="VideoPlayer/Help/MPCInfo/MPCSetupInstructions" to="VideoPlayer" method="_on_mpc_setup_instructions_pressed"]
+[connection signal="pressed" from="VideoPlayer/Help/mpvInfo/OpenMpvDirectory" to="VideoPlayer" method="_on_open_mpv_directory_pressed"]
+[connection signal="pressed" from="VideoPlayer/Help/mpvInfo/ReinstallLuaScripts" to="VideoPlayer" method="_on_reinstall_lua_scripts_pressed"]
+[connection signal="pressed" from="VideoPlayer/Help/mpvAndroidInfo/ReinstallMpvAndroidLua" to="VideoPlayer" method="_on_reinstall_mpv_android_lua_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVBridgeSplash/VBox/PickButton" to="VideoPlayer" method="_on_mpv_bridge_pick_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVBridgeSplash/VBox/CancelButton" to="VideoPlayer" method="_on_mpv_bridge_cancel_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVSettingsCopySplash/VBox/CopyButton" to="VideoPlayer" method="_on_mpv_bridge_copy_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVSettingsCopySplash/VBox/DoneButton" to="VideoPlayer" method="_on_mpv_bridge_done_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVBridgeDesktopSplash/VBox/InstallButton" to="VideoPlayer" method="_on_mpv_bridge_install_pressed"]
+[connection signal="pressed" from="VideoPlayer/MPVBridgeDesktopSplash/VBox/CancelButton" to="VideoPlayer" method="_on_mpv_bridge_install_cancel_pressed"]
 [connection signal="pressed" from="Settings/Back" to="Settings" method="_on_Back_pressed"]
+[connection signal="focus_entered" from="Settings/VBox/Network/Address/TextEdit" to="Settings/IPListPanel" method="_on_text_edit_focus_entered"]
 [connection signal="pressed" from="Settings/VBox/Network/Port/ChangePort" to="Settings" method="_on_change_port_pressed"]
 [connection signal="value_changed" from="Settings/VBox/Sliders/MaxSpeed/Input" to="Settings" method="_on_slider_max_speed_value_changed"]
 [connection signal="value_changed" from="Settings/VBox/Sliders/MaxAcceleration/Input" to="Settings" method="_on_slider_max_acceleration_value_changed"]
@@ -3519,14 +4205,20 @@ script = ExtResource("48_bme4d")
 [connection signal="timeout" from="Settings/VBox/HomingTrigger/DebounceTimer" to="Settings" method="_on_homing_trigger_debounce_timer_timeout"]
 [connection signal="toggled" from="Settings/VBox/ReverseMotorDirection" to="Settings" method="_on_reverse_motor_direction_toggled"]
 [connection signal="toggled" from="Settings/VBox/AlwaysOnTop" to="Settings" method="_on_always_on_top_toggled"]
+[connection signal="button_down" from="Settings/VBox/ReselectAndroidStorage" to="Settings" method="_on_reselect_android_storage_button_down"]
+[connection signal="button_up" from="Settings/VBox/ReselectAndroidStorage" to="Settings" method="_on_reselect_android_storage_button_up"]
+[connection signal="pressed" from="Settings/IPListPanel/CloseButton" to="Settings/IPListPanel" method="_on_close_button_pressed"]
+[connection signal="pressed" from="Settings/IPListPanel/CloseButtonTop" to="Settings/IPListPanel" method="_on_close_button_pressed"]
 [connection signal="pressed" from="Settings/HomingTriggerPopup/VBox/Buttons/YesButton" to="Settings/HomingTriggerPopup" method="_on_yes_button_pressed"]
 [connection signal="pressed" from="Settings/HomingTriggerPopup/VBox/Buttons/NoButton" to="Settings/HomingTriggerPopup" method="_on_no_button_pressed"]
+[connection signal="timeout" from="Settings/StorageHoldTimer" to="Settings" method="_on_storage_hold_timer_timeout"]
 [connection signal="pressed" from="AddFile/HBox/AddPath" to="AddFile" method="_on_add_path_pressed"]
 [connection signal="pressed" from="AddFile/HBox/LoadPlaylist" to="AddFile" method="_on_load_playlist_pressed"]
 [connection signal="pressed" from="AddFile/HBox/Back" to="AddFile" method="_on_back_pressed"]
 [connection signal="pressed" from="CircleSelection/Restart" to="Menu" method="_on_restart_pressed"]
 [connection signal="pressed" from="CircleSelection/OutsideButton" to="CircleSelection" method="_on_outside_button_pressed"]
 [connection signal="pressed" from="CircleSelection/InsideButton" to="CircleSelection" method="_on_inside_button_pressed"]
+[connection signal="pressed" from="FolderPickSplash/VBox/PickButton" to="." method="pick_storage_folder"]
 [connection signal="toggled" from="Splash/VBox/DontShowAgain" to="Splash" method="_on_dont_show_toggled"]
 [connection signal="pressed" from="Splash/VBox/Accept" to="Splash" method="_on_accept_pressed"]
 [connection signal="timeout" from="XToysBridge/SpeedTimer" to="XToysBridge" method="_on_speed_timer_timeout"]
