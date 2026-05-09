@@ -44,7 +44,7 @@
 [ext_resource type="Script" uid="uid://ccimjgty86f8v" path="res://scripts/settings.gd" id="40_u5kb6"]
 [ext_resource type="Script" uid="uid://qc06washnpwx" path="res://scripts/add_file.gd" id="41_gwrhd"]
 [ext_resource type="Script" uid="uid://dfqaq8bhaml37" path="res://scripts/playlist_item.gd" id="41_qnwk1"]
-[ext_resource type="FontFile" uid="uid://cp6qe0wexovpi" path="res://font/SGr-Iosevka-Regular.ttc" id="42_6esss"]
+[ext_resource type="FontFile" uid="uid://c16fu4ikwulko" path="res://font/Iosevka-Regular.ttf" id="42_6esss"]
 [ext_resource type="Script" uid="uid://borvji2u3vb68" path="res://scripts/file_list.gd" id="42_i7h0y"]
 [ext_resource type="Texture2D" uid="uid://c0bgeto1j6das" path="res://textures/wifi.svg" id="43_12g22"]
 [ext_resource type="Script" uid="uid://w1hne745oxnm" path="res://scripts/add_delay.gd" id="43_hjbjw"]

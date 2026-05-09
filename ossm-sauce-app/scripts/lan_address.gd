@@ -106,29 +106,6 @@ static func get_candidate_list() -> String:
 	return "\n".join(lines)
 
 
-#static func print_interfaces() -> void:
-	#print("=== Network interfaces ===")
-	#var ifaces := IP.get_local_interfaces()
-	#for iface in ifaces:
-		#var name: String = iface.get("name", "?")
-		#var friendly: String = iface.get("friendly", "")
-		#var idx = iface.get("index", "?")
-		#var label: String
-		#if friendly != "" and friendly != name:
-			#label = "%s (%s)" % [friendly, name]
-		#else:
-			#label = name
-		#print("\n[%s] %s" % [idx, label])
-		#var addrs: Array = iface.get("addresses", [])
-		#var ipv4: Array = addrs.filter(func(a): return ":" not in a)
-		#if ipv4.is_empty():
-			#print("    (no IPv4 addresses)")
-		#else:
-			#for addr in ipv4:
-				#print("    %s" % addr)
-	#print("\n=== End ===")
-
-
 static func _is_virtual_interface(iface: Dictionary) -> bool:
 	var friendly: String = str(iface.get("friendly", "")).to_lower()
 	var name: String = str(iface.get("name", "")).to_lower()
